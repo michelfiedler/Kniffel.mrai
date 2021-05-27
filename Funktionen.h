@@ -5,7 +5,13 @@
 
 int countN (int*, int, int);
 int sum (int*, int);
+
+//Spielsteuerungsfunktionen
 void rolldice (int*, int*);
+
+//Kontrollfunktionen
+bool kniffel (int*, int);
+bool fullhouse (int*, int);
 
 
 
@@ -39,6 +45,43 @@ int sum (int* zeiger, int laenge) //Summenfunktion
     for (int r=0; r<laenge; r++) summe+=zeiger[r];
     return summe;
 }
+
+
+// Kontrollfunktionen
+
+bool kniffel (int* zeiger, int laenge)
+{
+    for (int i=1; i<7; i++)
+    {
+        if (countN(zeiger, laenge, i) ==5) return true;
+    }
+    return false;
+}
+
+
+bool fullhouse (int* zeiger, int laenge)
+{
+    bool drei = false, zwei = false;
+    for (int i=1; i<7; i++)
+    {
+        if (countN (zeiger, laenge, i) == 2) zwei = true;
+        if (countN (zeiger, laenge, i) == 3) drei = true;
+    }
+    if (zwei == true && drei == true) return true;
+    else return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
