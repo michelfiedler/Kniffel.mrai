@@ -56,18 +56,17 @@ int main()
 			}
 		}
 
-        showscore(table);
-            if(sum(table, 7) > 62)
-            {
-                cout<<"Insgesamt wurden "<<sum(table, 13)+35<<" Punkte erreicht!"<<endl<<endl;
-            }
-            else
-            {
-                cout<<"Insgesamt wurden "<<sum(table,13) <<" Punkte erreicht!"<<endl<<endl;
-            }
-
     }
 
+    showscore(table);
+        if(sum(table, 7) > 62)
+        {
+            cout<<"Insgesamt wurden "<<sum(table, 13)+35<<" Punkte erreicht!"<<endl<<endl;
+        }
+        else
+        {
+            cout<<"Insgesamt wurden "<<sum(table,13) <<" Punkte erreicht!"<<endl<<endl;
+        }
 
 
 
