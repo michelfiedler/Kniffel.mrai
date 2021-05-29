@@ -47,7 +47,15 @@ int main()
         }
         while(Spieleranzahl<2 || Spieleranzahl>7);
 
-
+     // Spielerinitialisierung ------------------- Namen eingeben und Spielstände setzen
+    char Name[15];
+    for (int i=0; i<Spieleranzahl; i++)
+    {
+      cout << "Bitte gebt eure Namen ein:" << endl;
+      cin >> Name;
+      spielerptr[i].set_Name(Name);
+      spielerptr[i].reset_Spielstand();
+    }
 
 
 
