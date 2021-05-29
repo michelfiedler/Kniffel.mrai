@@ -14,7 +14,8 @@ bool kniffel (int*, int);
 bool fullhouse (int*, int);
 bool klstrasse (int*, int);
 bool grstrasse (int*, int);
-
+bool dreierpasch (int*, int);
+bool viererpasch (int*, int);
 
 //----------------------------------------------------------------------------------------------------------------
 
@@ -86,6 +87,40 @@ bool grstrasse (int* zeiger, int laenge)
     if (countN(zeiger, laenge, 2)>0&&countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0&&countN(zeiger, laenge, 5)>0
        &&((countN(zeiger, laenge, 1)>0||countN(zeiger, laenge, 6)>0))) return true;
     else return false;
+}
+
+bool dreierpasch (int* zeiger, int laenge)
+{
+    int sum = 0;
+    for (int i=1; i<7; i++)
+    {
+        if (countN(zeiger, laenge, i)>2)
+        {
+            for (int j=0; j<laenge; j++)
+            {
+                sum+=zeiger[j];
+            }
+            if (sum>0) return true;
+        }
+    }
+    return false;
+}
+
+bool viererpasch (int* zeiger, int laenge)
+{
+    int sum = 0;
+    for (int i=1; i<7; i++)
+    {
+        if (countN(zeiger, laenge, i)>3)
+        {
+            for (int j=0; j<laenge; j++)
+            {
+                sum+=zeiger[j];
+            }
+            if (sum>0) return true;
+        }
+    }
+    return false;
 }
 
 
