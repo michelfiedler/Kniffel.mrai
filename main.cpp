@@ -8,6 +8,8 @@ using namespace std;
 
 int main()
 {
+    srand((unsigned)time(NULL));                //Zufallsfunktion wird mit time initialiesiert
+
     int spielstand = 0;								//wird als bool verwendet
     int* table = new int[13];					//table speichert die Ergebnisse
     for (int i=0; i<13; i++) table[i] = 888;
