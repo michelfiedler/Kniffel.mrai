@@ -32,7 +32,29 @@ int main()
         }
         if (spielstand) showscore(table);
 
-
+        //Hier wird gewürfelt
+        for (int j=0; j<5; j++) {keep[j]=0;}            //Das keep-Feld wird resetet
+		for (int j=0; j<3; j++)
+		{
+			rolldice(dice, keep);
+			if(j==0||j==1)                              //Im ersten und zweiten Zug kann ausgewählt werden, welche Würfel behalten werden
+			{
+				cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+				cout <<"behalten? (1/0)	"; for(int k=0; k<5; k++) {cin >>keep[k]; cout<<"   ";}cout<<endl;
+				
+				if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1) 
+					{
+						write(dice, table); 
+						j=3;										//Für Schleifenabbruch sorgen
+					}
+				
+			}
+			else                            //Im dritten Zug wird direkt etwas eingetragen
+			{
+				cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+				write(dice, table);
+			}
+		}
 
 
     }
