@@ -16,11 +16,24 @@ int main()
     int* dice = new int[5];						//dice gibt die W�rfelergebnisse an
     for (int i=0; i<5; i++) dice[i]=1;
     int* keep = new int[5];					//keep gibt an, welche W�rfel behalten werden sollen
-
+    int Spielmodus;
+    int Spieleranzahl;
 
 
     cout 	<<"Willkommen, hier kannst du mit dir selbst Kniffel spielen. Die KI folgt bald."<<endl
             <<"Du kannst zwischendurch waehlen, ob du den Spielstand ansehen willst (1/0). Jetzt kanns losgehen!"<<endl<<endl;
+
+
+    //Abfrage Single- oder Multiplayer
+    cout << "Moechtest du im [0]Single- oder [1]Multiplayermodus spielen?" << endl;
+    cin >> Spielmodus;
+
+    if (Spielmodus == 0)
+    {
+        cout << "Die KI kommt bald!" << endl;
+    }
+
+
 
     for (int i=0; i<13; i++)
     {
