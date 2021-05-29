@@ -11,6 +11,7 @@ int sum (int*, int);
 //Spielsteuerungsfunktionen
 void rolldice (int*, int*);
 void showscore (int*);
+void write (int*, int*);
 
 //Kontrollfunktionen
 bool kniffel (int*, int);
@@ -145,7 +146,67 @@ void showscore (int* zeiger)
 }
 
 
+void write (int* wuerfel, int* blatt)
+{
+    int was;															//Eingabe mit anschließender Kontrolle
+    cout<<"Was soll eingetragen werden? "; cin>>was;
+    while(blatt[was-1]!=888)
+    {
+        cout<<"Bitte ein anderes Feld, dieses ist schon beschrieben. "; cin>>was;
+    }
 
+    if(was<7)
+    {
+        blatt[was-1]=was*countN(wuerfel,5,was);
+    }
+    else
+    {
+        switch (was)
+        {
+            case 7:
+            {
+                if (dreierpasch(wuerfel,5)) blatt[6]= sum(wuerfel, 5);
+                else blatt[6] =0;
+                break;
+            }
+            case 8:
+            {
+                if(viererpasch(wuerfel,5)) blatt[7] = sum(wuerfel,5);
+                else blatt[7]=0;
+                break;
+            }
+            case 9:
+            {
+                if(fullhouse(wuerfel,5)) blatt[8] = 25;
+                else blatt[8] = 0;
+                break;
+            }
+            case 10:
+            {
+                if(klstrasse(wuerfel,5)) blatt[9] = 30;
+                else blatt[9] =0;
+                break;
+            }
+            case 11:
+            {
+                if(grstrasse(wuerfel,5)) blatt[10] = 40;
+                else blatt[10] = 0;
+                break;
+            }
+            case 12:
+            {
+                if(kniffel(wuerfel,5)) blatt[11] = 50;
+                else blatt[11] =0;
+                break;
+            }
+            case 13:
+            {
+                blatt[12] = sum(wuerfel,5);
+                break;
+            }
+        }
+    }
+}
 
 
 
