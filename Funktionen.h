@@ -13,6 +13,7 @@ void rolldice (int*, int*);
 bool kniffel (int*, int);
 bool fullhouse (int*, int);
 bool klstrasse (int*, int);
+bool grstrasse (int*, int);
 
 
 //----------------------------------------------------------------------------------------------------------------
@@ -80,6 +81,12 @@ bool klstrasse (int* zeiger, int laenge)
     else return false;
 }
 
+bool grstrasse (int* zeiger, int laenge)
+{
+    if (countN(zeiger, laenge, 2)>0&&countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0&&countN(zeiger, laenge, 5)>0
+       &&((countN(zeiger, laenge, 1)>0||countN(zeiger, laenge, 6)>0))) return true;
+    else return false;
+}
 
 
 
