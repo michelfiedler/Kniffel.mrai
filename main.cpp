@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <Funktionen.h>
+#include <spieler.h>
 
 using namespace std;
 
@@ -10,12 +11,12 @@ int main()
 {
     srand((unsigned)time(NULL));                //Zufallsfunktion wird mit time initialiesiert
 
-    int spielstand = 0;								//wird als bool verwendet für Spielstandabfrage
-    int* dice = new int[5];						//dice gibt die W�rfelergebnisse an
+    int* dice = new int[5];						//dice gibt die Würfelergebnisse an
     for (int i=0; i<5; i++) dice[i]=1;
-    int* keep = new int[5];					//keep gibt an, welche W�rfel behalten werden sollen
+    int* keep = new int[5];					//keep gibt an, welche Würfel behalten werden sollen
     int Spielmodus;
     int Spieleranzahl;
+    int anzeige=0;
 
 
     cout 	<<"Willkommen, hier kannst du mit dir selbst Kniffel spielen. Die KI folgt bald."<<endl
@@ -45,15 +46,21 @@ int main()
         }
         while(Spieleranzahl<2 || Spieleranzahl>7);
 
-     // Spielerinitialisierung ------------------- Namen eingeben und Spielstände setzen
-    char Name[15];
-    for (int i=0; i<Spieleranzahl; i++)
-    {
-      cout << "Bitte gebt eure Namen ein:" << endl;
-      cin >> Name;
-      spielerptr[i].set_Name(Name);
-      spielerptr[i].reset_Spielstand();
-    }
+
+        // Speicheranforderung
+        Spieler* spielerptr = new Spieler[Spieleranzahl];
+
+
+        // Spielerinitialisierung ------------------- Namen eingeben und Spielstände setzen
+        char Name[15];
+        for (int i=0; i<Spieleranzahl; i++)
+        {
+            cout << "Bitte gebt eure Namen ein:" << endl;
+            cin >> Name;
+            spielerptr[i].set_Name(Name);
+            spielerptr[i].Spielstand = new int [13];
+            spielerptr[i].reset_Spielstand();
+        }
 
 
 
@@ -61,63 +68,78 @@ int main()
     // ----------------------------------------------------------------------------------------------------------------------------------------------
     //Programmablauf
 
-    for (int i=0; i<13; i++)
+    for (int i=0; i<13; i++) //Durchlauf der 13 Spielzüge
     {
-                                                        //Es wird gefragt, ob der Spielstand angezeigt werden soll und kontrolliert ob die Eingabe korrekt war
-        cout <<"Spielstand anzeigen? ";
-        cin >> spielstand;
-        while (spielstand != 1 && spielstand !=0)
-        {
-            cout << "Bitte 1 (Spielstand anzeigen) oder 2 (gleich wuerfeln) eingeben." ;
-            cin >> spielstand;
-        }
-        if (spielstand) showscore(table);
+           for (int l=0; l<Spieleranzahl; l++) //Durchlauf der einzelnen Spieler
+           {
+                cout << "Nun ist:   " << spielerptr[l].get_Name() << "   an der Reihe" << endl;
 
-        //Hier wird gewürfelt
-        for (int j=0; j<5; j++) {keep[j]=0;}            //Das keep-Feld wird resetet
-		for (int j=0; j<3; j++)
-		{
-			rolldice(dice, keep);
-			if(j==0||j==1)                              //Im ersten und zweiten Zug kann ausgewählt werden, welche Würfel behalten werden
-			{
-				cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
-				cout <<"behalten? (1/0)	"; for(int k=0; k<5; k++) {cin >>keep[k]; cout<<"   ";}cout<<endl;
+                                                    //Es wird gefragt, ob der Spielstand angezeigt werden soll und kontrolliert ob die Eingabe korrekt war
+
+            cout <<"Spielstand anzeigen? ";
+            cin >> anzeige;
+            while (anzeige != 1 && anzeige !=0)
+            {
+                cout << "Bitte 1 (Spielstand anzeigen) oder 0 (gleich wuerfeln) eingeben." ;
+                cin >> anzeige;
+            }
+            if (anzeige) spielerptr[l].showscore();
+
+            //Hier wird gewürfelt
+            for (int j=0; j<5; j++) {keep[j]=0;}            //Das keep-Feld wird resetet
+            for (int j=0; j<3; j++)                         //Nun beginnen die drei Würfe pro Spielzug
+            {
+                rolldice(dice, keep);
+                if(j==0||j==1)                              //Im ersten und zweiten Zug kann ausgewählt werden, welche Würfel behalten werden
+                {
+                    cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+                    cout <<"behalten? (1/0)	"; for(int k=0; k<5; k++) {cin >>keep[k]; cout<<"   ";}cout<<endl;
 				
-				if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1) 
-					{
-						write(dice, table); 
-						j=3;										//Für Schleifenabbruch sorgen
-					}
+                    if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
+                        {
+                            write(dice, spielerptr[l].Spielstand);
+                            j=3;										//Für Schleifenabbruch sorgen, wenn vor dem dritten Wurf alle Würfel behalten werden
+                        }
 				
-			}
-			else                            //Im dritten Zug wird direkt etwas eingetragen
-			{
+                }
+                else                            //Im dritten Zug wird direkt etwas eingetragen
+                {
 				cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
-				write(dice, table);
-			}
-		}
+                write(dice, spielerptr[l].Spielstand);
+                }
+            }
+           }
 
     }
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Punkteauswertung
 
-    showscore(table);
-        if(sum(table, 7) > 62)
+        for (int i=0; i<Spieleranzahl; i++) //Ausgabe des Endspielstandes für jeden Spieler
         {
-            cout<<"Insgesamt wurden "<<sum(table, 13)+35<<" Punkte erreicht!"<<endl<<endl;
+            cout << spielerptr[i].get_Name() << endl; //Hier noch zu machen: Umwandlung der Spielstandausgabe, sodass alle Spielstände nebeneinander ausgegeben werden
+            spielerptr[i].showscore();                //und nicht von jedem Spieler einzeln.
+
+            if(sum(spielerptr[i].Spielstand, 7) > 62)
+            {
+                cout<<"Insgesamt wurden "<<sum(spielerptr[i].Spielstand, 13)+35<<" Punkte erreicht!"<<endl<<endl;
+            }
+            else
+            {
+                cout<<"Insgesamt wurden "<<sum(spielerptr[i].Spielstand,13) <<" Punkte erreicht!"<<endl<<endl;
+            }
         }
-        else
-        {
-            cout<<"Insgesamt wurden "<<sum(table,13) <<" Punkte erreicht!"<<endl<<endl;
-        }
 
-
-
-    //Speicherfreigabe
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Speicherfreigabe
     
     delete[] dice;
     dice = NULL;
     delete[] keep;
     keep = NULL;
+    delete[] spielerptr;
+    spielerptr = NULL;
 
     return 0;
 
+}
 }
