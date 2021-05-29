@@ -10,9 +10,7 @@ int main()
 {
     srand((unsigned)time(NULL));                //Zufallsfunktion wird mit time initialiesiert
 
-    int spielstand = 0;								//wird als bool verwendet
-    int* table = new int[13];					//table speichert die Ergebnisse
-    for (int i=0; i<13; i++) table[i] = 888;
+    int spielstand = 0;								//wird als bool verwendet für Spielstandabfrage
     int* dice = new int[5];						//dice gibt die W�rfelergebnisse an
     for (int i=0; i<5; i++) dice[i]=1;
     int* keep = new int[5];					//keep gibt an, welche W�rfel behalten werden sollen
@@ -113,8 +111,8 @@ int main()
 
 
 
-    delete[] table;														//Speicherfreigabe
-    table = NULL;
+    //Speicherfreigabe
+    
     delete[] dice;
     dice = NULL;
     delete[] keep;
