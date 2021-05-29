@@ -4,7 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        spieler.cpp
 
 HEADERS += \
-    Funktionen.h
+    Funktionen.h \
+    spieler.h
