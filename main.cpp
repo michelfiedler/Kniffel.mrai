@@ -33,7 +33,27 @@ int main()
         cout << "Die KI kommt bald!" << endl;
     }
 
+    // ----------------------------------------------------------------------------------------------------------------------------------------------
+    // Beginn Multiplayer
 
+        if (Spielmodus == 1)
+        {
+
+        //Objektinstanzierung
+        do
+        {
+            cout << "Wie viele Spieler seid ihr?" << endl;
+            cin >> Spieleranzahl;
+        }
+        while(Spieleranzahl<2 || Spieleranzahl>7);
+
+
+
+
+
+
+    // ----------------------------------------------------------------------------------------------------------------------------------------------
+    //Programmablauf
 
     for (int i=0; i<13; i++)
     {
