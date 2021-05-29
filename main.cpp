@@ -68,9 +68,9 @@ int main()
     // ----------------------------------------------------------------------------------------------------------------------------------------------
     //Programmablauf
 
-    for (int i=0; i<13; i++) //Durchlaufen der 13 Spielzüge
+    for (int i=0; i<13; i++) //Durchlauf der 13 Spielzüge
     {
-           for (int l=0; l<Spieleranzahl; l++) // Durchlaufen der einzelnen Spieler
+           for (int l=0; l<Spieleranzahl; l++) //Durchlauf der einzelnen Spieler
            {
                 cout << "Nun ist:   " << spielerptr[l].get_Name() << "   an der Reihe" << endl;
 
@@ -87,7 +87,7 @@ int main()
 
             //Hier wird gewürfelt
             for (int j=0; j<5; j++) {keep[j]=0;}            //Das keep-Feld wird resetet
-            for (int j=0; j<3; j++)                         //Nun beginnen die drei Würfe pro Spieler
+            for (int j=0; j<3; j++)                         //Nun beginnen die drei Würfe pro Spielzug
             {
                 rolldice(dice, keep);
                 if(j==0||j==1)                              //Im ersten und zweiten Zug kann ausgewählt werden, welche Würfel behalten werden
@@ -114,10 +114,10 @@ int main()
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Punkteauswertung
 
-        for (int i=0; i<Spieleranzahl; i++)
+        for (int i=0; i<Spieleranzahl; i++) //Ausgabe des Endspielstandes für jeden Spieler
         {
-            cout << spielerptr[i].get_Name() << endl; //Es wäre hier noch schöner, wenn alle Spielstände nebeneinander angezeigt werden könnten und nicht von jedem Spieler einzeln
-            spielerptr[i].showscore();
+            cout << spielerptr[i].get_Name() << endl; //Hier noch zu machen: Umwandlung der Spielstandausgabe, sodass alle Spielstände nebeneinander ausgegeben werden
+            spielerptr[i].showscore();                //und nicht von jedem Spieler einzeln.
 
             if(sum(spielerptr[i].Spielstand, 7) > 62)
             {
