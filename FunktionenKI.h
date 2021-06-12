@@ -1,0 +1,4 @@
+#ifndef FUNKTIONENKI_H
+#define FUNKTIONENKI_H
+
+#endif // FUNKTIONENKI_H

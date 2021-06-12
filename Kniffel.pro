@@ -8,4 +8,5 @@ SOURCES += \
 
 HEADERS += \
     Funktionen.h \
+    FunktionenKI.h \
     spieler.h
