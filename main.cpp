@@ -83,7 +83,106 @@ int main()
                 cout << "Bitte 1 (Spielstand anzeigen) oder 0 (gleich wuerfeln) eingeben." ;
                 cin >> anzeige;
             }
-            if (anzeige) spielerptr[l].showscore();
+            if (anzeige)
+            {
+                cout << "\nSpieler          ";
+                for (int i=0; i<Spieleranzahl+1; i++)
+                {
+                    cout << "     "<< spielerptr[i].get_Name();
+                }
+                cout << endl;
+
+                cout <<"\n1 Einsen       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     " << spielerptr[a].getSpielstand(0);
+                }
+                cout << endl;
+
+                cout <<"\n2 Zweien       ";
+                for (int b=0; b<Spieleranzahl; b++)
+                {
+                    cout <<"     "<< spielerptr[b].getSpielstand(1);
+                }
+                cout << endl;
+
+                cout <<"\n3 Dreien       ";
+                for (int c=0; c<Spieleranzahl; c++)
+                {
+                    cout <<"     "<< spielerptr[c].getSpielstand(2);
+                }
+                cout << endl;
+
+                cout <<"\n1 Vieren       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(3);
+                }
+                cout << endl;
+
+                cout <<"\n1 Fünfen       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(4);
+                }
+                cout << endl;
+
+                cout <<"\n1 Sechsen       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(5);
+                }
+                cout << endl;
+
+                cout <<"\n1 Dreierpasch       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<<spielerptr[a].getSpielstand(6);
+                }
+                cout << endl;
+
+                cout <<"\n1 Viererpasch       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(7);
+                }
+                cout << endl;
+
+                cout <<"\n1 Full House      ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(8);
+                }
+                cout << endl;
+
+                cout <<"\n1 kl Strasse      ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(9);
+                }
+                cout << endl;
+
+                cout <<"\n1 gr Strasse       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(10);
+                }
+                cout << endl;
+
+                cout <<"\n1 Kniffel       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(11);
+                }
+                cout << endl;
+
+                cout <<"\n1 Chance       ";
+                for (int a=0; a<Spieleranzahl; a++)
+                {
+                    cout <<"     "<< spielerptr[a].getSpielstand(12);
+                }
+                cout << endl;
+            }
 
             //Hier wird gewürfelt
             for (int j=0; j<5; j++) {keep[j]=0;}            //Das keep-Feld wird resetet
@@ -92,7 +191,7 @@ int main()
                 rolldice(dice, keep);
                 if(j==0||j==1)                              //Im ersten und zweiten Zug kann ausgewählt werden, welche Würfel behalten werden
                 {
-                    cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+                    cout <<"\ngewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
                     cout <<"behalten? (1/0)	"; for(int k=0; k<5; k++) {cin >>keep[k]; cout<<"   ";}cout<<endl;
 				
                     if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)

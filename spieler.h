@@ -20,6 +20,7 @@ class Spieler
         char* get_Name();
         void showscore();
         void reset_Spielstand();
+        int getSpielstand(int);
 };
 
 //Methodendefinitionen
@@ -43,6 +44,11 @@ void Spieler::reset_Spielstand()
    {
      Spielstand[i] = 888;
    }
+}
+
+int Spieler::getSpielstand(int nummer)
+{
+    return this->Spielstand[nummer];
 }
 
 void Spieler::showscore()
