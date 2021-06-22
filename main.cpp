@@ -233,7 +233,7 @@ int main()
         bestenlisteFile.open ("Bestenliste.conf", ios::app);
         for (int i=0; i<Spieleranzahl; i++)                             //Die Spieler mit ihrer Punktzahl in die Bestenliste einschreiben
         {
-             bestenlisteFile << spielerptr[i].Endpunktzahl() << ":    " << spielerptr[i].get_Name() << endl;
+             bestenlisteFile << spielerptr[i].Endpunktzahl << ":    " << spielerptr[i].get_Name() << endl;
 
         }
         bestenlisteFile.close();
