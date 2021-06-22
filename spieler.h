@@ -15,6 +15,7 @@ class Spieler
     public:
         int Punktzahl;
         int* Spielstand;
+        int Endpunktzahl;
 
         void set_Name(char*);
         char* get_Name();

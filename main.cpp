@@ -213,38 +213,7 @@ int main()
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Punkteauswertung
 
-
-        int* Reihenfolge = new int[Spieleranzahl];      //Initialsieren des neuen Feldes Reihenfolge der Spieler
-
-        for(int i=0; i<Spieleranzahl; i++)              //Ermitteln der Endpunktzahl jedes einzelnen Spielers
-        {
-          Reihenfolge[i] = i;
-          spielerptr[i].Endpunktzahl = sum(spielerptr[i].Spielstand, 13);
-          if(sum(spielerptr[i].Spielstand, 7) > 62) spielerptr[i].Endpunktzahl +=35;
-        }
-
-        int temp = 0;                               //Sortieralgorithmus in Bezug auf die Endpunktzahl
-        for(int j = 0; j<Spieleranzahl-1; j++)
-        {
-            for(int i=0; i<Spieleranzahl-1; i++)
-            {
-                if(spielerptr[i].Endpunktzahl>spielerptr[i+1].Endpunktzahl)
-                {
-                    temp = Reihenfolge[i];
-                    Reihenfolge[i] = Reihenfolge[i+1];
-                    Reihenfolge[i+1] = temp;
-                }
-            }
-        }
-
-        cout << "ERGEBNIS" <<endl;          //Ausgabe der Siegesreihenfolge
-        for(int i=0; i<Spieleranzahl; i++)
-        {
-            cout    << i+1 <<". Platz: " <<spielerptr[Reihenfolge[Spieleranzahl-i-1]].get_Name() <<"   mit "
-                    <<spielerptr[Reihenfolge[Spieleranzahl-i-1]].Endpunktzahl << " Punkten!" <<endl;
-        }
-
-        cout << "Herzlichen Glueckwunsch  " << spielerptr[Reihenfolge[Spieleranzahl-1]].get_Name() << "!  Du hast gewonnen." << endl;
+    Punkteauswertung(Spieleranzahl,spielerptr);
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Speicherfreigabe
