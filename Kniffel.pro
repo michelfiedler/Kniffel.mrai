@@ -9,4 +9,5 @@ SOURCES += \
 HEADERS += \
     Funktionen.h \
     FunktionenKI.h \
+    bestenliste.h \
     spieler.h
