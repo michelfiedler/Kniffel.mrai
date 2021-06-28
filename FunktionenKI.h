@@ -7,6 +7,7 @@ double pot (double, int);
 int fact (int);
 double Bernoulli (int, int, double);
 double ErwartungswertOben1 (int*, int);
+double ErwartungswertgrStrasse1 (int*);
 double ErwartungswertKniffel1 (int*);
 double ErwartunsgwertKniffel2 (int*);
 
@@ -38,6 +39,19 @@ double Bernoulli (int n, int k, double p)
 {
     return ((fact(n)/(fact(k)*fact(n-k)))*pot(p,k)*pot(1-p,n-k));
 }
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//Alle folgenden Funktionen geben den Erwartungswert zurück!
+/* Die Erwartungswerte sind teilweise per Hand ober über die Simulation eines Baumdiagramms berechnet, bei der die Bedingungen und das Durchlaufen
+   der Forschleifen jeweils angepasst wurde.
+
+   Am Ende vieler Funktion wird die berechnete Wahrscheinlichkeit mit der maximal zu erreichenden Punktzahl multipliziert und bildet so den
+   Erwartungswert. Ziel ist es dann die verschiedenen Erwartungswerte nach ihrer Größe zu sortieren und das vielversprechendeste Ereignis
+   auszuwählen.
+
+   Die folgenden Erwartungswertfunktionen pro Ereignis gliedern sich jeweils in die Funktion nach dem ersten- und zweiten Wurf, sodass die
+   Möglichkeit besteht nach dem zweiten Wurf auf ein vielversprechenderes Ereignis zu wechseln.*/
+
 
 double ErwartungswertOben1 (int* feld, int zahl)
 {
@@ -71,6 +85,39 @@ double ErwartungswertOben1 (int* feld, int zahl)
     return erwartungswert*zahl;
 }
 
+//Berechnung des Erwartungswertes für eine große Straße nach dem ersten Wurf
+double ErwartungswertgrStrasse1 (int* feld)
+{
+    double erwartungswert;
+    int missingones = 0;        //fehlende Würfel, hier 1 und 6
+    int keymissingones = 0;     //wichtige fehlende Würfel, hier 2,3,4 und 5, da diese immer benötigt werden
+    int anzahl[6]={0};
+    for (int i=0; i<6; i++)     //Zählen aller vorliegenden Würfel
+    {
+        anzahl[i]=countN(feld,5,i+1);
+    }
+
+    for (int i=1; i<5; i++)        //Zählen der keymissingones und missingones
+    {
+       if (anzahl[i]==0) keymissingones++;
+    }
+
+    if (anzahl[0]==0 && anzahl[5]==0)missingones++;
+
+    //Fallunterscheidung bezüglich der fehlenden Würfel
+    if (grstrasse(feld,5)) return 40;
+    if (keymissingones==0) erwartungswert = 5.0/9.0;
+    if (keymissingones==1 && missingones==0) erwartungswert = 11.0/36.0;        //Werte alle zuvor ausgerechnet
+    if (keymissingones==1 && missingones==1) erwartungswert = 19.0/72.0;
+    if (keymissingones==2 && missingones==0) erwartungswert = 121.0/1296.0;
+    if (keymissingones==2 && missingones==1) erwartungswert = 307.0/5832.0;
+    if (keymissingones==3 && missingones==0) erwartungswert = 2141.0/46656.0;
+    if (keymissingones==3 && missingones==1) erwartungswert = 0.01;             //nicht berechnet, da sehr kleine Werte und in diesen Fällen
+    if (keymissingones==4 && missingones==0) erwartungswert = 0.005;            // andere Ereignisse vorliegen.
+
+
+    return erwartungswert*40; //Multiplikation mit der maximal zu erreichenden Punktzahl
+}
 
 //Berechnung des Erwartungwertes für einen Kniffel nach dem ersten Wurf
 double ErwartungswertKniffel1 (int* feld)

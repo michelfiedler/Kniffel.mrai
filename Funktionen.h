@@ -13,6 +13,7 @@ int sum (int*, int);
 void rolldice (int*, int*);
 void showscore (int*);
 void write (int*, int*);
+void Punkteauswertung (int, Spieler*);
 
 //Kontrollfunktionen
 bool kniffel (int*, int);
