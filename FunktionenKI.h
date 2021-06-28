@@ -8,6 +8,7 @@ int fact (int);
 double Bernoulli (int, int, double);
 double ErwartungswertOben1 (int*, int);
 double ErwartungswertKniffel1 (int*);
+double ErwartunsgwertKniffel2 (int*);
 
 //Funktionsdefinitionen--------------------------------------------------------------------------------------------------------
 
@@ -125,6 +126,62 @@ double ErwartungswertKniffel1 (int* feld)
     }
 
     return erwartungswert*50; //Mulitplikation mit der maximal zu erreichenden Punktzahl
+}
+
+
+//Berechnung des Erwartungswertes für einen Kniffel nach dem zweiten Wurf (selbes Vorgehen wie nach dem ersten Wurf)
+double ErwartunswertKniffel2 (int* feld)
+{
+    double erwartungswert;
+    int anzahl[6];
+
+    for (int i=0; i<6; i++)
+    {
+       anzahl[i] = countN(feld, 5, i+1);
+    }
+
+    int maxindex;
+    for (int i=0; i<5; i++)
+    {
+        if (anzahl[i] < anzahl[i+1])
+        {
+            maxindex = i+1;
+        }
+    }
+
+    switch (anzahl[maxindex])
+    {
+    case 1:
+    {
+        erwartungswert = 1.0/1296.0;
+        break;
+    }
+
+    case 2:
+    {
+        erwartungswert = 1.0/216.0;
+        break;
+    }
+    case 3:
+    {
+        erwartungswert = 1.0/36.0;
+        break;
+    }
+    case 4:
+    {
+        erwartungswert = 1.0/6.0;
+        break;
+    }
+    case 5:
+    {
+        erwartungswert = 1;
+        break;
+    }
+
+    }
+
+
+    return erwartungswert*50;
 }
 
 #endif // FUNKTIONENKI_H
