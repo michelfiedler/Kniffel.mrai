@@ -1,11 +1,13 @@
 #ifndef FUNKTIONENKI_H
 #define FUNKTIONENKI_H
+#include <Funktionen.h>
 
 //Funktionsdeklarationen-------------------------------------------------------------------------------------------------------
 double pot (double, int);
 int fact (int);
 double Bernoulli (int, int, double);
 double ErwartungswertOben1 (int*, int);
+double ErwartungswertKniffel1 (int*);
 
 //Funktionsdefinitionen--------------------------------------------------------------------------------------------------------
 
@@ -68,5 +70,61 @@ double ErwartungswertOben1 (int* feld, int zahl)
     return erwartungswert*zahl;
 }
 
+
+//Berechnung des Erwartungwertes für einen Kniffel nach dem ersten Wurf
+double ErwartungswertKniffel1 (int* feld)
+{
+    double erwartungswert = 0;
+    int anzahl[6];
+
+    for (int i=0; i<6; i++) //Zählen aller vorliegenden Würfel
+    {
+       anzahl[i] = countN(feld, 5, i+1);
+    }
+
+    int maxindex;
+    for (int i=0; i<5; i++)     //Bestimmung der Zahl, welche am häufigsten vorliegt
+    {
+        if (anzahl[i] < anzahl[i+1])
+        {
+            maxindex = i+1;
+        }
+    }
+
+    //Fallunterscheidung in Bezug auf die bereits vorliegenden maximale Anzahl
+    //Berechnung der jeweiligen Erwartunsgwerte
+    switch (anzahl[maxindex])
+    {
+    case 1:
+    {
+        erwartungswert = 0.012025;
+        break;
+    }
+
+    case 2:
+    {
+        erwartungswert = 0.02906325;
+        break;
+    }
+    case 3:
+    {
+        erwartungswert = 91.0/1296.0;
+        break;
+    }
+    case 4:
+    {
+        erwartungswert = 11.0/36.0;
+        break;
+    }
+    case 5:
+    {
+        erwartungswert = 1;
+        break;
+    }
+
+    }
+
+    return erwartungswert*50; //Mulitplikation mit der maximal zu erreichenden Punktzahl
+}
 
 #endif // FUNKTIONENKI_H
