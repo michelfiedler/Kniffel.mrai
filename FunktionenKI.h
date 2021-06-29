@@ -9,6 +9,7 @@ double Bernoulli (int, int, double);
 double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);
 double ErwartungswertDreierpasch1 (int*, int);
+double ErwartungswertDreierpasch2 (int*, int);
 double ErwartungswertgrStrasse1 (int*);
 double ErwartungswertKniffel1 (int*);
 double ErwartunsgwertKniffel2 (int*);
@@ -189,7 +190,7 @@ double ErwartungswertDreierpasch2 (int* feld)
             if (anzahl[3]%3 == 0 && anzahl[4]%3 == 0 && anzahl[5]%3 == 2) return 12 + 3*mostFrqN;
             if (anzahl[3]%3 == 1 && anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 9 + 3*mostFrqN;
             if (anzahl[3]%3 == 0 && anzahl[4]%3 == 1 && anzahl[5]%3 == 1) return 11 + 3*mostFrqN;
-            if (anzahl[3]%3 == 1 && anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 10 + 3*mostFrqN;
+            if (anzahl[3]%3 == 1 && anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 12 + 3*mostFrqN;
             break;
         }
     }
