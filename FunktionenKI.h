@@ -8,6 +8,7 @@ int fact (int);
 double Bernoulli (int, int, double);
 double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);
+double ErwartungswertDreierpasch1 (int*, int);
 double ErwartungswertgrStrasse1 (int*);
 double ErwartungswertKniffel1 (int*);
 double ErwartunsgwertKniffel2 (int*);
@@ -99,6 +100,60 @@ double ErwartungswertOben2 (int* feld, int zahl)
 
     return erwartungswert*zahl;
 }
+
+double ErwartungswertDreierPasch1 (int* feld)
+{
+    double erwartungswert;
+    int* anzahl = new int[6];
+
+    for (int i=0; i<6; i++)
+    {
+       anzahl[i] = countN(feld, 5, i);
+    }
+
+    int mostFrqN = maxindex(anzahl,6)+1;
+
+    //Fallunterscheidung in Bezug auf die bereits vorliegende Anzahl
+    switch (anzahl[mostFrqN-1])
+    {
+    case 1: //Man würde alle nochmal würfeln, dann dann die Wahrscheinlichkeit höher ist (WICHTIG: ABLAUFSTEUERUNG)
+    {
+        erwartungswert = 10.0857;
+        break;
+    }
+    case 2:
+    {
+        erwartungswert = 0.02036*maxindex*maxindex + 1.967*mostFrqN + 6.1251;
+        break;
+    }
+    case 3: //Ab diesem Case ist der Dreierpasch bereits erreicht
+    {
+
+    }
+    case 4:
+    {
+
+    }
+    case 5: /*Hier erfolgt die Fallunterscheidung bezüglich der Würfel, welche nicht Teil des Dreierpasches sind. Da beim Dreierpasch
+             jedoch die Summe miteinbezogen wird, muss man den Erwartunsgwert weiter auffächern. Die KI soll weiter würfeln, auch wenn der
+             Dreierpasch schon erreicht ist, um die maximal zu erreichende Punktzahl zu steigern
+
+             Der durchschnittliche Erwartungswert für jeden Würfel bei noch zwei Würfen beträgt 4.25, weshalb hier nur nach den 5 und 6
+             unterschieden wird, da die 4 noch mal gewürfelt werden würde. */
+    {
+        if (anzahl[4]%3 == 0 && anzahl[5]%3 == 0) erwartungswert = 8.5 + 3*mostFrqN;
+        if (anzahl[4]%3 == 1 && anzahl[5]%3 == 0) erwartungswert = 9.25 + 3*mostFrqN;
+        if (anzahl[4]%3 == 2 && anzahl[5]%3 == 0) erwartungswert = 10 + 3*mostFrqN;
+        if (anzahl[4]%3 == 0 && anzahl[5]%3 == 1) erwartungswert = 10.25 + 3*mostFrqN;
+        if (anzahl[4]%3 == 1 && anzahl[5]%3 == 1) erwartungswert = 11 + 3*mostFrqN;
+        if (anzahl[4]%3 == 0 && anzahl[5]%3 == 2) erwartungswert = 12 + 3*mostFrqN;
+        break;
+    }
+    }
+
+    return erwartungswert;
+}
+
 
 //Berechnung des Erwartungswertes für eine große Straße nach dem ersten Wurf
 double ErwartungswertgrStrasse1 (int* feld)

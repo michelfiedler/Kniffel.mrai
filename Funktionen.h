@@ -8,6 +8,7 @@ using namespace std;
 
 int countN (int*, int, int);
 int sum (int*, int);
+int maxindex(int*, int);
 
 //Spielsteuerungsfunktionen
 void rolldice (int*, int*);
@@ -54,6 +55,18 @@ int sum (int* zeiger, int laenge) //Summenfunktion
     return summe;
 }
 
+int maxindex (int* feld, int laenge) //einfache max-Funktion | gibt den Index des Feldeintrages wieder, der den höchsten Wert enthält
+{
+    int maxindex = 0;
+    for (int i=0; i<laenge-1; i++)
+    {
+        if (feld[maxindex] <= feld[i+1])
+        {
+            maxindex = i+1;
+        }
+    }
+    return maxindex;
+}
 
 // Kontrollfunktionen
 
