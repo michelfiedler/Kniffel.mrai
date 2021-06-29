@@ -7,6 +7,7 @@ double pot (double, int);
 int fact (int);
 double Bernoulli (int, int, double);
 double ErwartungswertOben1 (int*, int);
+double ErwartungswertOben2 (int*, int);
 double ErwartungswertgrStrasse1 (int*);
 double ErwartungswertKniffel1 (int*);
 double ErwartunsgwertKniffel2 (int*);
@@ -80,6 +81,20 @@ double ErwartungswertOben1 (int* feld, int zahl)
     for(int i=0; i<obergrenze; i++)
     {
         erwartungswert += (Bernoulli(5,matrix[0][i],1.0/6.0)*Bernoulli(5-matrix[0][i],matrix[1][i],1.0/6.0)*(matrix[0][i]+matrix[1][i]));
+    }
+
+    return erwartungswert*zahl;
+}
+
+//Funktion zur Berechnung des Zahlenfeldes nach dem zweiten Wurf, gleiche Übergabeparameter
+double ErwartungswertOben2 (int* feld, int zahl)
+{
+    int anzahl = countN(feld, 5, zahl);
+    double erwartungswert = anzahl;
+
+    for(int i=0; i<5-anzahl; i++)
+    {
+        erwartungswert += (Bernoulli(5-anzahl,i,1.0/6.0))*(i+1);
     }
 
     return erwartungswert*zahl;
