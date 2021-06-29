@@ -6,9 +6,12 @@
 #include <algorithm>
 #include <sstream>
 #include <cstdlib>
-#include <Funktionen.h>
-#include <spieler.h>
-#include <bestenliste.h>
+#include <QApplication>
+
+#include "mainwindow.h"
+#include "Funktionen.h"
+#include "spieler.h"
+#include "bestenliste.h"
 
 using namespace std;
 
