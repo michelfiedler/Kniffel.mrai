@@ -80,7 +80,7 @@ double ErwartungswertOben1 (int* feld, int zahl)
 
     for(int i=0; i<obergrenze; i++)
     {
-        erwartungswert += (Bernoulli(5,matrix[0][i],1.0/6.0)*Bernoulli(5-matrix[0][i],matrix[1][i],1.0/6.0)*(matrix[0][i]+matrix[1][i]));
+        erwartungswert += (Bernoulli(5-anzahl,matrix[0][i],1.0/6.0)*Bernoulli(5-anzahl-matrix[0][i],matrix[1][i],1.0/6.0)*(matrix[0][i]+matrix[1][i]));
     }
 
     return erwartungswert*zahl;
