@@ -18,3 +18,15 @@ void MainWindow::on_actionBeenden_triggered()    //Das Programm "Kniffel" wird g
     this->close();
 }
 
+
+void MainWindow::on_pBsingle_clicked()          //Button Singleplayer wurde ausgewählt
+{
+
+}
+
+
+void MainWindow::on_pBmulti_clicked()           //Button Multiplayer wurde ausgewählt
+{
+
+}
+

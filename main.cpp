@@ -17,8 +17,13 @@ using namespace std;
 
 
 
-int main()
+int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);                 //MainWindow wird initialisiert und geöffnet
+    MainWindow w;
+    w.show();
+    return a.exec();
+
     srand((unsigned)time(NULL));                //Zufallsfunktion wird mit time initialiesiert
 
     int* dice = new int[5];						//dice gibt die Würfelergebnisse an

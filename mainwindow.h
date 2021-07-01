@@ -18,6 +18,10 @@ public:
 private slots:
     void on_actionBeenden_triggered();
 
+    void on_pBsingle_clicked();
+
+    void on_pBmulti_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
