@@ -1,11 +1,23 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "bestenliste.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->setupUi(this);
+
+       ifstream bestenlisteLesenFile3;
+       bestenlisteLesenFile3.open("Bestenliste.conf");
+       string lines;
+       while(getline(bestenlisteLesenFile3, lines))
+           ui->label->setText();
+
+
+       bestenlisteLesenFile3.close();
 }
 
 MainWindow::~MainWindow()
