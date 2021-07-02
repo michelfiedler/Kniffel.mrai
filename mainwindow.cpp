@@ -8,13 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->setupUi(this);
-
        ifstream bestenlisteLesenFile3;
        bestenlisteLesenFile3.open("Bestenliste.conf");
        string lines;
        while(getline(bestenlisteLesenFile3, lines))
-           ui->label->setText();
+
 
 
        bestenlisteLesenFile3.close();
