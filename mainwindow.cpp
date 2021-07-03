@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "bestenliste.h"
-#include "spieler.h"
 
 #include <vector>
 #include <algorithm>
@@ -26,9 +25,10 @@ void MainWindow::on_actionBeenden_triggered()    //Das Programm "Kniffel" wird g
 }
 
 
-void MainWindow::on_pBsingle_clicked()          //Button Singleplayer wurde ausgewählt
+void MainWindow::on_pBsingle_clicked()          //Button Singleplayer wurde ausgewählt und öffnet ein neues Fenster, um im SingleplayerModus zu spielen
 {
-
+    singleplayerDialog* singleDialog = new singleplayerDialog (this);
+    singleDialog->exec();
 }
 
 

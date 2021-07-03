@@ -5,14 +5,17 @@ QT += widgets
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        singleplayerdialog.cpp
 
 HEADERS += \
     Funktionen.h \
     FunktionenKI.h \
     bestenliste.h \
     mainwindow.h \
+    singleplayerdialog.h \
     spieler.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    singleplayerdialog.ui

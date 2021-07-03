@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "singleplayerdialog.h"
+
 namespace Ui {
 class MainWindow;
 }
