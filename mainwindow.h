@@ -22,6 +22,10 @@ private slots:
 
     void on_pBmulti_clicked();
 
+    void on__Bestenliste_clicked();
+
+    void on_pB_Bestenliste_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
