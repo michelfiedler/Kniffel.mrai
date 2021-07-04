@@ -18,6 +18,8 @@ public:
 private slots:
     void on_buttonBox_rejected();
 
+    void on_tW_SpielstandSingle_cellClicked(int row, int column);
+
 private:
     Ui::singleplayerDialog *ui;
 };
