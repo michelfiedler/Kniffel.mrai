@@ -9,6 +9,7 @@ double Bernoulli (int, int, double);
 double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);
 double ErwartungswertDreierpasch1 (int*, int);
+double ErwartungswertDreierpasch2 (int*, int);
 double ErwartungswertgrStrasse1 (int*);
 double ErwartungswertKniffel1 (int*);
 double ErwartunsgwertKniffel2 (int*);
@@ -103,7 +104,6 @@ double ErwartungswertOben2 (int* feld, int zahl)
 
 double ErwartungswertDreierPasch1 (int* feld)
 {
-    double erwartungswert;
     int* anzahl = new int[6];
 
     for (int i=0; i<6; i++)
@@ -116,42 +116,84 @@ double ErwartungswertDreierPasch1 (int* feld)
     //Fallunterscheidung in Bezug auf die bereits vorliegende Anzahl
     switch (anzahl[mostFrqN-1])
     {
-    case 1: //Man würde alle nochmal würfeln, dann dann die Wahrscheinlichkeit höher ist (WICHTIG: ABLAUFSTEUERUNG)
-    {
-        erwartungswert = 10.0857;
-        break;
-    }
-    case 2:
-    {
-        erwartungswert = 0.02036*maxindex*maxindex + 1.967*mostFrqN + 6.1251;
-        break;
-    }
-    case 3: //Ab diesem Case ist der Dreierpasch bereits erreicht
-    {
+        case 1: //Man würde alle nochmal würfeln, dann dann die Wahrscheinlichkeit höher ist (WICHTIG: ABLAUFSTEUERUNG)
+        {
+            return 10.0857;
+            break;
+        }
+        case 2:
+        {
+            return 0.02036*mostFrqN*mostFrqN + 1.967*mostFrqN + 6.1251;
+            break;
+        }
+        case 3: //Ab diesem Case ist der Dreierpasch bereits erreicht
+        {
 
+        }
+        case 4:
+        {
+
+        }
+        case 5:
+        {
+            if (anzahl[4]%3 == 0 && anzahl[5]%3 == 0) return 8.5 + 3*mostFrqN;
+            if (anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 9.25 + 3*mostFrqN;
+            if (anzahl[4]%3 == 2 && anzahl[5]%3 == 0) return 10 + 3*mostFrqN;
+            if (anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 10.25 + 3*mostFrqN;
+            if (anzahl[4]%3 == 1 && anzahl[5]%3 == 1) return 11 + 3*mostFrqN;
+            if (anzahl[4]%3 == 0 && anzahl[5]%3 == 2) return 12 + 3*mostFrqN;
+            break;
+        }
     }
-    case 4:
+}
+
+double ErwartungswertDreierpasch2 (int* feld)
+{
+    int* anzahl = new int[6];
+
+    for (int i=0; i<6; i++)
     {
-
+       anzahl[i] = countN(feld, 5, i);
     }
-    case 5: /*Hier erfolgt die Fallunterscheidung bezüglich der Würfel, welche nicht Teil des Dreierpasches sind. Da beim Dreierpasch
-             jedoch die Summe miteinbezogen wird, muss man den Erwartunsgwert weiter auffächern. Die KI soll weiter würfeln, auch wenn der
-             Dreierpasch schon erreicht ist, um die maximal zu erreichende Punktzahl zu steigern
 
-             Der durchschnittliche Erwartungswert für jeden Würfel bei noch zwei Würfen beträgt 4.25, weshalb hier nur nach den 5 und 6
-             unterschieden wird, da die 4 noch mal gewürfelt werden würde. */
+    int mostFrqN = maxindex(anzahl,6)+1;
+
+    switch (anzahl[mostFrqN-1])
     {
-        if (anzahl[4]%3 == 0 && anzahl[5]%3 == 0) erwartungswert = 8.5 + 3*mostFrqN;
-        if (anzahl[4]%3 == 1 && anzahl[5]%3 == 0) erwartungswert = 9.25 + 3*mostFrqN;
-        if (anzahl[4]%3 == 2 && anzahl[5]%3 == 0) erwartungswert = 10 + 3*mostFrqN;
-        if (anzahl[4]%3 == 0 && anzahl[5]%3 == 1) erwartungswert = 10.25 + 3*mostFrqN;
-        if (anzahl[4]%3 == 1 && anzahl[5]%3 == 1) erwartungswert = 11 + 3*mostFrqN;
-        if (anzahl[4]%3 == 0 && anzahl[5]%3 == 2) erwartungswert = 12 + 3*mostFrqN;
-        break;
-    }
-    }
+        case 1: //Man würde alle nochmal würfeln, da dann die Wahrscheinlichkeit höher ist
+        {
+            return 0.212963*17.5;
+            break;
+        }
+        case 2:
+        {
+            return (Bernoulli(3,1,1.0/6.0)+Bernoulli(3,2,1.0/6.0)+Bernoulli(3,3,1.0/6.0))*(3*mostFrqN+7);
+            break;
+        }
+        case 3:
+        {
 
-    return erwartungswert;
+        }
+        case 4:
+        {
+
+        }
+        case 5:     /* Erneute Fallunterscheidung der übrigen Würfel, hier wird im Gegensatz zu oben bereist ab der 4
+                       unterschieden, da der Erwartungswert für zwei Würfel bei noch einem Wurf nun bei 3.5 liegt */
+        {
+            if (anzahl[3]%3 == 0 && anzahl[4]%3 == 0 && anzahl[5]%3 == 0) return 7 + 3*mostFrqN;
+            if (anzahl[3]%3 == 1 && anzahl[4]%3 == 0 && anzahl[5]%3 == 0) return 7.5 + 3*mostFrqN;
+            if (anzahl[3]%3 == 2 && anzahl[4]%3 == 0 && anzahl[5]%3 == 0) return 8 + 3*mostFrqN;
+            if (anzahl[3]%3 == 0 && anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 8.5 + 3*mostFrqN;
+            if (anzahl[3]%3 == 0 && anzahl[4]%3 == 2 && anzahl[5]%3 == 0) return 10 + 3*mostFrqN;
+            if (anzahl[3]%3 == 0 && anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 9.5 + 3*mostFrqN;
+            if (anzahl[3]%3 == 0 && anzahl[4]%3 == 0 && anzahl[5]%3 == 2) return 12 + 3*mostFrqN;
+            if (anzahl[3]%3 == 1 && anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 9 + 3*mostFrqN;
+            if (anzahl[3]%3 == 0 && anzahl[4]%3 == 1 && anzahl[5]%3 == 1) return 11 + 3*mostFrqN;
+            if (anzahl[3]%3 == 1 && anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 12 + 3*mostFrqN;
+            break;
+        }
+    }
 }
 
 
