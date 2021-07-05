@@ -10,13 +10,16 @@ double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);
 double ErwartungswertDreierpasch1 (int*, int);
 double ErwartungswertDreierpasch2 (int*, int);
+double ErwartungswertFullhouse1 (int*);
+double ErwartunswertFullhouse2 (int*);
 double ErwartungswertgrStrasse1 (int*);
+double ErwartungswertgrStrasse2 (int*);
 double ErwartungswertKniffel1 (int*);
 double ErwartunsgwertKniffel2 (int*);
 
-//Funktionsdefinitionen--------------------------------------------------------------------------------------------------------
+//Funktionsdefinitionen-------------------------------------------------------------------------------------------------------------------------------
 
-//Potenzfunktion mit Basis und Exponent als Übergabeparamter
+//Potenzfunktion mit Basis und Exponent als Übergabeparamter und anschließende Berechnung einer beliebigen Potenz
 double pot (double basis, int exponent)
 {
     double ergebnis = 1;
@@ -66,20 +69,31 @@ double ErwartungswertOben1 (int* feld, int zahl)
 
     int anzahl = countN(feld, 5, zahl);
     double erwartungswert = anzahl;
-    //Matrix zur Möglichkeitendarstellung
+
+  /*Die folgende Matrix wird mit allen möglichen Würfelkombinationen beschrieben, welche ich mit zwei Würfen erzielen kann.
+    Bezogen wird dies immer auf eine bestimmte Zahl:
+    Das bedeutet bspw, dass weder im ersten, noch im zweiten Wurf die gewünschte Zahl erzielt wurde (entspreche dann dem Fall (0/0)
+    in er Matrix oder ich erreiche im ersten Wurf 4-mal meine gewünschte Zahl und im zweiten Wurf dann entweder keinmal oder
+    einmal, denn diese beiden Möglichkeiten bleiben bei insgesamt fünf Würfeln noch übrig.
+
+    Im folgenden wird dann zwischen der Obergrenze unterschieden, abhägngig davon, wie viele Würfel meiner gewünschten Zahl ich im
+    ersten Wurf schon erreicht habe, ändert sich die Anzahl der noch möglichen Würfelkombinationen. Wenn ich schon zwei Würfel der gewünschten
+    Zahl im ersten Wurf habe, kann ich in den folgenden zweien nur noch maximal 3 Würfel meiner gewünschten Zahl dazuerreichen.*/
+
     int matrix[2][21] = {{0,0,1,1,0,2,1,2,3,0,0,4,1,3,2,0,5,1,4,3,2},{0,1,0,1,2,0,2,1,0,3,4,0,3,1,2,5,0,4,1,2,3}};
     int obergrenze;
 
     switch(anzahl)
     {
-    case 0: {obergrenze = 21; break;}       //Je nach der bereits existierenden Anzahl ist die Möglichkeitsmatrix
-    case 1: {obergrenze = 15; break;}       //unterschiedlich groß
+    case 0: {obergrenze = 21; break;}
+    case 1: {obergrenze = 15; break;}
     case 2: {obergrenze = 10; break;}
     case 3: {obergrenze = 6; break;}
     case 4: {obergrenze = 3; break;}
     case 5: {obergrenze = 1; break;}
     }
 
+    //Abhängig von der Obergrenze wird nun die jeweilige Wahrscheinlichkeit ausgerechnet
     for(int i=0; i<obergrenze; i++)
     {
         erwartungswert += (Bernoulli(5-anzahl,matrix[0][i],1.0/6.0)*Bernoulli(5-anzahl-matrix[0][i],matrix[1][i],1.0/6.0)*(matrix[0][i]+matrix[1][i]));
@@ -88,7 +102,7 @@ double ErwartungswertOben1 (int* feld, int zahl)
     return erwartungswert*zahl;
 }
 
-//Funktion zur Berechnung des Zahlenfeldes nach dem zweiten Wurf, gleiche Übergabeparameter
+//Funktion zur Berechnung des Zahlenfeldes nach dem zweiten Wurf
 double ErwartungswertOben2 (int* feld, int zahl)
 {
     int anzahl = countN(feld, 5, zahl);
@@ -134,7 +148,12 @@ double ErwartungswertDreierPasch1 (int* feld)
         {
 
         }
-        case 5:
+        case 5:/*Hier erfolgt die Fallunterscheidung bezüglich der Würfel, welche nicht Teil des Dreierpasches sind. Da beim Dreierpasch
+             jedoch die Summe miteinbezogen wird, muss man den Erwartunsgwert weiter auffächern. Die KI soll weiter würfeln, auch wenn der
+             Dreierpasch schon erreicht ist, um die maximal zu erreichende Punktzahl zu steigern
+
+             Der durchschnittliche Erwartungswert für jeden Würfel bei noch zwei Würfen beträgt 4.25, weshalb hier nur nach den 5 und 6
+             unterschieden wird, da die 4 noch mal gewürfelt werden würde. */
         {
             if (anzahl[4]%3 == 0 && anzahl[5]%3 == 0) return 8.5 + 3*mostFrqN;
             if (anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 9.25 + 3*mostFrqN;
@@ -196,20 +215,94 @@ double ErwartungswertDreierpasch2 (int* feld)
     }
 }
 
+//Funktion zur Berechnung des Erwartungswertes für ein Fullhouse nach dem ersten Wurf
+double ErwartungswertFullhouse1 (int* feld)
+{
+    if (fullhouse(feld,5)) return 25; //Prüfung, ob bereits ein Fullhouse vorliegt
+
+    double erwartungswert;
+    int anzahl[6];
+
+    //Zählen aller vorliegenden Würfel und speichern dieser im Anzahl-Feld
+    for (int i=0; i<6; i++)
+    {
+       anzahl[i] = countN(feld, 5, i+1);
+    }
+
+    int zwilling = 0;
+    int drilling = 0;
+
+    //Zählen, ob bereits Zwillinge (also zwei gleiche Würfel) oder ein Drilling (drei gleiche Würfel) vorliegen.
+    for (int i = 0; i<6; i++)
+    {
+        if (anzahl[i]==2) zwilling++;
+        if (anzahl[i]>=3) drilling++;
+    }
+
+    //Fallunterscheidung hinsichtlich der Anzahl vorliegender Zwillinge und Drillinge
+    //Berechnung der jeweiligen Erwartungswerte mit dem Simulationsprogramm
+    if (zwilling == 0 && drilling == 0) erwartungswert = 0.179;
+
+    if (zwilling == 1 && drilling == 0) erwartungswert = 0.204;
+
+    if (zwilling == 0 && drilling == 1) erwartungswert = 0.259;
+
+    if (zwilling == 2 && drilling == 0) erwartungswert = 5.0/9.0;
+
+
+    return erwartungswert*25; //Multilplikation mit der maximal zu erreichenden Punktzahl und Rückgabe des Erwartungswertes
+}
+
+double ErwartungswertFullhouse2 (int* feld) //Selbes Vorgehen wie oben, nur nach dem zweiten Wurf
+{
+    if (fullhouse(feld,5)) return 25;
+
+    double erwartungswert;
+    int anzahl[6];
+
+    for (int i=0; i<6; i++)
+    {
+       anzahl[i] = countN(feld, 5, i+1);
+    }
+
+    int zwilling = 0;
+    int drilling = 0;
+
+    for (int i = 0; i<6; i++)
+    {
+        if (anzahl[i]==2) zwilling++;
+        if (anzahl[i]>=3) drilling++;
+    }
+
+    if (zwilling == 0 && drilling == 0) erwartungswert = 0.0385;
+
+    if (zwilling == 1 && drilling == 0) erwartungswert = 0.02314;
+
+    if (zwilling == 0 && drilling == 1) erwartungswert = 5.0/36.0;
+
+    if (zwilling == 2 && drilling == 0) erwartungswert = 1.0/3.0;
+
+
+    return erwartungswert*25;
+
+}
+
 
 //Berechnung des Erwartungswertes für eine große Straße nach dem ersten Wurf
 double ErwartungswertgrStrasse1 (int* feld)
 {
     double erwartungswert;
-    int missingones = 0;        //fehlende Würfel, hier 1 und 6
-    int keymissingones = 0;     //wichtige fehlende Würfel, hier 2,3,4 und 5, da diese immer benötigt werden
+    int missingones = 0;        //entspricht den fehlenden Würfeln, hier 1 und 6
+    int keymissingones = 0;     //entspricht den wichtigen fehlende Würfeln, hier 2,3,4 und 5, da diese immer für eine große Straße benötigt werden
     int anzahl[6]={0};
-    for (int i=0; i<6; i++)     //Zählen aller vorliegenden Würfel
+    //Zählen aller vorliegenden Würfel
+    for (int i=0; i<6; i++)
     {
         anzahl[i]=countN(feld,5,i+1);
     }
 
-    for (int i=1; i<5; i++)        //Zählen der keymissingones und missingones
+    //Zählen der keymissingones und missingones
+    for (int i=1; i<5; i++)
     {
        if (anzahl[i]==0) keymissingones++;
     }
@@ -217,9 +310,10 @@ double ErwartungswertgrStrasse1 (int* feld)
     if (anzahl[0]==0 && anzahl[5]==0)missingones++;
 
     //Fallunterscheidung bezüglich der fehlenden Würfel
+    //Berechnung der Werte mit dem Simulationsprogramm
     if (grstrasse(feld,5)) return 40;
     if (keymissingones==0) erwartungswert = 5.0/9.0;
-    if (keymissingones==1 && missingones==0) erwartungswert = 11.0/36.0;        //Werte alle zuvor ausgerechnet
+    if (keymissingones==1 && missingones==0) erwartungswert = 11.0/36.0;
     if (keymissingones==1 && missingones==1) erwartungswert = 19.0/72.0;
     if (keymissingones==2 && missingones==0) erwartungswert = 121.0/1296.0;
     if (keymissingones==2 && missingones==1) erwartungswert = 307.0/5832.0;
@@ -228,7 +322,41 @@ double ErwartungswertgrStrasse1 (int* feld)
     if (keymissingones==4 && missingones==0) erwartungswert = 0.005;            // andere Ereignisse vorliegen.
 
 
-    return erwartungswert*40; //Multiplikation mit der maximal zu erreichenden Punktzahl
+    return erwartungswert*40; //Multiplikation mit der maximal zu erreichenden Punktzahl und Rückgabe des Erwartungswertes
+}
+
+//Berechnung des Erwartungswertes nach dem zweiten Wurf (selbes Vorgehen wie nach dem ersten Wurf)
+double ErwartungswertgrStrasse2 (int* feld)
+{
+    double erwartungswert;
+    int missingones = 0;
+    int keymissingones = 0;
+    int anzahl[6]={0};
+    for (int i=0; i<6; i++)
+    {
+        anzahl[i]=countN(feld,5,i+1);
+    }
+
+    for (int i=1; i<5; i++)
+    {
+       if (anzahl[i]==0) keymissingones++;
+    }
+
+    if (anzahl[0]==0||anzahl[5]==0)missingones++;
+
+    //Fallunterscheidung
+    if (grstrasse(feld,5)) return 40;
+    if (keymissingones==0) erwartungswert = 1.0/3.0;
+    if (keymissingones==1 && missingones==0) erwartungswert = 1.0/6.0;
+    if (keymissingones==1 && missingones==1) erwartungswert = 1.0/9.0;
+    if (keymissingones==2 && missingones==0) erwartungswert = 1.0/18.0;
+    if (keymissingones==2 && missingones==1) erwartungswert = 1.0/18.0;
+    if (keymissingones==3 && missingones==0) erwartungswert = 1.0/36.0;
+    if (keymissingones==3 && missingones==1) erwartungswert = 4.0/109.0;
+    if (keymissingones==4 && missingones==0) erwartungswert = 1.0/312.0;
+
+
+    return erwartungswert*40;
 }
 
 //Berechnung des Erwartungwertes für einen Kniffel nach dem ersten Wurf
@@ -237,13 +365,15 @@ double ErwartungswertKniffel1 (int* feld)
     double erwartungswert = 0;
     int anzahl[6];
 
-    for (int i=0; i<6; i++) //Zählen aller vorliegenden Würfel
+    //Zählen aller vorliegenden Würfel
+    for (int i=0; i<6; i++)
     {
        anzahl[i] = countN(feld, 5, i+1);
     }
 
+    //Bestimmung der Zahl, welche am häufigsten vorliegt mithilfe eines Max-Algorithmus
     int maxindex;
-    for (int i=0; i<5; i++)     //Bestimmung der Zahl, welche am häufigsten vorliegt
+    for (int i=0; i<5; i++)
     {
         if (anzahl[i] < anzahl[i+1])
         {
@@ -251,7 +381,7 @@ double ErwartungswertKniffel1 (int* feld)
         }
     }
 
-    //Fallunterscheidung in Bezug auf die bereits vorliegenden maximale Anzahl
+    //Fallunterscheidung in Bezug auf die bereits vorliegende maximale Anzahl
     //Berechnung der jeweiligen Erwartunsgwerte
     switch (anzahl[maxindex])
     {
@@ -284,7 +414,7 @@ double ErwartungswertKniffel1 (int* feld)
 
     }
 
-    return erwartungswert*50; //Mulitplikation mit der maximal zu erreichenden Punktzahl
+    return erwartungswert*50; //Mulitplikation mit der maximal zu erreichenden Punktzahl und Rückgabe des Erwartungswertes
 }
 
 
