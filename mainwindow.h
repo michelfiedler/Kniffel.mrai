@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "singleplayerdialog.h"
+#include "multiplayerdialog.h"
 
 namespace Ui {
 class MainWindow;

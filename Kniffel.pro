@@ -6,6 +6,7 @@ QT += widgets
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
+        multiplayerdialog.cpp \
         singleplayerdialog.cpp
 
 HEADERS += \
@@ -13,9 +14,11 @@ HEADERS += \
     FunktionenKI.h \
     bestenliste.h \
     mainwindow.h \
+    multiplayerdialog.h \
     singleplayerdialog.h \
     spieler.h
 
 FORMS += \
     mainwindow.ui \
+    multiplayerdialog.ui \
     singleplayerdialog.ui
