@@ -10,6 +10,7 @@ double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);
 double ErwartungswertDreierpasch1 (int*, int);
 double ErwartungswertDreierpasch2 (int*, int);
+double ErwartungswertViererpasch1 (int*, int);
 double ErwartungswertFullhouse1 (int*);
 double ErwartunswertFullhouse2 (int*);
 double ErwartungswertgrStrasse1 (int*);
