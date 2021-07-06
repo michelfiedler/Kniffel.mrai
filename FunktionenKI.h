@@ -215,6 +215,47 @@ double ErwartungswertDreierpasch2 (int* feld)
     }
 }
 
+double ErwartungswertViererpasch1 (int* feld)
+{
+    int* anzahl = new int[6];
+
+    for (int i=0; i<6; i++)
+    {
+       anzahl[i] = countN(feld, 5, i+1);
+    }
+
+    int mostFrqN = maxindex(anzahl, 6)+1;
+
+    switch (anzahl[mostFrqN-1])
+    {
+    case 1: //Man würde alle nochmal würfeln
+    {
+        return 2.379;
+        break;
+    }
+    case 2:
+    {
+        return 0.975 + 0.889*mostFrqN - 0.00328*mostFrqN*mostFrqN;
+        break;
+    }
+    case 3:
+    {
+        return 2.073*mostFrqN + 2.043;
+    }
+    case 4:     //Ab diesem Case ist der Viererpasch bereits erreicht
+    {
+
+    }
+    case 5:
+    {
+        if (anzahl[4]%4 == 0 && anzahl[5]%4 == 0) return 4.25 +4*mostFrqN;
+        if (anzahl[4]%4 == 1 && anzahl[5]%4 == 0) return 5 + 4*mostFrqN;
+        if (anzahl[4]%4 == 0 && anzahl[5]%4 == 1) return 6 + 4*mostFrqN;
+        break;
+    }
+    }
+}
+
 //Funktion zur Berechnung des Erwartungswertes für ein Fullhouse nach dem ersten Wurf
 double ErwartungswertFullhouse1 (int* feld)
 {
