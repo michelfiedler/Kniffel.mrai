@@ -11,6 +11,7 @@ double ErwartungswertOben2 (int*, int);
 double ErwartungswertDreierpasch1 (int*, int);
 double ErwartungswertDreierpasch2 (int*, int);
 double ErwartungswertViererpasch1 (int*, int);
+double ErwartungswertViererpasch2 (int*, int);
 double ErwartungswertFullhouse1 (int*);
 double ErwartunswertFullhouse2 (int*);
 double ErwartungswertgrStrasse1 (int*);
@@ -254,6 +255,50 @@ double ErwartungswertViererpasch1 (int* feld)
         if (anzahl[4]%4 == 0 && anzahl[5]%4 == 1) return 6 + 4*mostFrqN;
         break;
     }
+    }
+}
+
+double ErwartungswertViererpasch2 (int* feld)
+{
+    int* anzahl = new int[6];
+
+    for (int i=0; i<6; i++)
+    {
+       anzahl[i] = countN(feld, 5, i+1);
+    }
+
+    int mostFrqN = maxindex(anzahl, 6)+1;
+
+    switch (anzahl[mostFrqN-1])
+    {
+    case 1: //Man würde alle nochmal würfeln, da dann die Wahrscheinlichkeit höher ist
+    {
+        return 0.0200617*17.5;
+        break;
+    }
+    case 2:
+    {
+        return (Bernoulli(3,2,1.0/6.0)+Bernoulli(3,3,1.0/6.0))*(4*mostFrqN+3.5);
+        break;
+    }
+    case 3:
+    {
+        return (Bernoulli(2,1,1.0/6.0)+Bernoulli(2,2,1.0/6.0))*(4*mostFrqN+3.5);
+        break;
+    }
+    case 4:
+    {
+
+    }
+    case 5:
+    {
+        if (anzahl[3]%4 == 0 && anzahl[4]%4 == 0 && anzahl[5]%4 == 0) return 3.5 + 4*mostFrqN;
+        if (anzahl[3]%4 == 1 && anzahl[4]%4 == 0 && anzahl[5]%4 == 0) return 4 + 4*mostFrqN;
+        if (anzahl[3]%4 == 0 && anzahl[4]%4 == 1 && anzahl[5]%4 == 0) return 5 + 4*mostFrqN;
+        if (anzahl[3]%4 == 0 && anzahl[4]%4 == 0 && anzahl[5]%4 == 1) return 6 + 4*mostFrqN;
+        break;
+    }
+
     }
 }
 
