@@ -374,6 +374,52 @@ double ErwartungswertFullhouse2 (int* feld) //Selbes Vorgehen wie oben, nur nach
 
 }
 
+double ErwartungswertklStrasse2 (int* feld)
+{
+    double erwartungswert;
+    int miss34 = 0;
+    int miss25 = 0;
+    int miss16 = 0;
+    int anzahl[6]={0};
+    for (int i=0; i<6; i++)
+    {
+        anzahl[i]=countN(feld,5,i);
+    }
+
+    //Abfrage nach den fehlenden Würfeln unter Beachtung der Wichtigkeit
+    if (anzahl[2] == 0) miss34++;
+    if (anzahl[3] == 0) miss34++;
+    if (anzahl[1] == 0 && anzahl[4] == 0) miss25 = 1;
+    if (anzahl[0] == 0 && anzahl[5] == 0) miss16 = 1;
+
+    if (klstrasse(feld,5)) return 30;
+
+    if (miss34==0 && miss25==0 && miss16==0) erwartungswert = 0.556; //34 und 2/5 behalten
+    if (miss34==0 && miss25==0 && miss16==1) erwartungswert = 0.556; //34 und 2/5 behalten
+    if (miss34==0 && miss25==1 && miss16==0) erwartungswert = 0.361; //nur 3+4 behalten
+    if (miss34==0 && miss25==1 && miss16==1) erwartungswert = 0.361; //nur 3+4 behalten
+    if (miss34==1 && miss25==0 && miss16==0)
+    {
+        if ((countN(feld,5,1)>0 && countN(feld,5,2)>0)
+         || (countN(feld,5,5)>0 && countN(feld,5,6)>0)
+         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) erwartungswert = 0.361; //1+2, 2+5 oder 5+6 behalten
+        else erwartungswert = 0.25; //2/5 behalten
+    }
+    if (miss34==1 && miss25==0 && miss16==1)
+    {
+        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) erwartungswert = 0.361; //2+5 wenn möglich
+        else erwartungswert = 0.25; //2 oder 5 und 3 behalten
+    }
+    if (miss34==1 && miss25==1 && miss16==0) erwartungswert = 0.231; //nur 3 behalten
+    if (miss34==1 && miss25==1 && miss16==1) erwartungswert = 0.231; //nur 3 behalten
+    if (miss34==2 && miss25==0 && miss16==0) erwartungswert = 0.154; //alles neu
+    if (miss34==2 && miss25==0 && miss16==1) erwartungswert = 0.154; //alles neu
+    if (miss34==2 && miss25==1 && miss16==0) erwartungswert = 0.154; //alles neu
+    //Vollständigkeit: Fall "211"  kann es nicht geben
+
+    return erwartungswert*30;
+}
+
 
 //Berechnung des Erwartungswertes für eine große Straße nach dem ersten Wurf
 double ErwartungswertgrStrasse1 (int* feld)
