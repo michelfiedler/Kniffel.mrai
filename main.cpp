@@ -6,16 +6,24 @@
 #include <algorithm>
 #include <sstream>
 #include <cstdlib>
-#include <Funktionen.h>
-#include <spieler.h>
-#include <bestenliste.h>
+#include <QApplication>
+
+#include "mainwindow.h"
+#include "Funktionen.h"
+#include "spieler.h"
+#include "bestenliste.h"
 
 using namespace std;
 
 
 
-int main()
+int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);                 //MainWindow wird initialisiert und geöffnet
+    MainWindow w;
+    w.show();
+    return a.exec();
+
     srand((unsigned)time(NULL));                //Zufallsfunktion wird mit time initialiesiert
 
     int* dice = new int[5];						//dice gibt die Würfelergebnisse an
@@ -225,10 +233,6 @@ int main()
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Bestenliste
 
-        int num;
-        int count=0;
-        string line;
-
         ofstream bestenlisteFile;                                       //Erstellen einer Datei für die Bestenliste
         bestenlisteFile.open ("Bestenliste.conf", ios::app);
         for (int i=0; i<Spieleranzahl; i++)                             //Die Spieler mit ihrer Punktzahl in die Bestenliste einschreiben
@@ -238,53 +242,6 @@ int main()
         }
         bestenlisteFile.close();
 
-        //Die Datei öffnen und die Zeilen zählen
-
-        ifstream bestenlisteLesenFile1;
-        bestenlisteLesenFile1.open("Bestenliste.conf");
-        while (getline(bestenlisteLesenFile1, line))
-            count++;
-        bestenlisteLesenFile1.close();
-
-        //Die Datei auslesen Zeile um Zeile
-
-        ifstream bestenlisteLesenFile2;
-        bestenlisteLesenFile2.open("Bestenliste.conf");
-        if (bestenlisteLesenFile2.is_open())
-        {
-            string sLine;
-
-            int i=0;
-            vector<person> people(count);                               //Vector mit Struct-Einträgen (erstmal leer)
-
-            while(getline(bestenlisteLesenFile2, sLine))
-            {
-                string delimiter = ":";
-                string punkte = sLine.substr(0,sLine.find(delimiter));  //Lesen bis zum Doppelpunkt für die Punktzahl
-                string name = sLine.substr(sLine.find(delimiter)+1);    //Danach ist alles der Name
-
-                stringstream ss;
-                ss << punkte;
-                ss >> num;          //String to Int
-
-                people[i].name = name;      //Befüllen des structs mit den Namen
-                people[i].punkte = num;     //Befüllen des structs mit den Punkten
-                i = i+1;
-            }
-
-            bestenlisteLesenFile2.close();
-
-            sort (people.begin(), people.end(),                         //Sort Algorithmus --> die Liste sortieren
-                  [] (const person &left, const person &right)
-            {return (left.punkte > right.punkte);});
-
-            int anzahlEintraege = people.size();                        //Länge des Struct-Vektors
-            for (int i=0; i<anzahlEintraege; i++)
-            {
-                cout << people[i].name << "\t\t" << people[i].punkte << endl;       //Print der Einträge
-            }
-
-        }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Speicherfreigabe
