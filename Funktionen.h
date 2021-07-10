@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//Funktionsdeklarationen--------------------------------------------------------------------------------------------------------------------------
 int countN (int*, int, int);
 int sum (int*, int);
 int maxindex(int*, int);
@@ -24,11 +25,12 @@ bool grstrasse (int*, int);
 bool dreierpasch (int*, int);
 bool viererpasch (int*, int);
 
-//----------------------------------------------------------------------------------------------------------------
+//Funktionsdefinitionen--------------------------------------------------------------------------------------------------------------------------
 
-//Funktionsdefinitionen
+/*Die Zählfunktion bekommt das Würfelfeld übergeben, sowie dessen Länge und den Parameter, welchen die Funktion zählen soll.
+  Zurückgegeben wird die Anzahl des Paramteres N in dem vorhandenen Feld. */
 
-int countN (int* zeiger, int laenge, int N) //Zählfunktionen
+int countN (int* zeiger, int laenge, int N)
 {
     int anz=0;
     for (int i=0; i<laenge; i++)
@@ -38,24 +40,19 @@ int countN (int* zeiger, int laenge, int N) //Zählfunktionen
     return anz;
 }
 
+/*Die Summenfunktion erhält als Übergabeparameter das Würfelfeld und dessen Länge. Berechnet wird die Summe des gesamten Würfelfeldes und
+  und diese dann anschließend zurückgegeben. */
 
-void rolldice (int* zeiger, int* behalten) //Zufällige Würfelfunktion
-{
-    for (int k=0; k<5; k++)
-    {
-        if (behalten[k]==0) {zeiger[k]=(rand()%6)+1;}
-    }
-}
-
-
-int sum (int* zeiger, int laenge) //Summenfunktion
+int sum (int* zeiger, int laenge)
 {
     int summe=0;
     for (int r=0; r<laenge; r++) summe+=zeiger[r];
     return summe;
 }
 
-int maxindex (int* feld, int laenge) //einfache max-Funktion | gibt den Index des Feldeintrages wieder, der den höchsten Wert enthält
+/*Die Funktion erhält als Übergabeparameter das Würfelfeld und dessen Länge. Ermittelt wird der höchste Feldeintrag und dessen Index
+  wird anschließend zurückgegeben. */
+int maxindex (int* feld, int laenge)
 {
     int maxindex = 0;
     for (int i=0; i<laenge-1; i++)
@@ -68,7 +65,10 @@ int maxindex (int* feld, int laenge) //einfache max-Funktion | gibt den Index de
     return maxindex;
 }
 
-// Kontrollfunktionen
+//Kontrollfunktionen-------------------------------------------------------------------------------------------------------------------------------
+/*Die folgenden Funktion überprüfen alle, ob eine bestimmtes Ereignis des Kniffel-Spiels vorliegt. Allen Funktionen wird dabei das Würfelfeld,
+  sowie dessen Länge übergeben und zurückgegeben wird eine bool-Variable. */
+
 
 bool kniffel (int* zeiger, int laenge)
 {
@@ -142,6 +142,22 @@ bool viererpasch (int* zeiger, int laenge)
     return false;
 }
 
+//Spielsteuerungsfunktionen--------------------------------------------------------------------------------------------------------------------------
+
+/*Die Funktion würfelt zufällig und bekommt das Würfelfeld übergeben, sowie das Würfelbehalten-Feld, welches vom Benutzer oder der KI
+  beschrieben wurde. Je nach dem, ob der jeweilige Feldeintrag behalten werden soll oder nicht würfelt diese Funktion den Feldeintrag
+  neu. Die Werte liegen dabei in dem Intervall 1 bis 6 und werden mithilfe der mit der Zeit initialisierten Random-Funktion ermittelt.
+  Zurückgegeben wird nichts, da die Funktion bei ihrem Aufruf das Würfelfeld neu beschreibt. */
+
+void rolldice (int* zeiger, int* behalten)
+{
+    for (int k=0; k<5; k++)
+    {
+        if (behalten[k]==0) {zeiger[k]=(rand()%6)+1;}
+    }
+}
+
+
 void showscore (int* zeiger)
 {
     cout <<endl<<"SPIELSTAND"<<endl;
@@ -161,15 +177,18 @@ void showscore (int* zeiger)
 }
 
 
+/*Die Funktion erhält als Übergabeparamter das Würfelfeld, sowie das Spielstandsfeld*/
 void write (int* wuerfel, int* blatt)
 {
-    int was;															//Eingabe mit anschließender Kontrolle
+    int was;
+    //Abfrage, welches Spielstandsfeld beschrieben werden soll mit anschließender Kontrolle, ob dieses bereits beschrieben ist.
     cout<<"Was soll eingetragen werden? "; cin>>was;
     while(blatt[was-1]!=888)
     {
         cout<<"Bitte ein anderes Feld, dieses ist schon beschrieben. "; cin>>was;
     }
 
+    //Beschreiben der einzelnen Spielstandsfelder mit der jeweiligen Punktzahl, abhängig davon, welches Feld ausgewählt wurde:
     if(was<7)
     {
         blatt[was-1]=was*countN(wuerfel,5,was);
@@ -224,10 +243,14 @@ void write (int* wuerfel, int* blatt)
 }
 
 
+/*Die Funktion erhält als Übergabeparameter die Spieleranzahl und der Zeiger, welcher auf das Spielerfeld verweist. Ausgegeben wird die
+  Platzierung der Spieler mit Namen und Endpunktzahl, sowie dem ersten Platz gratuliert*/
 void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
 {
     int* Reihenfolge = new int[Spieleranzahl];
 
+    //Defaultbeschreibung des Reihenfolgenfeldes, sowie Berechnung der Endpunktzahl der einzelnen Spieler.
+    //Wenn die Punktzahl des oberen Zahlenblockes eines Spielers 63 Punkte oder mehr beträgt, wird der Kniffelbonus von 35 Punkten hinzuaddiert.
     for(int i=0; i<Spieleranzahl; i++)
     {
       Reihenfolge[i] = i;
@@ -235,6 +258,7 @@ void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
       if(sum(spielerptr[i].Spielstand, 7) > 62) spielerptr[i].Endpunktzahl +=35;
     }
 
+    //Sortieren des Reihenfolgenfeldes mit einem Bubble-Sort-Algorithmus, um den Sieger zu ermitteln.
     int temp = 0;
     for(int j = 0; j<Spieleranzahl-1; j++)
     {
@@ -249,6 +273,7 @@ void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
         }
     }
 
+    //Ergebnisausgabe
     cout << "ERGEBNIS" <<endl;
     for(int i=0; i<Spieleranzahl; i++)
     {

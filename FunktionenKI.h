@@ -60,17 +60,13 @@ double Bernoulli (int n, int k, double p)
    auszuwählen.
 
    Die folgenden Erwartungswertfunktionen pro Ereignis gliedern sich jeweils in die Funktion nach dem ersten- und zweiten Wurf, sodass die
-   Möglichkeit besteht nach dem zweiten Wurf auf ein vielversprechenderes Ereignis zu wechseln.*/
+   Möglichkeit besteht nach dem zweiten Wurf auf ein vielversprechenderes Ereignis zu wechseln. Allen Erwartungswertfunktionen wird das Würfelfeld
+   übergeben und für die Erwartungswerte des oberen Zahlenblockes wird den Funktionen ebenfalls die jeweilge Zahl übergeben. */
 
 
 double ErwartungswertOben1 (int* feld, int zahl)
 {
-    //int** matrix = new int*[2]; //Ziel Matrix dynamisch anfordern!
-    //for (int i=0; i<2; i++)
-    //{
-        //matrix[i] = new int[21];
-    //}
-
+    //Zählen, wie oft die übergebene Zahl im Würfelfeld vorliegt
     int anzahl = countN(feld, 5, zahl);
     double erwartungswert = anzahl;
 
@@ -80,9 +76,9 @@ double ErwartungswertOben1 (int* feld, int zahl)
     in er Matrix oder ich erreiche im ersten Wurf 4-mal meine gewünschte Zahl und im zweiten Wurf dann entweder keinmal oder
     einmal, denn diese beiden Möglichkeiten bleiben bei insgesamt fünf Würfeln noch übrig.
 
-    Im folgenden wird dann zwischen der Obergrenze unterschieden, abhägngig davon, wie viele Würfel meiner gewünschten Zahl ich im
+    Im folgenden wird dann zwischen der Obergrenze unterschieden, abhängig davon, wie viele Würfel meiner gewünschten Zahl ich im
     ersten Wurf schon erreicht habe, ändert sich die Anzahl der noch möglichen Würfelkombinationen. Wenn ich schon zwei Würfel der gewünschten
-    Zahl im ersten Wurf habe, kann ich in den folgenden zweien nur noch maximal 3 Würfel meiner gewünschten Zahl dazuerreichen.*/
+    Zahl im ersten Wurf habe, kann ich in den folgenden zweien nur noch maximal 3 Würfel meiner gewünschten Zahl dazu erreichen.*/
 
     int matrix[2][21] = {{0,0,1,1,0,2,1,2,3,0,0,4,1,3,2,0,5,1,4,3,2},{0,1,0,1,2,0,2,1,0,3,4,0,3,1,2,5,0,4,1,2,3}};
     int obergrenze;
@@ -124,6 +120,7 @@ double ErwartungswertDreierPasch1 (int* feld)
 {
     int* anzahl = new int[6];
 
+    //Zählen der jeweils vorliegenden Würfel
     for (int i=0; i<6; i++)
     {
        anzahl[i] = countN(feld, 5, i);
@@ -307,7 +304,8 @@ double ErwartungswertViererpasch2 (int* feld)
 //Funktion zur Berechnung des Erwartungswertes für ein Fullhouse nach dem ersten Wurf
 double ErwartungswertFullhouse1 (int* feld)
 {
-    if (fullhouse(feld,5)) return 25; //Prüfung, ob bereits ein Fullhouse vorliegt
+    //Prüfung, ob bereits ein Fullhouse vorliegt
+    if (fullhouse(feld,5)) return 25;
 
     double erwartungswert;
     int anzahl[6];
@@ -467,6 +465,7 @@ double ErwartungswertgrStrasse1 (int* feld)
     int missingones = 0;        //entspricht den fehlenden Würfeln, hier 1 und 6
     int keymissingones = 0;     //entspricht den wichtigen fehlende Würfeln, hier 2,3,4 und 5, da diese immer für eine große Straße benötigt werden
     int anzahl[6]={0};
+
     //Zählen aller vorliegenden Würfel
     for (int i=0; i<6; i++)
     {
