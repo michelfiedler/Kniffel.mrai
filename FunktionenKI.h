@@ -14,6 +14,8 @@ double ErwartungswertViererpasch1 (int*, int);
 double ErwartungswertViererpasch2 (int*, int);
 double ErwartungswertFullhouse1 (int*);
 double ErwartunswertFullhouse2 (int*);
+double ErwartungswertklStrasse1 (int*);
+double ErwartungswertklStrasse2 (int*);
 double ErwartungswertgrStrasse1 (int*);
 double ErwartungswertgrStrasse2 (int*);
 double ErwartungswertKniffel1 (int*);
@@ -372,6 +374,48 @@ double ErwartungswertFullhouse2 (int* feld) //Selbes Vorgehen wie oben, nur nach
 
     return erwartungswert*25;
 
+}
+
+double ErwartungswertklStrasse1 (int* feld)
+{   
+    //Die folgenden Variablen dienen der späteren Fallunterscheidung. Sie beschreiben, ob die entsprechenden Zahlen im Würfelfeld NICHT vorhanden sind
+    int miss34 = 0;             //Zählt fehlende 3en und 4en
+    int miss25 = 0;             //Zählt fehlende 2en und 5en
+    int miss16 = 0;             //Zählt fehlende 1en und 6en
+
+    //Abfrage nach den fehlenden Würfeln
+    if (countN(feld,5,3) == 0) miss34++;        //weder 3 noch 4 vorhanden: 2, entweder 3 oder 4 vorhanden: 1, beide vorhanden: 0
+    if (countN(feld,5,4) == 0) miss34++;
+    if (countN(feld,5,2) == 0 && countN(feld,5,5) == 0) miss25 = 1;     //weder 2 noch 5 vorhanden: 1, entweder 2 oder 5 vorhanden oder beide: 0
+    if (countN(feld,5,1) == 0 && countN(feld,5,6) == 0) miss16 = 1;     //weder 1 noch 6 vorhanden: 1, entweder 1 oder 6 vorhanden oder beide: 0
+
+    if (klstrasse(feld,5)) return 30;           //Falls kleine Straße schon vorhanden: Erwartungswert ist 30
+
+    //Die zu den Erwartungswerten zugehörigen Wahrscheinlichkeiten wurden teilweise mittels Simulation bestimmt, teils berechnet
+    if (miss34==0 && miss25==0 && miss16==0) return 30*65.0/81.0;
+    if (miss34==0 && miss25==0 && miss16==1) return 30*65.0/81.0;
+    if (miss34==0 && miss25==1 && miss16==0) return 30*0.658; //nur 3+4 behalten
+    if (miss34==0 && miss25==1 && miss16==1) return 30*0.658;
+    if (miss34==1 && miss25==0 && miss16==0) //1+2, 2+5 oder 5+6 behalten (0.518), wenn das nicht geht: 2/5 behalten (0.490)
+    {
+        if ((countN(feld,5,1)>0 && countN(feld,5,2)>0)
+         || (countN(feld,5,5)>0 && countN(feld,5,6)>0)
+         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) return 30*0.518;
+        else return 30*0.49;
+    }
+    if (miss34==1 && miss25==0 && miss16==1) //2+5 wenn möglich (0.518), sonst: 2 oder 5 und 3 behalten (0.424)
+    {
+        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) return 30*0.518;
+        else return 30*0.424;
+    }
+    if (miss34==1 && miss25==1 && miss16==0) return 30*0.426;
+    if (miss34==1 && miss25==1 && miss16==1) return 30*0.588;
+    if (miss34==2 && miss25==0 && miss16==0) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
+    if (miss34==2 && miss25==0 && miss16==1) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
+    if (miss34==2 && miss25==1 && miss16==0) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
+    //Vollständigkeit: Fall "211"  kann es nicht geben
+    else return 0;          //Theoretisch sind alle 11 bzw. 12 Fälle abgedeckt, da die Steuervariablen keine anderen Fälle annehmen können
+                            //Zur Problemvorbeugung soll 0 zurückgegeben werden
 }
 
 double ErwartungswertklStrasse2 (int* feld)
