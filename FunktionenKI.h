@@ -420,48 +420,43 @@ double ErwartungswertklStrasse1 (int* feld)
 
 double ErwartungswertklStrasse2 (int* feld)
 {
-    double erwartungswert;
-    int miss34 = 0;
-    int miss25 = 0;
-    int miss16 = 0;
-    int anzahl[6]={0};
-    for (int i=0; i<6; i++)
-    {
-        anzahl[i]=countN(feld,5,i);
-    }
+   //Die folgenden Variablen dienen der späteren Fallunterscheidung. Sie beschreiben, ob die entsprechenden Zahlen im Würfelfeld NICHT vorhanden sind
+    int miss34 = 0;             //Zählt fehlende 3en und 4en
+    int miss25 = 0;             //Zählt fehlende 2en und 5en
+    int miss16 = 0;             //Zählt fehlende 1en und 6en
 
-    //Abfrage nach den fehlenden Würfeln unter Beachtung der Wichtigkeit
-    if (anzahl[2] == 0) miss34++;
-    if (anzahl[3] == 0) miss34++;
-    if (anzahl[1] == 0 && anzahl[4] == 0) miss25 = 1;
-    if (anzahl[0] == 0 && anzahl[5] == 0) miss16 = 1;
+    //Abfrage nach den fehlenden Würfeln
+    if (countN(feld,5,3) == 0) miss34++;        //weder 3 noch 4 vorhanden: 2, entweder 3 oder 4 vorhanden: 1, beide vorhanden: 0
+    if (countN(feld,5,4) == 0) miss34++;
+    if (countN(feld,5,2) == 0 && countN(feld,5,5) == 0) miss25 = 1;     //weder 2 noch 5 vorhanden: 1, entweder 2 oder 5 vorhanden oder beide: 0
+    if (countN(feld,5,1) == 0 && countN(feld,5,6) == 0) miss16 = 1;     //weder 1 noch 6 vorhanden: 1, entweder 1 oder 6 vorhanden oder beide: 0
 
     if (klstrasse(feld,5)) return 30;
 
-    if (miss34==0 && miss25==0 && miss16==0) erwartungswert = 0.556; //34 und 2/5 behalten
-    if (miss34==0 && miss25==0 && miss16==1) erwartungswert = 0.556; //34 und 2/5 behalten
-    if (miss34==0 && miss25==1 && miss16==0) erwartungswert = 0.361; //nur 3+4 behalten
-    if (miss34==0 && miss25==1 && miss16==1) erwartungswert = 0.361; //nur 3+4 behalten
+    if (miss34==0 && miss25==0 && miss16==0) return 30*0.556; //34 und 2/5 behalten
+    if (miss34==0 && miss25==0 && miss16==1) return 30*0.556; //34 und 2/5 behalten
+    if (miss34==0 && miss25==1 && miss16==0) return 30*0.361; //nur 3+4 behalten
+    if (miss34==0 && miss25==1 && miss16==1) return 30*0.361; //nur 3+4 behalten
     if (miss34==1 && miss25==0 && miss16==0)
     {
         if ((countN(feld,5,1)>0 && countN(feld,5,2)>0)
          || (countN(feld,5,5)>0 && countN(feld,5,6)>0)
-         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) erwartungswert = 0.361; //1+2, 2+5 oder 5+6 behalten
-        else erwartungswert = 0.25; //2/5 behalten
+         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) return 30*0.361; //1+2, 2+5 oder 5+6 behalten
+        else return 30*0.25; //2/5 behalten
     }
     if (miss34==1 && miss25==0 && miss16==1)
     {
-        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) erwartungswert = 0.361; //2+5 wenn möglich
-        else erwartungswert = 0.25; //2 oder 5 und 3 behalten
+        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) return 30*0.361; //2+5 wenn möglich
+        else return 30*0.25; //2 oder 5 und 3 behalten
     }
-    if (miss34==1 && miss25==1 && miss16==0) erwartungswert = 0.231; //nur 3 behalten
-    if (miss34==1 && miss25==1 && miss16==1) erwartungswert = 0.231; //nur 3 behalten
-    if (miss34==2 && miss25==0 && miss16==0) erwartungswert = 0.154; //alles neu
-    if (miss34==2 && miss25==0 && miss16==1) erwartungswert = 0.154; //alles neu
-    if (miss34==2 && miss25==1 && miss16==0) erwartungswert = 0.154; //alles neu
+    if (miss34==1 && miss25==1 && miss16==0) return 30*0.231; //nur 3 behalten
+    if (miss34==1 && miss25==1 && miss16==1) return 30*0.231; //nur 3 behalten
+    if (miss34==2 && miss25==0 && miss16==0) return 30*0.154; //alles neu
+    if (miss34==2 && miss25==0 && miss16==1) return 30*0.154; //alles neu
+    if (miss34==2 && miss25==1 && miss16==0) return 30*0.154; //alles neu
     //Vollständigkeit: Fall "211"  kann es nicht geben
-
-    return erwartungswert*30;
+    else return 0;          //Theoretisch sind alle 11 bzw. 12 Fälle abgedeckt, da die Steuervariablen keine anderen Fälle annehmen können
+                            //Zur Problemvorbeugung soll 0 zurückgegeben werden
 }
 
 
