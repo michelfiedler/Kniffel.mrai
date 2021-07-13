@@ -2,15 +2,17 @@
 #define DATA_H
 
 #include "bestenliste.h"
+#include "spieler.h"
 #include <iostream>
 #include <QObject>
 
-class data      //Eine Klasse mit dem statischen Objekt bestenliste aus der Klasse Bestenliste, damit es so gemeinsam genutzt werden kann
+class data      //Eine Klasse die Objekte besitzt, gemeinsam genutzt werden
 {
 public:
     data();
 
-    static Bestenliste bestenliste;
+    static Bestenliste bestenliste; //statisches Objekt der Klasse Bestenliste
+    static Spieler singleSpieler;   //statisches Objekt der Klasse Spieler
 };
 
 #endif // DATA_H
