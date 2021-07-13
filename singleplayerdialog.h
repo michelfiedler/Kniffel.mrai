@@ -20,6 +20,9 @@ private slots:
 
     void on_tW_SpielstandSingle_cellClicked(int row, int column);
 
+public slots:
+    void neuWaehlen();
+
 public:
 signals:
     void besetzt();

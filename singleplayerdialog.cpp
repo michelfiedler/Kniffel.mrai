@@ -3,12 +3,15 @@
 #include "data.h"
 
 #include <QObject>
+#include <QMessageBox>
 
 singleplayerDialog::singleplayerDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::singleplayerDialog)
 {
     ui->setupUi(this);
+
+    QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);    //Der Slot neuWaehlen und das Signal besetzt werden verküpft
 }
 
 singleplayerDialog::~singleplayerDialog()
@@ -115,3 +118,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
     else {emit besetzt();}        //Signal für erneute Feldauswahl
 }
 
+void neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
+{
+    QMessageBox msgBox;
+    msgBox.setText("Dieses Feld kann nicht beschrieben werden. Bitte wählen Sie ein anderes aus.");
+    msgBox.exec();
+}
