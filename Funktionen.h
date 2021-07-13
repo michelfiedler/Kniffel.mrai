@@ -6,6 +6,11 @@
 
 using namespace std;
 
+//Variablen
+int punktzahlBesterSpieler;
+char nameBesterSpieler[15];
+
+//generelle Funktionen
 int countN (int*, int, int);
 int sum (int*, int);
 int maxindex(int*, int);
@@ -254,6 +259,16 @@ void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
     {
         cout    << i+1 <<". Platz: " <<spielerptr[Reihenfolge[Spieleranzahl-i-1]].get_Name() <<"   mit "
                 <<spielerptr[Reihenfolge[Spieleranzahl-i-1]].Endpunktzahl << " Punkten!" <<endl;
+
+        //Hier den Namen und die Punktzahl des Spielers des ersten Platzes speichern, um ihn möglicherweise in die Bestenliste aufzunehmen
+        if (i==0)
+        {
+            spielerptr[Reihenfolge[Spieleranzahl-i-1]].Endpunktzahl = punktzahlBesterSpieler;
+            for(int j=1; j<15; j++)
+            {
+                spielerptr[Reihenfolge[Spieleranzahl-i-1]].Name[j] = nameBesterSpieler[j];
+            }
+        }
     }
 
     cout << "Herzlichen Glueckwunsch  " << spielerptr[Reihenfolge[Spieleranzahl-1]].get_Name() << "!  Du hast gewonnen." << endl;

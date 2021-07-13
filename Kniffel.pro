@@ -4,6 +4,8 @@ CONFIG -= app_bundle
 QT += widgets
 
 SOURCES += \
+        bestenliste.cpp \
+        data.cpp \
         main.cpp \
         mainwindow.cpp \
         multiplayerdialog.cpp \
@@ -13,6 +15,7 @@ HEADERS += \
     Funktionen.h \
     FunktionenKI.h \
     bestenliste.h \
+    data.h \
     mainwindow.h \
     multiplayerdialog.h \
     singleplayerdialog.h \

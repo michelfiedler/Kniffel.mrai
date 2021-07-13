@@ -11,7 +11,7 @@
 #include "mainwindow.h"
 #include "Funktionen.h"
 #include "spieler.h"
-#include "bestenliste.h"
+#include "data.h"
 
 using namespace std;
 
@@ -233,14 +233,8 @@ int main(int argc, char *argv[])
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Bestenliste
 
-        ofstream bestenlisteFile;                                       //Erstellen einer Datei für die Bestenliste
-        bestenlisteFile.open ("Bestenliste.conf", ios::app);
-        for (int i=0; i<Spieleranzahl; i++)                             //Die Spieler mit ihrer Punktzahl in die Bestenliste einschreiben
-        {
-             bestenlisteFile << spielerptr[i].Endpunktzahl << ":    " << spielerptr[i].get_Name() << endl;
-
-        }
-        bestenlisteFile.close();
+    data::bestenliste.fuellenBestenliste(punktzahlBesterSpieler, nameBesterSpieler);        //Überprüfen, ob der Spieler mit den meisten Punkten in die
+                                                                                            //Bestenliste mit aufgenommen werden soll
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
