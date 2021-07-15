@@ -22,6 +22,20 @@ private slots:
 
 public slots:
     void neuWaehlen();
+    void einsenGewaehlt();
+    void zweienGewaehlt();
+    void dreienGewaehlt();
+    void vierenGewaehlt();
+    void fuenfenGewaehlt();
+    void sechsenGewaehlt();
+    void dreierpaschGewaehlt();
+    void viererpaschGewaehlt();
+    void fullhouseGewaehlt();
+    void klstrasseGewaehlt();
+    void grstrasseGewaehlt();
+    void kniffelGewaehlt();
+    void chanceGewaehlt();
+
 
 public:
 signals:

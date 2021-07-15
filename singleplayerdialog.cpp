@@ -1,6 +1,7 @@
 #include "singleplayerdialog.h"
 #include "ui_singleplayerdialog.h"
 #include "data.h"
+#include "Funktionen.h"
 
 #include <QObject>
 #include <QMessageBox>
@@ -12,12 +13,29 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
     ui->setupUi(this);
 
     QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);    //Der Slot neuWaehlen und das Signal besetzt werden verküpft
+    //Die Signale und Slots, die angeben welches Feld im Gewinnblatt ausgewählt wurde und dieses beschreiben, verknüpfen
+    QObject::connect(this, &singleplayerDialog::wahlEinsen, this, &singleplayerDialog::einsenGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlZweien, this, &singleplayerDialog::zweienGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlDreien, this, &singleplayerDialog::dreienGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlVieren, this, &singleplayerDialog::vierenGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlFuenfen, this, &singleplayerDialog::fuenfenGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlSechsen, this, &singleplayerDialog::sechsenGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlDreierpasch, this, &singleplayerDialog::dreierpaschGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlViererpasch, this, &singleplayerDialog::viererpaschGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlFullHouse, this, &singleplayerDialog::fullhouseGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlKlStrasse, this, &singleplayerDialog::klstrasseGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlGrStrasse, this, &singleplayerDialog::grstrasseGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlKniffel, this, &singleplayerDialog::kniffelGewaehlt);
+    QObject::connect(this, &singleplayerDialog::wahlChance, this, &singleplayerDialog::chanceGewaehlt);
 }
 
 singleplayerDialog::~singleplayerDialog()
 {
     delete ui;
 }
+
+
+//Slots
 
 void singleplayerDialog::on_buttonBox_rejected()        //Der SingleplayerModus wird geschlossen
 {
@@ -118,9 +136,74 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
     else {emit besetzt();}        //Signal für erneute Feldauswahl
 }
 
-void neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
+void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
 {
     QMessageBox msgBox;
     msgBox.setText("Dieses Feld kann nicht beschrieben werden. Bitte wählen Sie ein anderes aus.");
     msgBox.exec();
+}
+
+void singleplayerDialog::einsenGewaehlt()   //Slot, der im Spielstand die Einsen einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 1);
+}
+
+void singleplayerDialog::zweienGewaehlt()   //Slot, der im Spielstand die Zweien einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 2);
+}
+
+void singleplayerDialog::dreienGewaehlt()   //Slot, der im Spielstand der Dreien einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 3);
+}
+
+void singleplayerDialog::vierenGewaehlt()   //Slot, der im Spielstand der Vieren einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 4);
+}
+
+void singleplayerDialog::fuenfenGewaehlt()   //Slot, der im Spielstand der Fünfen einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 5);
+}
+
+void singleplayerDialog::sechsenGewaehlt()   //Slot, der im Spielstand der Sechsen einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 6);
+}
+
+void singleplayerDialog::dreierpaschGewaehlt()   //Slot, der im Spielstand die Punkte für einen Dreierpasch einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 7);
+}
+
+void singleplayerDialog::viererpaschGewaehlt()   //Slot, der im Spielstand die Punkte für einen Viererpasch einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 8);
+}
+
+void singleplayerDialog::fullhouseGewaehlt()   //Slot, der im Spielstand die Punkte für ein Full House einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 9);
+}
+
+void singleplayerDialog::klstrasseGewaehlt()   //Slot, der im Spielstand die Punkte für eine kleine Straße einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 10);
+}
+
+void singleplayerDialog::grstrasseGewaehlt()   //Slot, der im Spielstand die Punkte für eine große Straße einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 11);
+}
+
+void singleplayerDialog::kniffelGewaehlt()   //Slot, der im Spielstand die Punkte für einen Kniffel einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 12);
+}
+
+void singleplayerDialog::chanceGewaehlt()   //Slot, der im Spielstand die Punkte für eine Chance einträgt
+{
+    write (dice, data::singleSpieler.Spielstand, 13);
 }

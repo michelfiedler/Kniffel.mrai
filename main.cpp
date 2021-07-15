@@ -10,7 +10,6 @@
 
 #include "mainwindow.h"
 #include "Funktionen.h"
-#include "spieler.h"
 #include "data.h"
 
 using namespace std;
@@ -26,8 +25,8 @@ int main(int argc, char *argv[])
 
     srand((unsigned)time(NULL));                //Zufallsfunktion wird mit time initialiesiert
 
-    int* dice = new int[5];						//dice gibt die Würfelergebnisse an
-    for (int i=0; i<5; i++) dice[i]=1;
+    //int* dice = new int[5];						//wurde schon in funktionen.cpp definiert
+    for (int i=0; i<5; i++) dice[i]=1;              //alle Würfel werden auf 1 gesetzt
     int* keep = new int[5];					//keep gibt an, welche Würfel behalten werden sollen
     int Spielmodus;
     int Spieleranzahl;
@@ -211,7 +210,7 @@ int main(int argc, char *argv[])
 				
                     if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
                         {
-                            write(dice, spielerptr[l].Spielstand);
+                            //write(dice, spielerptr[l].Spielstand); -> das Eintragen passiert jetzt durch Anklicken des Gewinnblatts
                             j=3;										//Für Schleifenabbruch sorgen, wenn vor dem dritten Wurf alle Würfel behalten werden
                         }
 				
@@ -219,7 +218,7 @@ int main(int argc, char *argv[])
                 else                            //Im dritten Zug wird direkt etwas eingetragen
                 {
 				cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
-                write(dice, spielerptr[l].Spielstand);
+                //write(dice, spielerptr[l].Spielstand); -> -> das Eintragen passiert jetzt durch Anklicken des Gewinnblatts
                 }
             }
            }

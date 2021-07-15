@@ -4,12 +4,14 @@ CONFIG -= app_bundle
 QT += widgets
 
 SOURCES += \
+        Funktionen.cpp \
         bestenliste.cpp \
         data.cpp \
         main.cpp \
         mainwindow.cpp \
         multiplayerdialog.cpp \
-        singleplayerdialog.cpp
+        singleplayerdialog.cpp \
+        spieler.cpp
 
 HEADERS += \
     Funktionen.h \
