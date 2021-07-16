@@ -34,9 +34,6 @@ int main(int argc, char *argv[])
     int anzeige=0;
 
 
-    cout 	<<"Willkommen, hier kannst du mit dir selbst Kniffel spielen. Die KI folgt bald."<<endl
-            <<"Du kannst zwischendurch waehlen, ob du den Spielstand ansehen willst (1/0). Jetzt kanns losgehen!"<<endl<<endl;
-
 
     //Abfrage Single- oder Multiplayer
     cout << "Moechtest du im [0]Single- oder [1]Multiplayermodus spielen?" << endl;
