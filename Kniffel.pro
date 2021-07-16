@@ -5,6 +5,7 @@ QT += widgets
 
 SOURCES += \
         Funktionen.cpp \
+        FunktionenKI.cpp \
         bestenliste.cpp \
         data.cpp \
         main.cpp \

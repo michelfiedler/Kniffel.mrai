@@ -118,8 +118,8 @@ int main(int argc, char *argv[])
                                   Erwartungswerte[3] = ErwartungswertOben1(dice, 4);
                                   Erwartungswerte[4] = ErwartungswertOben1(dice, 5);
                                   Erwartungswerte[5] = ErwartungswertOben1(dice, 6);
-                                  Erwartungswerte[6] = ErwartungswertDreierpasch1(dice);
-                                  Erwartungswerte[7] = ErwartungswertViererpasch1(dice);
+                                  Erwartungswerte[6] = ErwartungswertDreierPasch1(dice);
+                                  Erwartungswerte[7] = ErwartungswertViererPasch1(dice);
                                   Erwartungswerte[8] = ErwartungswertFullhouse1(dice);
                                   Erwartungswerte[9] = ErwartungswertklStrasse1(dice);
                                   Erwartungswerte[10]= ErwartungswertgrStrasse1(dice);
