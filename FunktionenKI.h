@@ -5,7 +5,9 @@
 //Funktionsdeklarationen-------------------------------------------------------------------------------------------------------
 double pot (double, int);
 int fact (int);
+void pick (int*, int*, int, int)
 double Bernoulli (int, int, double);
+void setGoal (int*, int*, int, int)
 double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);
 double ErwartungswertDreierpasch1 (int*, int);
@@ -63,6 +65,181 @@ void pick (int* wuerfel, int* behalten, int was, int anz)
             }
         }
     }
+}
+
+void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
+{
+    int* anzahl = new int[6];
+    for(int i=0; i<6; i++) anzahl[i] = countN(wuerfel, 5, i+1);
+
+    switch(Ereignis)
+    {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    {
+        pick(wuerfel, behalten, Ereignis+1, countN(wuerfel, 5, Ereignis+1));
+        break;
+    }
+    case 6:
+    {
+        int mostFrqN = maxindex(anzahl, 6)+1;
+        if(dreierpasch(wuerfel, 5))
+        {
+            if(Wurf==0)
+            {
+                pick(wuerfel, behalten, mostFrqN, 3);
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+            if(Wurf==1)
+            {
+                pick(wuerfel, behalten, mostFrqN, 3);
+                pick(wuerfel, behalten, 4, countN(wuerfel, 5, 4));
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+        }
+        else
+        {
+            pick(wuerfel, behalten, mostFrqN, countN(wuerfel, 5, mostFrqN));
+        }
+        break;
+    }
+    case 7:
+    {
+        int mostFrqN = maxindex(anzahl, 6)+1;
+        if(viererpasch(wuerfel, 5))
+        {
+            if(Wurf==0)
+            {
+                pick(wuerfel, behalten, mostFrqN, 4);
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+            if(Wurf==1)
+            {
+                pick(wuerfel, behalten, mostFrqN, 4);
+                pick(wuerfel, behalten, 4, countN(wuerfel, 5, 4));
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+        }
+        else
+        {
+            pick(wuerfel, behalten, mostFrqN, countN(wuerfel, 5, mostFrqN));
+        }
+        break;
+    }
+    case 8:
+    {
+        int zwilling = 0;
+        int drilling = 0;
+        if (fullhouse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+
+        //Zählen, ob bereits Zwilling (also zwei gleiche Würfel) oder Drillinge (drei gleiche Würfel) vorliegen.
+        for (int i = 0; i<6; i++)
+        {
+            if (countN(wuerfel, 5, i+1)==2) zwilling++;
+            if (countN(wuerfel, 5, i+1)>=3) drilling++;
+
+            if (zwilling == 1 && drilling == 0)
+            {
+                int mostFrqN = maxindex(anzahl, 6)+1;
+                pick(wuerfel, behalten, mostFrqN, 2);
+            }
+            if (zwilling == 0 && drilling == 1)
+            {
+                int mostFrqN = maxindex(anzahl, 6)+1;
+                pick(wuerfel, behalten, mostFrqN, 3);
+            }
+            if (zwilling == 2 && drilling == 0)
+            {
+                int ZW1 = 0;
+                for (int i=0; i<6; i++)
+                {
+                    if (anzahl[ZW1] < anzahl[i+1])
+                    {
+                        ZW1 = i+1;
+                    }
+                }
+                ZW1++;
+                int ZW2 = maxindex(anzahl, 6)+1;
+
+                pick(wuerfel, behalten, ZW1, 2);
+                pick(wuerfel, behalten, ZW2, 2);
+            }
+        }
+        break;
+    }
+    case 9:
+    {
+        if(klstrasse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+        else
+        {
+            pick(wuerfel, behalten, 3, 1);
+            pick(wuerfel, behalten, 4, 1);
+
+            int miss34 = 0;
+            int miss25 = 0;
+            int miss16 = 0;
+
+            if (anzahl[2] == 0) miss34++;
+            if (anzahl[3] == 0) miss34++;
+            if (anzahl[1] == 0 && anzahl[4] == 0) miss25 = 1;
+            if (anzahl[0] == 0 && anzahl[5] == 0) miss16 = 1;
+
+            if (miss34==1 && miss25==0 && miss16==0) //1+2, 2+5 oder 5+6 behalten, wenn das nicht geht: 2/5 behalten
+            {
+                if (countN(wuerfel,5,1)>0 && countN(wuerfel,5,2)>0) {pick(wuerfel, behalten, 1, 1); pick(wuerfel, behalten, 2, 1);}
+                if (countN(wuerfel,5,5)>0 && countN(wuerfel,5,6)>0) {pick(wuerfel, behalten, 5, 1); pick(wuerfel, behalten, 6, 1);}
+                if (countN(wuerfel,5,2)>0 && countN(wuerfel,5,5)>0) {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+                else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+            }
+            else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+        }
+        break;
+    }
+    case 10:
+    {
+        if(grstrasse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+
+        pick(wuerfel, behalten, 2, 1);
+        pick(wuerfel, behalten, 3, 1);
+        pick(wuerfel, behalten, 4, 1);
+        pick(wuerfel, behalten, 5, 1);
+
+        if (countN(wuerfel, 5, 1)>0 && countN(wuerfel, 5, 2)>0 && countN(wuerfel, 5, 3)>0 && countN(wuerfel, 5, 4)>0) pick(wuerfel, behalten, 1, 1);
+        if (countN(wuerfel, 5, 3)>0 && countN(wuerfel, 5, 4)>0 && countN(wuerfel, 5, 5)>0 && countN(wuerfel, 5, 6)>0) pick(wuerfel, behalten, 6, 1);
+        break;
+    }
+    case 11:
+    {
+        int mostFrqN = maxindex(wuerfel, 5)+1;
+        pick(wuerfel, behalten, mostFrqN, countN(wuerfel, 5, mostFrqN));
+        break;
+    }
+    case 12:
+    {
+        if(Wurf==0)
+        {
+            pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+            pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+        }
+        if(Wurf==1)
+        {
+            pick(wuerfel, behalten, 4, countN(wuerfel, 5, 4));
+            pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+            pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+        }
+        break;
+    }
+    }
+    delete[] anzahl;
+    anzahl = NULL;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
