@@ -34,6 +34,7 @@ void MainWindow::on_pBsingle_clicked()          //Button Singleplayer wurde ausg
 {
     singleplayerDialog* singleDialog = new singleplayerDialog (this);
     singleDialog->exec();
+    data::Spielmodus=0;     //Spielmodus als SinglePlayer festlegen
 }
 
 
@@ -41,6 +42,7 @@ void MainWindow::on_pBmulti_clicked()           //Button Multiplayer wurde ausge
 {
         MultiplayerDialog* multiplayerDialog = new MultiplayerDialog(this);
         multiplayerDialog->show();
+        data::Spielmodus=1;     //Spielmodus Multiplayer festlegen
 }
 
 

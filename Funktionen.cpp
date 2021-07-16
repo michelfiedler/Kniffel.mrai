@@ -1,5 +1,6 @@
 #include "Funktionen.h"
 #include "spieler.h"
+#include "data.h"
 
 #include <iostream>
 
@@ -8,6 +9,7 @@ using namespace std;
 int punktzahlBesterSpieler;
 char nameBesterSpieler[15];
 int* dice = new int[5];
+int* keep = new int[5];
 
 //Funktionsdefinitionen
 
@@ -236,6 +238,7 @@ void write (int* wuerfel, int* blatt, int was)  //Funktion schreibt die Punkte i
             }
         }
     }
+    data::wievielterWurf=0;
 }
 
 

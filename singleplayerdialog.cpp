@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QMessageBox>
+#include <QLCDNumber>
 
 singleplayerDialog::singleplayerDialog(QWidget *parent) :
     QDialog(parent),
@@ -207,3 +208,53 @@ void singleplayerDialog::chanceGewaehlt()   //Slot, der im Spielstand die Punkte
 {
     write (dice, data::singleSpieler.Spielstand, 13);
 }
+
+void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Würfelergebnisse an
+{
+    if(data::wievielterWurf<3){     //Man kann nicht mehr als 3 mal würfeln
+    rolldice(dice,keep);
+    for(int i=0; i<5; i++) keep[i]=0;   //nach jedem Wurf wird das keep Feld wieder mit 0 beschrieben
+    ui->lcdNumber_1->display(dice[0]);
+    ui->lcdNumber_2->display(dice[1]);
+    ui->lcdNumber_3->display(dice[2]);
+    ui->lcdNumber_4->display(dice[3]);
+    ui->lcdNumber_5->display(dice[4]);
+    data::wievielterWurf++;
+    }
+}
+
+//Slots für das Behalten oder nicht Behalten der Würfel
+void singleplayerDialog::on_pBW1_clicked()
+{
+    if(keep[0]==0)keep[0]=1;
+    else keep[0]=0;
+}
+
+
+void singleplayerDialog::on_pBW2_clicked()
+{
+    if(keep[1]==0)keep[1]=1;
+    else keep[1]=0;
+}
+
+
+void singleplayerDialog::on_pBW3_clicked()
+{
+    if(keep[2]==0)keep[2]=1;
+    else keep[2]=0;
+}
+
+
+void singleplayerDialog::on_pBW4_clicked()
+{
+    if(keep[3]==0)keep[3]=1;
+    else keep[3]=0;
+}
+
+
+void singleplayerDialog::on_pBW5_clicked()
+{
+    if(keep[4]==0)keep[4]=1;
+    else keep[4]=0;
+}
+

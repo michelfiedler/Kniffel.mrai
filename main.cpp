@@ -28,41 +28,35 @@ int main(int argc, char *argv[])
 
     //int* dice = new int[5];						//wurde schon in funktionen.cpp definiert
     for (int i=0; i<5; i++) dice[i]=1;              //alle Würfel werden auf 1 gesetzt
-    int* keep = new int[5];					//keep gibt an, welche Würfel behalten werden sollen
-    int Spielmodus;
+    //int* keep = new int[5];					//keep gibt an, welche Würfel behalten werden sollen
     int Spieleranzahl;
     int anzeige=0;
 
 
 
-    //Abfrage Single- oder Multiplayer
-    cout << "Moechtest du im [0]Single- oder [1]Multiplayermodus spielen?" << endl;
-    cin >> Spielmodus;
-
-
     //KI-MODUS-------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        if (Spielmodus == 0)
+        if (data::Spielmodus == 0)
         {
-            Spieler* spielerptr = new Spieler[2];
+
             double* Erwartungswerte = new double[13];
             int* EintragTemp = new int[13];
             int* order = new int[13];
             int m_temp = 0;
             char Name[15];
 
-              cout << "Bitte gib deinen Namen ein:" << endl;
+              cout << "Bitte gib deinen Namen ein:" << endl;//In GUI namen eingeben und iwie speichern und hier übergeben
               cin >> Name;
-              spielerptr[0].set_Name(Name);
-              spielerptr[0].Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
-              spielerptr[0].reset_Spielstand();
+              data::singleSpieler.set_Name(Name);
+              data::singleSpieler.Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
+              //data::singleSpieler.reset_Spielstand();
               //Namen der KI noch beschreiben
               cout <<"Name der KI"<<endl;
               cin >> Name;
-              spielerptr[1].set_Name(Name);
-              spielerptr[1].Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
-              spielerptr[1].reset_Spielstand();
+              data::KI.set_Name(Name);
+              data::KI.Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
+              data::KI.reset_Spielstand();
 
 
 
@@ -70,35 +64,9 @@ int main(int argc, char *argv[])
               {
                   for (int l=0; l<2; l++) // Durchlaufen der einzelnen Spieler, hier gibt es nur zwei!
                   {
-                      cout << "Nun ist:   " << spielerptr[l].get_Name() << "   an der Reihe" << endl;
+                      //MessageBox wer an der Reihe ist
 
 
-                  spielerptr[l].showscore();                      //Spielstandanzeige
-
-                  if (l==0)
-                  {
-                      for (int j=0; j<5; j++) {keep[j]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
-                      for (int j=0; j<3; j++)                         // Nun beginnen die drei Würfe pro Spieler
-                      {
-                          rolldice(dice, keep);
-                          if(j==0||j==1)
-                          {
-                              cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
-                              cout <<"behalten? (1/0)	"; for(int k=0; k<5; k++) {cin >>keep[k]; cout<<"   ";}cout<<endl;
-
-                              if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
-                                  {
-                                      write(dice, spielerptr[l].Spielstand);
-                                      j=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
-                                  }
-                              else{}
-                          }
-                          else
-                          {
-                              cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
-                              write(dice, spielerptr[l].Spielstand);
-                          }
-                      }
                       if (l==1)
                       {
                           for (int j=0; j<5; j++) {keep[j]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
@@ -136,7 +104,7 @@ int main(int argc, char *argv[])
 
                                   for (int m=0; m<13; m++)
                                   {
-                                      if (spielerptr[1].Spielstand[order[12-m]] == 888)
+                                      if (data::KI.Spielstand[order[12-m]] == 888)
                                       {
                                           m_temp = m;
                                           setGoal(dice, keep, order[12-m], 0);
@@ -159,8 +127,8 @@ int main(int argc, char *argv[])
                                   Erwartungswerte[3] = ErwartungswertOben2(dice, 4);
                                   Erwartungswerte[4] = ErwartungswertOben2(dice, 5);
                                   Erwartungswerte[5] = ErwartungswertOben2(dice, 6);
-                                  Erwartungswerte[6] = ErwartungswertDreierpasch2(dice);
-                                  Erwartungswerte[7] = ErwartungswertViererpasch2(dice);
+                                  Erwartungswerte[6] = ErwartungswertDreierPasch2(dice);
+                                  Erwartungswerte[7] = ErwartungswertViererPasch2(dice);
                                   Erwartungswerte[8] = ErwartungswertFullhouse2(dice);
                                   Erwartungswerte[9] = ErwartungswertklStrasse2(dice);
                                   Erwartungswerte[10]= ErwartungswertgrStrasse2(dice);
@@ -177,7 +145,7 @@ int main(int argc, char *argv[])
 
                                   for (int m=0; m<13; m++)
                                   {
-                                      if (spielerptr[1].Spielstand[order[12-m]] == 888)
+                                      if (data::KI.Spielstand[order[12-m]] == 888)
                                       {
                                           m_temp = m;
                                           setGoal(dice, keep, order[12-m], 1);
@@ -193,7 +161,7 @@ int main(int argc, char *argv[])
 
                               if((j==0||j==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
                               {
-                                  write(dice, spielerptr[1].Spielstand, order[12-m_temp]);
+                                  write(dice, data::KI.Spielstand, order[12-m_temp]);
                                   j=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
                               }
                               //Nach dem dritten Wurf --------------------------------------------------------------------------------------------------------------------------
@@ -206,9 +174,9 @@ int main(int argc, char *argv[])
                                       sort(EintragTemp, order, 13);
                                       for (int q=0; q<13; q++)
                                       {
-                                          if (spielerptr[1].Spielstand[order[12-p]] == 888)
+                                          if (data::KI.Spielstand[order[12-p]] == 888)
                                           {
-                                              write(dice, spielerptr[1].Spielstand, order[12-p]);
+                                              write(dice, data::KI.Spielstand, order[12-p]);
                                               q = 13;
                                           }
                                       }
@@ -216,12 +184,12 @@ int main(int argc, char *argv[])
                               }
                           }
                       }
-                     }
+
+                  }
+              }
 
               delete[] Erwartungswerte;
               Erwartungswerte = NULL;
-              delete[] spielerptr;
-              spielerptr = NULL;
               delete[] EintragTemp;
               EintragTemp = NULL;
         }
@@ -229,7 +197,7 @@ int main(int argc, char *argv[])
     // ----------------------------------------------------------------------------------------------------------------------------------------------
     // Beginn Multiplayer
 
-        if (Spielmodus == 1)
+        if (data::Spielmodus == 1)
         {
 
         //Objektinstanzierung

@@ -20,6 +20,18 @@ private slots:
 
     void on_tW_SpielstandSingle_cellClicked(int row, int column);
 
+    void on_pBwuerfeln_clicked();
+
+    void on_pBW1_clicked();
+
+    void on_pBW2_clicked();
+
+    void on_pBW3_clicked();
+
+    void on_pBW4_clicked();
+
+    void on_pBW5_clicked();
+
 public slots:
     void neuWaehlen();
     void einsenGewaehlt();
