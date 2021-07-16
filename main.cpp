@@ -41,10 +41,75 @@ int main(int argc, char *argv[])
     cout << "Moechtest du im [0]Single- oder [1]Multiplayermodus spielen?" << endl;
     cin >> Spielmodus;
 
-    if (Spielmodus == 0)
-    {
-        cout << "Die KI kommt bald!" << endl;
-    }
+
+    //KI-MODUS-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        if (Spielmodus == 0)
+        {
+            Spieler* spielerptr = new Spieler[2];
+            double* Erwartungswerte = new double[13];
+            int* EintragTemp = new int[13];
+            int* order = new int[13];
+            int m_temp = 0;
+            char Name[15];
+
+              cout << "Bitte gib deinen Namen ein:" << endl;
+              cin >> Name;
+              spielerptr[0].set_Name(Name);
+              spielerptr[0].Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
+              spielerptr[0].reset_Spielstand();
+              //Namen der KI noch beschreiben
+              cout <<"Name der KI"<<endl;
+              cin >> Name;
+              spielerptr[1].set_Name(Name);
+              spielerptr[1].Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
+              spielerptr[1].reset_Spielstand();
+
+
+
+              for (int i=0; i<13; i++) // Durchlaufen der 13 Spielzüge
+              {
+                  for (int l=0; l<2; l++) // Durchlaufen der einzelnen Spieler, hier gibt es nur zwei!
+                  {
+                      cout << "Nun ist:   " << spielerptr[l].get_Name() << "   an der Reihe" << endl;
+
+
+                  spielerptr[l].showscore();                      //Spielstandanzeige
+
+                  if (l==0)
+                  {
+                      for (int j=0; j<5; j++) {keep[j]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
+                      for (int j=0; j<3; j++)                         // Nun beginnen die drei Würfe pro Spieler
+                      {
+                          rolldice(dice, keep);
+                          if(j==0||j==1)
+                          {
+                              cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+                              cout <<"behalten? (1/0)	"; for(int k=0; k<5; k++) {cin >>keep[k]; cout<<"   ";}cout<<endl;
+
+                              if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
+                                  {
+                                      write(dice, spielerptr[l].Spielstand);
+                                      j=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
+                                  }
+                              else{}
+                          }
+                          else
+                          {
+                              cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+                              write(dice, spielerptr[l].Spielstand);
+                          }
+                      }
+
+
+              delete[] Erwartungswerte;
+              Erwartungswerte = NULL;
+              delete[] spielerptr;
+              spielerptr = NULL;
+              delete[] EintragTemp;
+              EintragTemp = NULL;
+        }
 
     // ----------------------------------------------------------------------------------------------------------------------------------------------
     // Beginn Multiplayer
