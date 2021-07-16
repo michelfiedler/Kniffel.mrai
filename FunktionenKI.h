@@ -5,7 +5,9 @@
 //Funktionsdeklarationen-------------------------------------------------------------------------------------------------------
 double pot (double, int);
 int fact (int);
+void pick (int*, int*, int, int)
 double Bernoulli (int, int, double);
+void setGoal (int*, int*, int, int)
 double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);
 double ErwartungswertDreierpasch1 (int*, int);
@@ -14,6 +16,8 @@ double ErwartungswertViererpasch1 (int*, int);
 double ErwartungswertViererpasch2 (int*, int);
 double ErwartungswertFullhouse1 (int*);
 double ErwartunswertFullhouse2 (int*);
+double ErwartungswertklStrasse1 (int*);
+double ErwartungswertklStrasse2 (int*);
 double ErwartungswertgrStrasse1 (int*);
 double ErwartungswertgrStrasse2 (int*);
 double ErwartungswertKniffel1 (int*);
@@ -48,6 +52,196 @@ double Bernoulli (int n, int k, double p)
     return ((fact(n)/(fact(k)*fact(n-k)))*pot(p,k)*pot(1-p,n-k));
 }
 
+//Die Funktion pick wählt aus den Würfeln diejenigen aus die behalten werden (was) und beschreibt das behalten-Feld entsprechend
+void pick (int* wuerfel, int* behalten, int was, int anz)
+{
+    if(countN(wuerfel, 5, was)>0)
+    {
+        for(int j=0; j<anz; j++)
+        {
+            for(int i=0; i<5; i++)
+            {
+                if(wuerfel[i]==was && behalten[i]==0) {behalten[i] = 1; i=5;}
+            }
+        }
+    }
+}
+
+void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
+{
+    int* anzahl = new int[6];
+    for(int i=0; i<6; i++) anzahl[i] = countN(wuerfel, 5, i+1);
+
+    switch(Ereignis)
+    {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    {
+        pick(wuerfel, behalten, Ereignis+1, countN(wuerfel, 5, Ereignis+1));
+        break;
+    }
+    case 6:
+    {
+        int mostFrqN = maxindex(anzahl, 6)+1;
+        if(dreierpasch(wuerfel, 5))
+        {
+            if(Wurf==0)
+            {
+                pick(wuerfel, behalten, mostFrqN, 3);
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+            if(Wurf==1)
+            {
+                pick(wuerfel, behalten, mostFrqN, 3);
+                pick(wuerfel, behalten, 4, countN(wuerfel, 5, 4));
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+        }
+        else
+        {
+            pick(wuerfel, behalten, mostFrqN, countN(wuerfel, 5, mostFrqN));
+        }
+        break;
+    }
+    case 7:
+    {
+        int mostFrqN = maxindex(anzahl, 6)+1;
+        if(viererpasch(wuerfel, 5))
+        {
+            if(Wurf==0)
+            {
+                pick(wuerfel, behalten, mostFrqN, 4);
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+            if(Wurf==1)
+            {
+                pick(wuerfel, behalten, mostFrqN, 4);
+                pick(wuerfel, behalten, 4, countN(wuerfel, 5, 4));
+                pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+                pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+            }
+        }
+        else
+        {
+            pick(wuerfel, behalten, mostFrqN, countN(wuerfel, 5, mostFrqN));
+        }
+        break;
+    }
+    case 8:
+    {
+        int zwilling = 0;
+        int drilling = 0;
+        if (fullhouse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+
+        //Zählen, ob bereits Zwilling (also zwei gleiche Würfel) oder Drillinge (drei gleiche Würfel) vorliegen.
+        for (int i = 0; i<6; i++)
+        {
+            if (countN(wuerfel, 5, i+1)==2) zwilling++;
+            if (countN(wuerfel, 5, i+1)>=3) drilling++;
+
+            if (zwilling == 1 && drilling == 0)
+            {
+                int mostFrqN = maxindex(anzahl, 6)+1;
+                pick(wuerfel, behalten, mostFrqN, 2);
+            }
+            if (zwilling == 0 && drilling == 1)
+            {
+                int mostFrqN = maxindex(anzahl, 6)+1;
+                pick(wuerfel, behalten, mostFrqN, 3);
+            }
+            if (zwilling == 2 && drilling == 0)
+            {
+                int ZW1 = 0;
+                for (int i=0; i<6; i++)
+                {
+                    if (anzahl[ZW1] < anzahl[i+1])
+                    {
+                        ZW1 = i+1;
+                    }
+                }
+                ZW1++;
+                int ZW2 = maxindex(anzahl, 6)+1;
+
+                pick(wuerfel, behalten, ZW1, 2);
+                pick(wuerfel, behalten, ZW2, 2);
+            }
+        }
+        break;
+    }
+    case 9:
+    {
+        if(klstrasse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+        else
+        {
+            pick(wuerfel, behalten, 3, 1);
+            pick(wuerfel, behalten, 4, 1);
+
+            int miss34 = 0;
+            int miss25 = 0;
+            int miss16 = 0;
+
+            if (anzahl[2] == 0) miss34++;
+            if (anzahl[3] == 0) miss34++;
+            if (anzahl[1] == 0 && anzahl[4] == 0) miss25 = 1;
+            if (anzahl[0] == 0 && anzahl[5] == 0) miss16 = 1;
+
+            if (miss34==1 && miss25==0 && miss16==0) //1+2, 2+5 oder 5+6 behalten, wenn das nicht geht: 2/5 behalten
+            {
+                if (countN(wuerfel,5,1)>0 && countN(wuerfel,5,2)>0) {pick(wuerfel, behalten, 1, 1); pick(wuerfel, behalten, 2, 1);}
+                if (countN(wuerfel,5,5)>0 && countN(wuerfel,5,6)>0) {pick(wuerfel, behalten, 5, 1); pick(wuerfel, behalten, 6, 1);}
+                if (countN(wuerfel,5,2)>0 && countN(wuerfel,5,5)>0) {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+                else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+            }
+            else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+        }
+        break;
+    }
+    case 10:
+    {
+        if(grstrasse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+
+        pick(wuerfel, behalten, 2, 1);
+        pick(wuerfel, behalten, 3, 1);
+        pick(wuerfel, behalten, 4, 1);
+        pick(wuerfel, behalten, 5, 1);
+
+        if (countN(wuerfel, 5, 1)>0 && countN(wuerfel, 5, 2)>0 && countN(wuerfel, 5, 3)>0 && countN(wuerfel, 5, 4)>0) pick(wuerfel, behalten, 1, 1);
+        if (countN(wuerfel, 5, 3)>0 && countN(wuerfel, 5, 4)>0 && countN(wuerfel, 5, 5)>0 && countN(wuerfel, 5, 6)>0) pick(wuerfel, behalten, 6, 1);
+        break;
+    }
+    case 11:
+    {
+        int mostFrqN = maxindex(wuerfel, 5)+1;
+        pick(wuerfel, behalten, mostFrqN, countN(wuerfel, 5, mostFrqN));
+        break;
+    }
+    case 12:
+    {
+        if(Wurf==0)
+        {
+            pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+            pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+        }
+        if(Wurf==1)
+        {
+            pick(wuerfel, behalten, 4, countN(wuerfel, 5, 4));
+            pick(wuerfel, behalten, 5, countN(wuerfel, 5, 5));
+            pick(wuerfel, behalten, 6, countN(wuerfel, 5, 6));
+        }
+        break;
+    }
+    }
+    delete[] anzahl;
+    anzahl = NULL;
+}
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //Alle folgenden Funktionen geben den Erwartungswert zurück!
 /* Die Erwartungswerte sind teilweise per Hand ober über die Simulation eines Baumdiagramms berechnet, bei der die Bedingungen und das Durchlaufen
@@ -58,17 +252,13 @@ double Bernoulli (int n, int k, double p)
    auszuwählen.
 
    Die folgenden Erwartungswertfunktionen pro Ereignis gliedern sich jeweils in die Funktion nach dem ersten- und zweiten Wurf, sodass die
-   Möglichkeit besteht nach dem zweiten Wurf auf ein vielversprechenderes Ereignis zu wechseln.*/
+   Möglichkeit besteht nach dem zweiten Wurf auf ein vielversprechenderes Ereignis zu wechseln. Allen Erwartungswertfunktionen wird das Würfelfeld
+   übergeben und für die Erwartungswerte des oberen Zahlenblockes wird den Funktionen ebenfalls die jeweilge Zahl übergeben. */
 
 
 double ErwartungswertOben1 (int* feld, int zahl)
 {
-    //int** matrix = new int*[2]; //Ziel Matrix dynamisch anfordern!
-    //for (int i=0; i<2; i++)
-    //{
-        //matrix[i] = new int[21];
-    //}
-
+    //Zählen, wie oft die übergebene Zahl im Würfelfeld vorliegt
     int anzahl = countN(feld, 5, zahl);
     double erwartungswert = anzahl;
 
@@ -78,9 +268,9 @@ double ErwartungswertOben1 (int* feld, int zahl)
     in er Matrix oder ich erreiche im ersten Wurf 4-mal meine gewünschte Zahl und im zweiten Wurf dann entweder keinmal oder
     einmal, denn diese beiden Möglichkeiten bleiben bei insgesamt fünf Würfeln noch übrig.
 
-    Im folgenden wird dann zwischen der Obergrenze unterschieden, abhägngig davon, wie viele Würfel meiner gewünschten Zahl ich im
+    Im folgenden wird dann zwischen der Obergrenze unterschieden, abhängig davon, wie viele Würfel meiner gewünschten Zahl ich im
     ersten Wurf schon erreicht habe, ändert sich die Anzahl der noch möglichen Würfelkombinationen. Wenn ich schon zwei Würfel der gewünschten
-    Zahl im ersten Wurf habe, kann ich in den folgenden zweien nur noch maximal 3 Würfel meiner gewünschten Zahl dazuerreichen.*/
+    Zahl im ersten Wurf habe, kann ich in den folgenden zweien nur noch maximal 3 Würfel meiner gewünschten Zahl dazu erreichen.*/
 
     int matrix[2][21] = {{0,0,1,1,0,2,1,2,3,0,0,4,1,3,2,0,5,1,4,3,2},{0,1,0,1,2,0,2,1,0,3,4,0,3,1,2,5,0,4,1,2,3}};
     int obergrenze;
@@ -122,6 +312,7 @@ double ErwartungswertDreierPasch1 (int* feld)
 {
     int* anzahl = new int[6];
 
+    //Zählen der jeweils vorliegenden Würfel
     for (int i=0; i<6; i++)
     {
        anzahl[i] = countN(feld, 5, i);
@@ -305,7 +496,8 @@ double ErwartungswertViererpasch2 (int* feld)
 //Funktion zur Berechnung des Erwartungswertes für ein Fullhouse nach dem ersten Wurf
 double ErwartungswertFullhouse1 (int* feld)
 {
-    if (fullhouse(feld,5)) return 25; //Prüfung, ob bereits ein Fullhouse vorliegt
+    //Prüfung, ob bereits ein Fullhouse vorliegt
+    if (fullhouse(feld,5)) return 25;
 
     double erwartungswert;
     int anzahl[6];
@@ -374,50 +566,87 @@ double ErwartungswertFullhouse2 (int* feld) //Selbes Vorgehen wie oben, nur nach
 
 }
 
+double ErwartungswertklStrasse1 (int* feld)
+{   
+    //Die folgenden Variablen dienen der späteren Fallunterscheidung. Sie beschreiben, ob die entsprechenden Zahlen im Würfelfeld NICHT vorhanden sind
+    int miss34 = 0;             //Zählt fehlende 3en und 4en
+    int miss25 = 0;             //Zählt fehlende 2en und 5en
+    int miss16 = 0;             //Zählt fehlende 1en und 6en
+
+    //Abfrage nach den fehlenden Würfeln
+    if (countN(feld,5,3) == 0) miss34++;        //weder 3 noch 4 vorhanden: 2, entweder 3 oder 4 vorhanden: 1, beide vorhanden: 0
+    if (countN(feld,5,4) == 0) miss34++;
+    if (countN(feld,5,2) == 0 && countN(feld,5,5) == 0) miss25 = 1;     //weder 2 noch 5 vorhanden: 1, entweder 2 oder 5 vorhanden oder beide: 0
+    if (countN(feld,5,1) == 0 && countN(feld,5,6) == 0) miss16 = 1;     //weder 1 noch 6 vorhanden: 1, entweder 1 oder 6 vorhanden oder beide: 0
+
+    if (klstrasse(feld,5)) return 30;           //Falls kleine Straße schon vorhanden: Erwartungswert ist 30
+
+    //Die zu den Erwartungswerten zugehörigen Wahrscheinlichkeiten wurden teilweise mittels Simulation bestimmt, teils berechnet
+    if (miss34==0 && miss25==0 && miss16==0) return 30*65.0/81.0;
+    if (miss34==0 && miss25==0 && miss16==1) return 30*65.0/81.0;
+    if (miss34==0 && miss25==1 && miss16==0) return 30*0.658; //nur 3+4 behalten
+    if (miss34==0 && miss25==1 && miss16==1) return 30*0.658;
+    if (miss34==1 && miss25==0 && miss16==0) //1+2, 2+5 oder 5+6 behalten (0.518), wenn das nicht geht: 2/5 behalten (0.490)
+    {
+        if ((countN(feld,5,1)>0 && countN(feld,5,2)>0)
+         || (countN(feld,5,5)>0 && countN(feld,5,6)>0)
+         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) return 30*0.518;
+        else return 30*0.49;
+    }
+    if (miss34==1 && miss25==0 && miss16==1) //2+5 wenn möglich (0.518), sonst: 2 oder 5 und 3 behalten (0.424)
+    {
+        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) return 30*0.518;
+        else return 30*0.424;
+    }
+    if (miss34==1 && miss25==1 && miss16==0) return 30*0.426;
+    if (miss34==1 && miss25==1 && miss16==1) return 30*0.588;
+    if (miss34==2 && miss25==0 && miss16==0) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
+    if (miss34==2 && miss25==0 && miss16==1) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
+    if (miss34==2 && miss25==1 && miss16==0) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
+    //Vollständigkeit: Fall "211"  kann es nicht geben
+    else return 0;          //Theoretisch sind alle 11 bzw. 12 Fälle abgedeckt, da die Steuervariablen keine anderen Fälle annehmen können
+                            //Zur Problemvorbeugung soll 0 zurückgegeben werden
+}
+
 double ErwartungswertklStrasse2 (int* feld)
 {
-    double erwartungswert;
-    int miss34 = 0;
-    int miss25 = 0;
-    int miss16 = 0;
-    int anzahl[6]={0};
-    for (int i=0; i<6; i++)
-    {
-        anzahl[i]=countN(feld,5,i);
-    }
+   //Die folgenden Variablen dienen der späteren Fallunterscheidung. Sie beschreiben, ob die entsprechenden Zahlen im Würfelfeld NICHT vorhanden sind
+    int miss34 = 0;             //Zählt fehlende 3en und 4en
+    int miss25 = 0;             //Zählt fehlende 2en und 5en
+    int miss16 = 0;             //Zählt fehlende 1en und 6en
 
-    //Abfrage nach den fehlenden Würfeln unter Beachtung der Wichtigkeit
-    if (anzahl[2] == 0) miss34++;
-    if (anzahl[3] == 0) miss34++;
-    if (anzahl[1] == 0 && anzahl[4] == 0) miss25 = 1;
-    if (anzahl[0] == 0 && anzahl[5] == 0) miss16 = 1;
+    //Abfrage nach den fehlenden Würfeln
+    if (countN(feld,5,3) == 0) miss34++;        //weder 3 noch 4 vorhanden: 2, entweder 3 oder 4 vorhanden: 1, beide vorhanden: 0
+    if (countN(feld,5,4) == 0) miss34++;
+    if (countN(feld,5,2) == 0 && countN(feld,5,5) == 0) miss25 = 1;     //weder 2 noch 5 vorhanden: 1, entweder 2 oder 5 vorhanden oder beide: 0
+    if (countN(feld,5,1) == 0 && countN(feld,5,6) == 0) miss16 = 1;     //weder 1 noch 6 vorhanden: 1, entweder 1 oder 6 vorhanden oder beide: 0
 
     if (klstrasse(feld,5)) return 30;
 
-    if (miss34==0 && miss25==0 && miss16==0) erwartungswert = 0.556; //34 und 2/5 behalten
-    if (miss34==0 && miss25==0 && miss16==1) erwartungswert = 0.556; //34 und 2/5 behalten
-    if (miss34==0 && miss25==1 && miss16==0) erwartungswert = 0.361; //nur 3+4 behalten
-    if (miss34==0 && miss25==1 && miss16==1) erwartungswert = 0.361; //nur 3+4 behalten
+    if (miss34==0 && miss25==0 && miss16==0) return 30*0.556; //34 und 2/5 behalten
+    if (miss34==0 && miss25==0 && miss16==1) return 30*0.556; //34 und 2/5 behalten
+    if (miss34==0 && miss25==1 && miss16==0) return 30*0.361; //nur 3+4 behalten
+    if (miss34==0 && miss25==1 && miss16==1) return 30*0.361; //nur 3+4 behalten
     if (miss34==1 && miss25==0 && miss16==0)
     {
         if ((countN(feld,5,1)>0 && countN(feld,5,2)>0)
          || (countN(feld,5,5)>0 && countN(feld,5,6)>0)
-         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) erwartungswert = 0.361; //1+2, 2+5 oder 5+6 behalten
-        else erwartungswert = 0.25; //2/5 behalten
+         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) return 30*0.361; //1+2, 2+5 oder 5+6 behalten
+        else return 30*0.25; //2/5 behalten
     }
     if (miss34==1 && miss25==0 && miss16==1)
     {
-        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) erwartungswert = 0.361; //2+5 wenn möglich
-        else erwartungswert = 0.25; //2 oder 5 und 3 behalten
+        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) return 30*0.361; //2+5 wenn möglich
+        else return 30*0.25; //2 oder 5 und 3 behalten
     }
-    if (miss34==1 && miss25==1 && miss16==0) erwartungswert = 0.231; //nur 3 behalten
-    if (miss34==1 && miss25==1 && miss16==1) erwartungswert = 0.231; //nur 3 behalten
-    if (miss34==2 && miss25==0 && miss16==0) erwartungswert = 0.154; //alles neu
-    if (miss34==2 && miss25==0 && miss16==1) erwartungswert = 0.154; //alles neu
-    if (miss34==2 && miss25==1 && miss16==0) erwartungswert = 0.154; //alles neu
+    if (miss34==1 && miss25==1 && miss16==0) return 30*0.231; //nur 3 behalten
+    if (miss34==1 && miss25==1 && miss16==1) return 30*0.231; //nur 3 behalten
+    if (miss34==2 && miss25==0 && miss16==0) return 30*0.154; //alles neu
+    if (miss34==2 && miss25==0 && miss16==1) return 30*0.154; //alles neu
+    if (miss34==2 && miss25==1 && miss16==0) return 30*0.154; //alles neu
     //Vollständigkeit: Fall "211"  kann es nicht geben
-
-    return erwartungswert*30;
+    else return 0;          //Theoretisch sind alle 11 bzw. 12 Fälle abgedeckt, da die Steuervariablen keine anderen Fälle annehmen können
+                            //Zur Problemvorbeugung soll 0 zurückgegeben werden
 }
 
 
@@ -428,6 +657,7 @@ double ErwartungswertgrStrasse1 (int* feld)
     int missingones = 0;        //entspricht den fehlenden Würfeln, hier 1 und 6
     int keymissingones = 0;     //entspricht den wichtigen fehlende Würfeln, hier 2,3,4 und 5, da diese immer für eine große Straße benötigt werden
     int anzahl[6]={0};
+
     //Zählen aller vorliegenden Würfel
     for (int i=0; i<6; i++)
     {
