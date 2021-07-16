@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
 
                               if((j==0||j==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
                               {
-                                  writeKI(dice, order[12-m_temp], spielerptr[1].Spielstand);
+                                  write(dice, spielerptr[1].Spielstand, order[12-m_temp]);
                                   j=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
                               }
                               //Nach dem dritten Wurf --------------------------------------------------------------------------------------------------------------------------
@@ -205,13 +205,13 @@ int main(int argc, char *argv[])
                                   cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
                                   for (int p=0; p<13; p++)
                                   {
-                                      writeKI(dice, p+1, EintragTemp);
+                                      write(dice, EintragTemp, p+1);
                                       sort(EintragTemp, order, 13);
                                       for (int q=0; q<13; q++)
                                       {
                                           if (spielerptr[1].Spielstand[order[12-p]] == 888)
                                           {
-                                              writeKI(dice, order[12-p], spielerptr[1].Spielstand);
+                                              write(dice, spielerptr[1].Spielstand, order[12-p]);
                                               q = 13;
                                           }
                                       }
