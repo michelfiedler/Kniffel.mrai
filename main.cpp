@@ -10,6 +10,7 @@
 
 #include "mainwindow.h"
 #include "Funktionen.h"
+#include "FunktionenKI.h"
 #include "data.h"
 
 using namespace std;
@@ -101,7 +102,124 @@ int main(int argc, char *argv[])
                               write(dice, spielerptr[l].Spielstand);
                           }
                       }
+                      if (l==1)
+                      {
+                          for (int j=0; j<5; j++) {keep[j]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
+                          for (int j=0; j<3; j++)                         // Nun beginnen die drei Würfe pro Spieler
+                          {
+                              rolldice(dice, keep);
+                              for (int j=0; j<5; j++) {keep[j]=0;}            //??? unsicher: muss das keep feld genau hier hin??
+                              //----------------------------------------------------------------------------------------------------------------------------------------------
+                              //Erster Wurf der KI
 
+                              if(j==0)
+                              {
+                                  cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+                                  Erwartungswerte[0] = ErwartungswertOben1(dice, 1);
+                                  Erwartungswerte[1] = ErwartungswertOben1(dice, 2);
+                                  Erwartungswerte[2] = ErwartungswertOben1(dice, 3);
+                                  Erwartungswerte[3] = ErwartungswertOben1(dice, 4);
+                                  Erwartungswerte[4] = ErwartungswertOben1(dice, 5);
+                                  Erwartungswerte[5] = ErwartungswertOben1(dice, 6);
+                                  Erwartungswerte[6] = ErwartungswertDreierpasch1(dice);
+                                  Erwartungswerte[7] = ErwartungswertViererpasch1(dice);
+                                  Erwartungswerte[8] = ErwartungswertFullhouse1(dice);
+                                  Erwartungswerte[9] = ErwartungswertklStrasse1(dice);
+                                  Erwartungswerte[10]= ErwartungswertgrStrasse1(dice);
+                                  Erwartungswerte[11]= ErwartungswertKniffel1(dice);
+                                  Erwartungswerte[12]= 0;                                 //Chance
+
+                                  for(int n=0; n<13; n++) cout<<Erwartungswerte[n]<<"   ";
+                                  cout<<endl;
+
+                                  sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
+
+                                  for(int n=0; n<13; n++) cout<<order[n]<<"   ";
+                                  cout<<endl;
+
+                                  for (int m=0; m<13; m++)
+                                  {
+                                      if (spielerptr[1].Spielstand[order[12-m]] == 888)
+                                      {
+                                          m_temp = m;
+                                          setGoal(dice, keep, order[12-m], 0);
+                                          cout<<order[12-m]<<endl;
+                                          //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
+                                          m = 13;
+                                      }
+                                  }
+                              }
+
+                              //--------------------------------------------------------------------------------------------------------------------------------------------
+                              //Zweiter Wurf der KI
+
+                              if(j==1)
+                              {
+                                  cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+                                  Erwartungswerte[0] = ErwartungswertOben2(dice, 1);
+                                  Erwartungswerte[1] = ErwartungswertOben2(dice, 2);
+                                  Erwartungswerte[2] = ErwartungswertOben2(dice, 3);
+                                  Erwartungswerte[3] = ErwartungswertOben2(dice, 4);
+                                  Erwartungswerte[4] = ErwartungswertOben2(dice, 5);
+                                  Erwartungswerte[5] = ErwartungswertOben2(dice, 6);
+                                  Erwartungswerte[6] = ErwartungswertDreierpasch2(dice);
+                                  Erwartungswerte[7] = ErwartungswertViererpasch2(dice);
+                                  Erwartungswerte[8] = ErwartungswertFullhouse2(dice);
+                                  Erwartungswerte[9] = ErwartungswertklStrasse2(dice);
+                                  Erwartungswerte[10]= ErwartungswertgrStrasse2(dice);
+                                  Erwartungswerte[11]= ErwartungswertKniffel2(dice);
+                                  Erwartungswerte[12]= 0;                                 //Chance
+
+                                  for(int n=0; n<13; n++) cout<<Erwartungswerte[n]<<"   ";
+                                  cout<<endl;
+
+                                  sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
+
+                                  for(int n=0; n<13; n++) cout<<order[n]<<"   ";
+                                  cout<<endl;
+
+                                  for (int m=0; m<13; m++)
+                                  {
+                                      if (spielerptr[1].Spielstand[order[12-m]] == 888)
+                                      {
+                                          m_temp = m;
+                                          setGoal(dice, keep, order[12-m], 1);
+                                          cout<<order[12-m]<<endl;
+
+                                          //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
+                                          m = 13;
+                                      }
+                                  }
+                              }
+
+
+
+                              if((j==0||j==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
+                              {
+                                  writeKI(dice, order[12-m_temp], spielerptr[1].Spielstand);
+                                  j=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
+                              }
+                              //Nach dem dritten Wurf --------------------------------------------------------------------------------------------------------------------------
+                              if(j==2)
+                              {
+                                  cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
+                                  for (int p=0; p<13; p++)
+                                  {
+                                      writeKI(dice, p+1, EintragTemp);
+                                      sort(EintragTemp, order, 13);
+                                      for (int q=0; q<13; q++)
+                                      {
+                                          if (spielerptr[1].Spielstand[order[12-p]] == 888)
+                                          {
+                                              writeKI(dice, order[12-p], spielerptr[1].Spielstand);
+                                              q = 13;
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                     }
 
               delete[] Erwartungswerte;
               Erwartungswerte = NULL;
