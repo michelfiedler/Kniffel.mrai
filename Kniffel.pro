@@ -8,9 +8,12 @@ SOURCES += \
         bestenliste.cpp \
         data.cpp \
         dreispielerdialog.cpp \
+        fuenfspielerdialog.cpp \
         main.cpp \
         mainwindow.cpp \
         multiplayerdialog.cpp \
+        sechsspielerdialog.cpp \
+        siebenspielerdialog.cpp \
         singleplayerdialog.cpp \
         vierspielerdialog.cpp \
         zweispielerdialog.cpp
@@ -21,8 +24,11 @@ HEADERS += \
     bestenliste.h \
     data.h \
     dreispielerdialog.h \
+    fuenfspielerdialog.h \
     mainwindow.h \
     multiplayerdialog.h \
+    sechsspielerdialog.h \
+    siebenspielerdialog.h \
     singleplayerdialog.h \
     spieler.h \
     vierspielerdialog.h \
@@ -30,8 +36,11 @@ HEADERS += \
 
 FORMS += \
     dreispielerdialog.ui \
+    fuenfspielerdialog.ui \
     mainwindow.ui \
     multiplayerdialog.ui \
+    sechsspielerdialog.ui \
+    siebenspielerdialog.ui \
     singleplayerdialog.ui \
     vierspielerdialog.ui \
     zweispielerdialog.ui

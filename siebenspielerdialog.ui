@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VierSpielerDialog</class>
- <widget class="QDialog" name="VierSpielerDialog">
+ <class>SiebenSpielerDialog</class>
+ <widget class="QDialog" name="SiebenSpielerDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>392</width>
-    <height>222</height>
+    <width>400</width>
+    <height>324</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>180</y>
+     <x>20</x>
+     <y>260</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -34,7 +34,7 @@
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>351</width>
+     <width>341</width>
      <height>31</height>
     </rect>
    </property>
@@ -51,8 +51,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>20</x>
      <y>60</y>
-     <width>351</width>
-     <height>108</height>
+     <width>341</width>
+     <height>192</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -84,7 +84,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QLineEdit" name="lineEdit_3"/>
+     <widget class="QLineEdit" name="lineEdit_4"/>
     </item>
     <item row="3" column="0">
      <widget class="QLabel" name="label_4">
@@ -94,7 +94,37 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QLineEdit" name="lineEdit_4"/>
+     <widget class="QLineEdit" name="lineEdit_3"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Spieler 5:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="lineEdit_6"/>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Spieler 6:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="lineEdit_7"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Spieler 7:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="lineEdit_5"/>
     </item>
    </layout>
   </widget>
@@ -104,7 +134,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>VierSpielerDialog</receiver>
+   <receiver>SiebenSpielerDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -120,7 +150,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>VierSpielerDialog</receiver>
+   <receiver>SiebenSpielerDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

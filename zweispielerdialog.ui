@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>170</y>
+     <y>180</y>
      <width>166</width>
      <height>23</height>
     </rect>
@@ -34,7 +34,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>380</width>
+     <width>361</width>
      <height>41</height>
     </rect>
    </property>
@@ -46,51 +46,37 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Bitte trage die Namen der Spieler ein.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>80</y>
-     <width>51</width>
-     <height>16</height>
+     <x>10</x>
+     <y>70</y>
+     <width>361</width>
+     <height>52</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Spieler 1:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>120</y>
-     <width>51</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Spieler 2:</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>80</y>
-     <width>111</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>120</y>
-     <width>113</width>
-     <height>22</height>
-    </rect>
-   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Spieler 1:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Spieler 2:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="lineEdit_2"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <tabstops>

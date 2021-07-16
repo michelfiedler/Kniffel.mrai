@@ -37,7 +37,7 @@ void MainWindow::on_pBsingle_clicked()          //Button Singleplayer wurde ausg
 }
 
 
-void MainWindow::on_pBmulti_clicked()           //Button Multiplayer wurde ausgewählt
+void MainWindow::on_pBmulti_clicked()           //Button Multiplayer wurde ausgewählt und öffnet ein neues Fenster, um im MultiplayerModus zu spielen.
 {
         MultiplayerDialog* multiplayerDialog = new MultiplayerDialog(this);
         multiplayerDialog->show();
