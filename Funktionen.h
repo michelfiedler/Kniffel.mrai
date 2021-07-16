@@ -22,6 +22,8 @@ void rolldice (int*, int*);
 void showscore (int*);
 void write (int*, int*, int);
 void Punkteauswertung (int, Spieler*);
+void sort (double*, int*, int);
+void sort (int*, int*, int);
 
 //Kontrollfunktionen
 bool kniffel (int*, int);

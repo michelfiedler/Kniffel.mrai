@@ -51,6 +51,44 @@ int maxindex (int* feld, int laenge) //einfache max-Funktion | gibt den Index de
     return maxindex;
 }
 
+void sort(double* feld, int* Reihenfolge, int laenge)
+{
+    for(int i=0; i<laenge; i++) Reihenfolge[i] = i;
+
+    int temp = 0;
+    for(int j = 0; j<laenge-1; j++)
+    {
+        for(int i=0; i<laenge-1; i++)
+        {
+            if(feld[Reihenfolge[i]]>feld[Reihenfolge[i+1]])
+            {
+                temp = Reihenfolge[i];
+                Reihenfolge[i] = Reihenfolge[i+1];
+                Reihenfolge[i+1] = temp;
+            }
+        }
+    }
+}
+
+void sort(int* feld, int* Reihenfolge, int laenge)
+{
+    for(int i=0; i<laenge; i++) Reihenfolge[i] = i;
+
+    int temp = 0;
+    for(int j = 0; j<laenge-1; j++)
+    {
+        for(int i=0; i<laenge-1; i++)
+        {
+            if(feld[Reihenfolge[i]]>feld[Reihenfolge[i+1]])
+            {
+                temp = Reihenfolge[i];
+                Reihenfolge[i] = Reihenfolge[i+1];
+                Reihenfolge[i+1] = temp;
+            }
+        }
+    }
+}
+
 // Kontrollfunktionen
 
 bool kniffel (int* zeiger, int laenge)
