@@ -50,6 +50,21 @@ double Bernoulli (int n, int k, double p)
     return ((fact(n)/(fact(k)*fact(n-k)))*pot(p,k)*pot(1-p,n-k));
 }
 
+//Die Funktion pick wählt aus den Würfeln diejenigen aus die behalten werden (was) und beschreibt das behalten-Feld entsprechend
+void pick (int* wuerfel, int* behalten, int was, int anz)
+{
+    if(countN(wuerfel, 5, was)>0)
+    {
+        for(int j=0; j<anz; j++)
+        {
+            for(int i=0; i<5; i++)
+            {
+                if(wuerfel[i]==was && behalten[i]==0) {behalten[i] = 1; i=5;}
+            }
+        }
+    }
+}
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //Alle folgenden Funktionen geben den Erwartungswert zurück!
 /* Die Erwartungswerte sind teilweise per Hand ober über die Simulation eines Baumdiagramms berechnet, bei der die Bedingungen und das Durchlaufen
