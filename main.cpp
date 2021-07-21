@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
               cout << "Bitte gib deinen Namen ein:" << endl;//In GUI namen eingeben und iwie speichern und hier übergeben
               cin >> Name;
               data::singleSpieler.set_Name(Name);
-              data::singleSpieler.Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
+              //data::singleSpieler.Spielstand = new int [13]; ->wird ausgeführt wenn der singlePlayer Dialog gestartet wird // FEHLER REPRODUZIEREN: Diese Zeile löschen!
               //data::singleSpieler.reset_Spielstand();
               //Namen der KI noch beschreiben
               cout <<"Name der KI"<<endl;
@@ -192,6 +192,8 @@ int main(int argc, char *argv[])
               Erwartungswerte = NULL;
               delete[] EintragTemp;
               EintragTemp = NULL;
+              /*delete [] data::singleSpieler.Spielstand;
+              data::singleSpieler.Spielstand = NULL;*/
         }
 
     // ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -393,6 +395,7 @@ int main(int argc, char *argv[])
     keep = NULL;
     delete[] spielerptr;
     spielerptr = NULL;
+
 
     return 0;
 

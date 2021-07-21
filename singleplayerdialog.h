@@ -34,37 +34,12 @@ private slots:
 
 public slots:
     void neuWaehlen();
-    void einsenGewaehlt();
-    void zweienGewaehlt();
-    void dreienGewaehlt();
-    void vierenGewaehlt();
-    void fuenfenGewaehlt();
-    void sechsenGewaehlt();
-    void dreierpaschGewaehlt();
-    void viererpaschGewaehlt();
-    void fullhouseGewaehlt();
-    void klstrasseGewaehlt();
-    void grstrasseGewaehlt();
-    void kniffelGewaehlt();
-    void chanceGewaehlt();
 
 
 public:
 signals:
     void besetzt();
-    void wahlEinsen();
-    void wahlZweien();
-    void wahlDreien();
-    void wahlVieren();
-    void wahlFuenfen();
-    void wahlSechsen();
-    void wahlDreierpasch();
-    void wahlViererpasch();
-    void wahlFullHouse();
-    void wahlKlStrasse();
-    void wahlGrStrasse();
-    void wahlKniffel();
-    void wahlChance();
+
 
 private:
     Ui::singleplayerDialog *ui;

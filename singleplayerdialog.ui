@@ -23,7 +23,7 @@
       <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
+      <set>QAbstractItemView::SelectedClicked</set>
      </property>
      <row>
       <property name="text">
