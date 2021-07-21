@@ -13,7 +13,6 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    data::Spielmodus=0; //Die Variable für den Spielmodus setzen
     data::singleSpieler.Spielstand = new int [13]; //Ein Spielstand Feld für den SinglePlayer erstellen
     for (int i=0; i<13; i++) {data::singleSpieler.Spielstand[i]=0;} //Alle Einträge des Spielstandes auf 0 setzen
 

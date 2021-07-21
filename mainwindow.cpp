@@ -52,19 +52,19 @@ void MainWindow::fillBestenliste()
 
         //Nun wird immer eine Zeile zur Bestenliste hinzugefügt und darin in Absteigender Reihenfolge die Punkte und Namen der Plätze 1 bis 5 eingefügt
         ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(data::bestenliste.platz1));
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(data::bestenliste.name1));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz1)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name1)));
         ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(data::bestenliste.platz2));
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(data::bestenliste.name2));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz2)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name2)));
         ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(data::bestenliste.platz3));
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(data::bestenliste.name3));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz3)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name3)));
         ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(data::bestenliste.platz4));
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(data::bestenliste.name4));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz4)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name4)));
         ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(data::bestenliste.platz5));
-        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(data::bestenliste.name5));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz5)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name5)));
 }
 
