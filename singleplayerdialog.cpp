@@ -156,6 +156,7 @@ void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche d
 
 void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Würfelergebnisse an
 {
+    if(data::wievielterWurf==0) for(int i=0; i<5; i++) keep[i] = 0;
     if(data::wievielterWurf<3){     //Man kann nicht mehr als 3 mal würfeln
     rolldice(dice,keep);
     for(int i=0; i<5; i++) keep[i]=0;   //nach jedem Wurf wird das keep Feld wieder mit 0 beschrieben

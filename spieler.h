@@ -13,6 +13,7 @@ class Spieler
         char Name[15];
 
     public:
+        Spieler();
         int Punktzahl;
         int* Spielstand;
         int Endpunktzahl;

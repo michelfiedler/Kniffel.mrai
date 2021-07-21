@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
 
                               if((j==0||j==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
                               {
-                                  write(dice, data::KI.Spielstand, order[12-m_temp]);
+                                  write(dice, data::KI.Spielstand, order[12-m_temp]+1);
                                   j=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
                               }
                               //Nach dem dritten Wurf --------------------------------------------------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
                                       {
                                           if (data::KI.Spielstand[order[12-p]] == 888)
                                           {
-                                              write(dice, data::KI.Spielstand, order[12-p]);
+                                              write(dice, data::KI.Spielstand, order[12-p]+1);
                                               q = 13;
                                           }
                                       }
