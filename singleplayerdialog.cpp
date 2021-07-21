@@ -155,6 +155,11 @@ void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche d
 
 void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Würfelergebnisse an
 {
+    ui->pBW1->setChecked(false);    //Die Buttons für das Behalten werden zurückgesetzt->sie "leuchten" nicht mehr
+    ui->pBW2->setChecked(false);
+    ui->pBW3->setChecked(false);
+    ui->pBW4->setChecked(false);
+    ui->pBW5->setChecked(false);
     if(data::wievielterWurf==0) for(int i=0; i<5; i++) keep[i] = 0;
     if(data::wievielterWurf<3){     //Man kann nicht mehr als 3 mal würfeln
     rolldice(dice,keep);
@@ -171,35 +176,35 @@ void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Wü
 //Slots für das Behalten oder nicht Behalten der Würfel
 void singleplayerDialog::on_pBW1_clicked()
 {
-    if(keep[0]==0)keep[0]=1;
+    if(ui->pBW1->isChecked())keep[0]=1; //Wenn die Buttons gedrückt werden, soll der Würfel behalten werden->der behalten Button "leuchtet" in dem Fall
     else keep[0]=0;
 }
 
 
 void singleplayerDialog::on_pBW2_clicked()
 {
-    if(keep[1]==0)keep[1]=1;
+    if(ui->pBW2->isChecked())keep[1]=1;
     else keep[1]=0;
 }
 
 
 void singleplayerDialog::on_pBW3_clicked()
 {
-    if(keep[2]==0)keep[2]=1;
+    if(ui->pBW3->isChecked())keep[2]=1;
     else keep[2]=0;
 }
 
 
 void singleplayerDialog::on_pBW4_clicked()
 {
-    if(keep[3]==0)keep[3]=1;
+    if(ui->pBW4->isChecked())keep[3]=1;
     else keep[3]=0;
 }
 
 
 void singleplayerDialog::on_pBW5_clicked()
 {
-    if(keep[4]==0)keep[4]=1;
+    if(ui->pBW5->isChecked())keep[4]=1;
     else keep[4]=0;
 }
 

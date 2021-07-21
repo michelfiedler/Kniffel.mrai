@@ -130,12 +130,18 @@
        <property name="text">
         <string>behalten</string>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="pBW1">
        <property name="text">
         <string>behalten</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -144,6 +150,9 @@
        <property name="text">
         <string>behalten</string>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="0" column="2">
@@ -151,12 +160,18 @@
        <property name="text">
         <string>behalten</string>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
       <widget class="QPushButton" name="pBW2">
        <property name="text">
         <string>behalten</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
