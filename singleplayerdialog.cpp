@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QMessageBox>
 #include <QLCDNumber>
+#include <QLabel>
 
 singleplayerDialog::singleplayerDialog(QWidget *parent) :
     QDialog(parent),
@@ -164,11 +165,55 @@ void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Wü
     if(data::wievielterWurf<3){     //Man kann nicht mehr als 3 mal würfeln
     rolldice(dice,keep);
     for(int i=0; i<5; i++) keep[i]=0;   //nach jedem Wurf wird das keep Feld wieder mit 0 beschrieben
-    ui->lcdNumber_1->display(dice[0]);
-    ui->lcdNumber_2->display(dice[1]);
-    ui->lcdNumber_3->display(dice[2]);
-    ui->lcdNumber_4->display(dice[3]);
-    ui->lcdNumber_5->display(dice[4]);
+
+    //Variablen für die Bilder der Würfel anlegen
+    QPixmap augen1 (":/MyImages/imageWuerfel1.png");
+    QPixmap augen2 (":/MyImages/imageWuerfel2.png");
+    QPixmap augen3 (":/MyImages/imageWuerfel3.png");
+    QPixmap augen4 (":/MyImages/imageWuerfel4.png");
+    QPixmap augen5 (":/MyImages/imageWuerfel5.png");
+    QPixmap augen6 (":/MyImages/imageWuerfel6.png");
+
+    //Für den gewürfelten Wert von Würfel 1 das entsprechende Bild einfügen
+    if(dice[0]==1) {ui->qlW1->setPixmap(augen1);}
+    if(dice[0]==2) {ui->qlW1->setPixmap(augen2);}
+    if(dice[0]==3) {ui->qlW1->setPixmap(augen3);}
+    if(dice[0]==4) {ui->qlW1->setPixmap(augen4);}
+    if(dice[0]==5) {ui->qlW1->setPixmap(augen5);}
+    if(dice[0]==6) {ui->qlW1->setPixmap(augen6);}
+
+    //Für den gewürfelten Wert von Würfel 2 das entsprechende Bild einfügen
+    if(dice[1]==1) {ui->qlW2->setPixmap(augen1);}
+    if(dice[1]==2) {ui->qlW2->setPixmap(augen2);}
+    if(dice[1]==3) {ui->qlW2->setPixmap(augen3);}
+    if(dice[1]==4) {ui->qlW2->setPixmap(augen4);}
+    if(dice[1]==5) {ui->qlW2->setPixmap(augen5);}
+    if(dice[1]==6) {ui->qlW2->setPixmap(augen6);}
+
+    //Für den gewürfelten Wert von Würfel 3 das entsprechende Bild einfügen
+    if(dice[2]==1) {ui->qlW3->setPixmap(augen1);}
+    if(dice[2]==2) {ui->qlW3->setPixmap(augen2);}
+    if(dice[2]==3) {ui->qlW3->setPixmap(augen3);}
+    if(dice[2]==4) {ui->qlW3->setPixmap(augen4);}
+    if(dice[2]==5) {ui->qlW3->setPixmap(augen5);}
+    if(dice[2]==6) {ui->qlW3->setPixmap(augen6);}
+
+    //Für den gewürfelten Wert von Würfel 4 das entsprechende Bild einfügen
+    if(dice[3]==1) {ui->qlW4->setPixmap(augen1);}
+    if(dice[3]==2) {ui->qlW4->setPixmap(augen2);}
+    if(dice[3]==3) {ui->qlW4->setPixmap(augen3);}
+    if(dice[3]==4) {ui->qlW4->setPixmap(augen4);}
+    if(dice[3]==5) {ui->qlW4->setPixmap(augen5);}
+    if(dice[3]==6) {ui->qlW4->setPixmap(augen6);}
+
+    //Für den gewürfelten Wert von Würfel 5 das entsprechende Bild einfügen
+    if(dice[4]==1) {ui->qlW5->setPixmap(augen1);}
+    if(dice[4]==2) {ui->qlW5->setPixmap(augen2);}
+    if(dice[4]==3) {ui->qlW5->setPixmap(augen3);}
+    if(dice[4]==4) {ui->qlW5->setPixmap(augen4);}
+    if(dice[4]==5) {ui->qlW5->setPixmap(augen5);}
+    if(dice[4]==6) {ui->qlW5->setPixmap(augen6);}
+
     data::wievielterWurf++;
     }
 }

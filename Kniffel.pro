@@ -28,3 +28,6 @@ FORMS += \
     mainwindow.ui \
     multiplayerdialog.ui \
     singleplayerdialog.ui
+
+RESOURCES += \
+    Resources.qrc

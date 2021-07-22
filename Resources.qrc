@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/MyImages">
+        <file>imageWuerfel1.png</file>
+        <file>imageWuerfel2.png</file>
+        <file>imageWuerfel3.png</file>
+        <file>imageWuerfel4.png</file>
+        <file>imageWuerfel5.png</file>
+        <file>imageWuerfel6.png</file>
+    </qresource>
+</RCC>
