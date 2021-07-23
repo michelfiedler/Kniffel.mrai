@@ -60,26 +60,25 @@ int main(int argc, char *argv[])
 
 
 
-              for (int i=0; i<13; i++) // Durchlaufen der 13 Spielzüge
+              for (int Zug=0; Zug<13; Zug++) // Durchlaufen der 13 Spielzüge
               {
-                  for (int l=0; l<2; l++) // Durchlaufen der einzelnen Spieler, hier gibt es nur zwei!
+                  for (int player=0; player<2; player++) // Durchlaufen der einzelnen Spieler, hier gibt es nur zwei!
                   {
                       //MessageBox wer an der Reihe ist
 
 
-                      if (l==1)
+                      if (player==1)
                       {
-                          for (int j=0; j<5; j++) {keep[j]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
-                          for (int j=0; j<3; j++)                         // Nun beginnen die drei Würfe pro Spieler
+                          for (int i=0; i<5; i++) {keep[i]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
+                          for (int Wurf=0; Wurf<3; Wurf++)                         // Nun beginnen die drei Würfe pro Spieler
                           {
                               rolldice(dice, keep);
-                              for (int j=0; j<5; j++) {keep[j]=0;}            //??? unsicher: muss das keep feld genau hier hin??
+                              for (int i=0; i<5; i++) {keep[i]=0;}            //??? unsicher: muss das keep feld genau hier hin??
                               //----------------------------------------------------------------------------------------------------------------------------------------------
                               //Erster Wurf der KI
 
-                              if(j==0)
+                              if(Wurf==0)
                               {
-                                  cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
                                   Erwartungswerte[0] = ErwartungswertOben1(dice, 1);
                                   Erwartungswerte[1] = ErwartungswertOben1(dice, 2);
                                   Erwartungswerte[2] = ErwartungswertOben1(dice, 3);
@@ -94,23 +93,17 @@ int main(int argc, char *argv[])
                                   Erwartungswerte[11]= ErwartungswertKniffel1(dice);
                                   Erwartungswerte[12]= 0;                                 //Chance
 
-                                  for(int n=0; n<13; n++) cout<<Erwartungswerte[n]<<"   ";
-                                  cout<<endl;
-
                                   sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
 
-                                  for(int n=0; n<13; n++) cout<<order[n]<<"   ";
-                                  cout<<endl;
-
-                                  for (int m=0; m<13; m++)
+                                  for (int i=0; i<13; i++)
                                   {
-                                      if (data::KI.Spielstand[order[12-m]] == 888)
+                                      if (data::KI.Spielstand[order[12-i]] == 888)
                                       {
-                                          m_temp = m;
-                                          setGoal(dice, keep, order[12-m], 0);
-                                          cout<<order[12-m]<<endl;
+                                          m_temp = i;
+                                          setGoal(dice, keep, order[12-i], 0);
+                                          cout<<order[12-i]<<endl;
                                           //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
-                                          m = 13;
+                                          i = 13;
                                       }
                                   }
                               }
@@ -118,9 +111,8 @@ int main(int argc, char *argv[])
                               //--------------------------------------------------------------------------------------------------------------------------------------------
                               //Zweiter Wurf der KI
 
-                              if(j==1)
+                              if(Wurf==1)
                               {
-                                  cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
                                   Erwartungswerte[0] = ErwartungswertOben2(dice, 1);
                                   Erwartungswerte[1] = ErwartungswertOben2(dice, 2);
                                   Erwartungswerte[2] = ErwartungswertOben2(dice, 3);
@@ -135,54 +127,92 @@ int main(int argc, char *argv[])
                                   Erwartungswerte[11]= ErwartungswertKniffel2(dice);
                                   Erwartungswerte[12]= 0;                                 //Chance
 
-                                  for(int n=0; n<13; n++) cout<<Erwartungswerte[n]<<"   ";
-                                  cout<<endl;
-
                                   sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
 
-                                  for(int n=0; n<13; n++) cout<<order[n]<<"   ";
-                                  cout<<endl;
-
-                                  for (int m=0; m<13; m++)
+                                  for (int i=0; i<13; i++)
                                   {
-                                      if (data::KI.Spielstand[order[12-m]] == 888)
+                                      if (data::KI.Spielstand[order[12-i]] == 888)
                                       {
-                                          m_temp = m;
-                                          setGoal(dice, keep, order[12-m], 1);
-                                          cout<<order[12-m]<<endl;
+                                          m_temp = i;
+                                          setGoal(dice, keep, order[12-i], 1);
+                                          cout<<order[12-i]<<endl;
 
                                           //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
-                                          m = 13;
+                                          i = 13;
                                       }
                                   }
                               }
 
 
 
-                              if((j==0||j==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
+                              if((Wurf==0||Wurf==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
                               {
                                   write(dice, data::KI.Spielstand, order[12-m_temp]+1);
-                                  j=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
+                                  Wurf=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
                               }
                               //Nach dem dritten Wurf --------------------------------------------------------------------------------------------------------------------------
-                              if(j==2)
+                              if(Wurf==2)
                               {
-                                  cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
-                                  for (int p=0; p<13; p++)
+                                  for (int i=0; i<13; i++)
                                   {
-                                      write(dice, EintragTemp, p+1);
-                                      sort(EintragTemp, order, 13);
-                                      for (int q=0; q<13; q++)
-                                      {
-                                          if (data::KI.Spielstand[order[12-p]] == 888)
-                                          {
-                                              write(dice, data::KI.Spielstand, order[12-p]+1);
-                                              q = 13;
-                                          }
-                                      }
+                                      write(dice, EintragTemp, i+1);
                                   }
+                                  EintragTemp[12] = 0;
+                                  for(int i=0; i<3; i++) EintragTemp[i]+=9; //Kniffelbonus wird höher gewichtet!
+                                  for(int i=3; i<6; i++) EintragTemp[i]+=7; //damit nicht einer der Päsche eingetragen wird.
+                                  sort(EintragTemp, order, 13);
+
+                                  for (int i=0; i<13; i++)
+                                  {
+                                      if (data::KI.Spielstand[order[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
+                                      {
+                                            //Wenn kein gutes Ergebnis im oberen Zahlenblock vorliegt
+                                            if(order[12-i]<6 && order[12-i]>1 && countN(dice, 5, order[12-i]+1)<3 && Zug<8)
+                                            {
+                                                //Streichpriorisierung
+                                                if (data::KI.Spielstand[12] == 888 && sum(dice, 5)> 15) //Chance
+                                                {
+                                                    write(dice, data::KI.Spielstand, 13);
+                                                    i = 13;
+                                                }
+                                                else if (data::KI.Spielstand[0] == 888) //Einsen eintragen
+                                                {
+                                                    write(dice, data::KI.Spielstand, 1);
+                                                    i = 13;
+                                                }
+                                                else if (data::KI.Spielstand[11] == 888) //Kniffel streichen
+                                                {
+                                                    write(dice, data::KI.Spielstand, 12);
+                                                    i= 13;
+                                                }
+                                                else if (data::KI.Spielstand[7] == 888) //Viererpasch streichen
+                                                {
+                                                    write(dice, data::KI.Spielstand, 8);
+                                                    i = 13;
+                                                }
+                                                else if (data::KI.Spielstand[1] == 888) //Zweien eintragen
+                                                {
+                                                    write(dice, data::KI.Spielstand, 2);
+                                                    i = 13;
+                                                }
+                                                else if (data::KI.Spielstand[10] == 888) //große Straße streichen
+                                                {
+                                                    write(dice, data::KI.Spielstand, 11);
+                                                    i = 13;
+                                                }
+                                            }
+                                                else //Eintragen des "schlechten" Ergebnisses
+                                                {
+                                                    write(dice, data::KI.Spielstand, order[12-i]+1);
+                                                    i = 13;
+                                                }
+                                        }
+
+                                   }
+                                }
+
                               }
-                          }
+
                       }
 
                   }

@@ -1,6 +1,7 @@
 #include "FunktionenKI.h"
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -241,7 +242,7 @@ double ErwartungswertOben1 (int* feld, int zahl)
 {
     //Zählen, wie oft die übergebene Zahl im Würfelfeld vorliegt
     int anzahl = countN(feld, 5, zahl);
-    double erwartungswert = anzahl;
+    double erwartungswert = pow(anzahl, 2.3); //Anzahl wird aufgrund des Kniffelbonus höher gewichtet
 
   /*Die folgende Matrix wird mit allen möglichen Würfelkombinationen beschrieben, welche ich mit zwei Würfen erzielen kann.
     Bezogen wird dies immer auf eine bestimmte Zahl:
@@ -279,7 +280,7 @@ double ErwartungswertOben1 (int* feld, int zahl)
 double ErwartungswertOben2 (int* feld, int zahl)
 {
     int anzahl = countN(feld, 5, zahl);
-    double erwartungswert = anzahl;
+    double erwartungswert = pow(anzahl, 1.7); //Anzahl wird aufgrund des Kniffelbonus höher gewichtet
 
     for(int i=0; i<5-anzahl; i++)
     {
