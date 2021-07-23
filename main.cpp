@@ -162,53 +162,19 @@ int main(int argc, char *argv[])
                                   for(int i=3; i<6; i++) EintragTemp[i]+=7; //damit nicht einer der Päsche eingetragen wird.
                                   sort(EintragTemp, order, 13);
 
-                                  for (int i=0; i<13; i++)
+                                  if(!EintragLetzterWurf(data::KI.Spielstand, order, dice, Zug))
                                   {
-                                      if (data::KI.Spielstand[order[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
+                                      for (int i=0; i<13; i++)
                                       {
-                                            //Wenn kein gutes Ergebnis im oberen Zahlenblock vorliegt
-                                            if(order[12-i]<6 && order[12-i]>1 && countN(dice, 5, order[12-i]+1)<3 && Zug<8)
-                                            {
-                                                //Streichpriorisierung
-                                                if (data::KI.Spielstand[12] == 888 && sum(dice, 5)> 15) //Chance
-                                                {
-                                                    write(dice, data::KI.Spielstand, 13);
-                                                    i = 13;
-                                                }
-                                                else if (data::KI.Spielstand[0] == 888) //Einsen eintragen
-                                                {
-                                                    write(dice, data::KI.Spielstand, 1);
-                                                    i = 13;
-                                                }
-                                                else if (data::KI.Spielstand[11] == 888) //Kniffel streichen
-                                                {
-                                                    write(dice, data::KI.Spielstand, 12);
-                                                    i= 13;
-                                                }
-                                                else if (data::KI.Spielstand[7] == 888) //Viererpasch streichen
-                                                {
-                                                    write(dice, data::KI.Spielstand, 8);
-                                                    i = 13;
-                                                }
-                                                else if (data::KI.Spielstand[1] == 888) //Zweien eintragen
-                                                {
-                                                    write(dice, data::KI.Spielstand, 2);
-                                                    i = 13;
-                                                }
-                                                else if (data::KI.Spielstand[10] == 888) //große Straße streichen
-                                                {
-                                                    write(dice, data::KI.Spielstand, 11);
-                                                    i = 13;
-                                                }
-                                            }
-                                                else //Eintragen des "schlechten" Ergebnisses
-                                                {
-                                                    write(dice, data::KI.Spielstand, order[12-i]+1);
-                                                    i = 13;
-                                                }
-                                        }
+                                          if (data::KI.Spielstand[order[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
+                                          {
+                                              write(dice, order[12-i]+1, data::KI.Spielstand);
+                                              i = 13;
+                                          }
+                                      }
+                                  }
 
-                                   }
+
                                 }
 
                               }
