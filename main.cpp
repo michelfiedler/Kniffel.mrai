@@ -171,7 +171,14 @@ int main(int argc, char *argv[])
                                   for (int p=0; p<13; p++)
                                   {
                                       write(dice, EintragTemp, p+1);
-                                      sort(EintragTemp, order, 13);
+                                  }
+                                  EintragTemp[12] = 0;
+                                  for(int i=0; i<3; i++) EintragTemp[i]+=9; //Kniffelbonus wird höher gewichtet!
+                                  for(int i=3; i<6; i++) EintragTemp[i]+=7; //damit nicht einer der Päsche eingetragen wird.
+                                  sort(EintragTemp, order, 13);
+
+                                  for (int p=0; p<13; p++)
+                                  {
                                       for (int q=0; q<13; q++)
                                       {
                                           if (data::KI.Spielstand[order[12-p]] == 888)
