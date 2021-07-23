@@ -49,6 +49,76 @@ void pick (int* wuerfel, int* behalten, int was, int anz)
     }
 }
 
+bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zug)
+{
+    for(int i=0; i<13; i++)
+    {
+        if (Spielstand[Reihenfolge[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
+        {
+            //Wenn kein gutes Ergebnis für 3en, 4en, 5en oder 6en vorliegt, dieses aber eingetragen werden würde
+            if(Reihenfolge[12-i]<6 && Reihenfolge[12-i]>1 && countN(wuerfel, 5, Reihenfolge[12-i]+1)<3 && Zug<8)
+            {
+                //-----------------------------------------------------------
+                //Streichpriorisierung
+                //liegt kein gutes Ergebnis vor, wird vom der KI häufig ein Ereignis eingetragen, welches nicht schlau ist. Die Streichpriorisierung dient als
+                //Notlösung und fragt nacheinander mögliche Ereignisse ab, die gestrichen werden können
+                //Jeweils wird abgefragt, ob ein Feld schon beschrieben ist. Wenn nicht, wird es beschrieben, die Schleife abgebrochen und true zurückgegeben
+
+                if (Spielstand[12] == 888 && sum(wuerfel, 5)> 15) //Chance eintragen, wenn diese groß genug ist (21 oder mehr)
+                {
+                    write(wuerfel, Spielstand, 13);
+                    i = 13;
+                    return true;
+                }
+                else if (Spielstand[0] == 888) //Einsen eintragen
+                {
+                    write(wuerfel, Spielstand, 1);
+                    i = 13;
+                    return true;
+                }
+                else if (Spielstand[11] == 888) //Kniffel streichen
+                {
+                    write(wuerfel, Spielstand, 12);
+                    i= 13;
+                    return true;
+                }
+                else if (Spielstand[7] == 888) //Viererpasch streichen
+                {
+                    write(wuerfel, Spielstand, 8);
+                    i = 13;
+                    return true;
+                }
+                else if (Spielstand[1] == 888) //Zweien eintragen
+                {
+                    write(wuerfel, Spielstand, 2);
+                    i = 13;
+                    return true;
+                }
+                else if (Spielstand[10] == 888) //große Straße streichen
+                {
+                    write(wuerfel, Spielstand, 11);
+                    i = 13;
+                    return true;
+                }
+                else if (Spielstand[8] == 888) //FullHouse streichen
+                {
+                    write(wuerfel, Spielstand, 9);
+                    i = 13;
+                    return true;
+                }
+
+            }
+            else //Eintragen des Ereignisses
+            {
+                write(wuerfel, Spielstand, Reihenfolge[12-i]+1);
+                i = 13;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
 {
     int* anzahl = new int[6];
