@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
                                                     write(dice, data::KI.Spielstand, 12);
                                                     i= 13;
                                                 }
-                                                else if (data::KI.Spielstand[8] == 888) //Viererpasch streichen
+                                                else if (data::KI.Spielstand[7] == 888) //Viererpasch streichen
                                                 {
                                                     write(dice, data::KI.Spielstand, 8);
                                                     i = 13;
