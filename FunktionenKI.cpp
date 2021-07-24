@@ -190,7 +190,14 @@ void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
     {
         int zwilling = 0;
         int drilling = 0;
-        if (fullhouse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+        if (fullhouse(wuerfel, 5))
+        {
+            for(int i=0; i<5; i++)
+            {
+                behalten[i]=1;
+            }
+            break;
+        }
 
         //Zählen, ob bereits Zwilling (also zwei gleiche Würfel) oder Drillinge (drei gleiche Würfel) vorliegen.
         for (int i = 0; i<6; i++)
