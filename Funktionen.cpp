@@ -250,7 +250,7 @@ void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
     {
       Reihenfolge[i] = i;
       spielerptr[i].Endpunktzahl = sum(spielerptr[i].Spielstand, 13);
-      if(sum(spielerptr[i].Spielstand, 7) > 62) spielerptr[i].Endpunktzahl +=35;
+      if(sum(spielerptr[i].Spielstand, 6) > 62) spielerptr[i].Endpunktzahl +=35;
     }
 
     int temp = 0;
