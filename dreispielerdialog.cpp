@@ -18,7 +18,6 @@ DreiSpielerDialog::~DreiSpielerDialog()
 
 void DreiSpielerDialog::on_buttonBox_accepted()
 {
-    Spieler spieler;
 
     data::spieler[0].mName = ui ->spielerName31->text().trimmed();
     data::spieler[1].mName = ui ->spielerName32->text().trimmed();

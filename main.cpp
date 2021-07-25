@@ -39,28 +39,18 @@ int main(int argc, char *argv[])
 
         if (data::Spielmodus == 0)
         {
-
-            double* Erwartungswerte = new double[13];
-            int* EintragTemp = new int[13];
-            int* order = new int[13];
-            int m_temp = 0;
             char Name[15];
 
-              cout << "Bitte gib deinen Namen ein:" << endl;//In GUI namen eingeben und iwie speichern und hier übergeben
-              cin >> Name;
-              data::singleSpieler.set_Name(Name);
               //data::singleSpieler.Spielstand = new int [13]; ->wird ausgeführt wenn der singlePlayer Dialog gestartet wird // FEHLER REPRODUZIEREN: Diese Zeile löschen!
               //data::singleSpieler.reset_Spielstand();
               //Namen der KI noch beschreiben
-              cout <<"Name der KI"<<endl;
-              cin >> Name;
-              data::KI.set_Name(Name);
+
+
               data::KI.Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
               data::KI.reset_Spielstand();
 
 
-
-              for (int Zug=0; Zug<13; Zug++) // Durchlaufen der 13 Spielzüge
+         /*     for (int Zug=0; Zug<13; Zug++) // Durchlaufen der 13 Spielzüge
               {
                   for (int player=0; player<2; player++) // Durchlaufen der einzelnen Spieler, hier gibt es nur zwei!
                   {
@@ -168,7 +158,7 @@ int main(int argc, char *argv[])
                                    *  soll einfach das ereignis mit dem H´höchstmöglichen Wert eingetragen werden.
                                    *      ÜBRIGENS: Das Ereignis mit dem höchstmöclichen Wert ist NICHT immer automatisch die beste Wahl, da es dadurch möglicherweise
                                    *      nicht mehr möglich ist, den Bonus zu erhalten!
-                                   */
+
                                   if(!EintragLetzterWurf(data::KI.Spielstand, order, dice, Zug))
                                   {
                                       for (int i=0; i<13; i++)
@@ -189,12 +179,9 @@ int main(int argc, char *argv[])
                       }
 
                   }
-              }
+              }*/
 
-              delete[] Erwartungswerte;
-              Erwartungswerte = NULL;
-              delete[] EintragTemp;
-              EintragTemp = NULL;
+
               /*delete [] data::singleSpieler.Spielstand;
               data::singleSpieler.Spielstand = NULL;*/
         }

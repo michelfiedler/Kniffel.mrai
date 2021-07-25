@@ -18,7 +18,6 @@ SiebenSpielerDialog::~SiebenSpielerDialog()
 
 void SiebenSpielerDialog::on_buttonBox_accepted()
 {
-    Spieler spieler;
 
 
     data::spieler[0].mName = ui ->spielerName71->text().trimmed();      //Die eingegebenen Namen werden gespeichert.

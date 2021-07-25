@@ -242,7 +242,7 @@ void write (int* wuerfel, int* blatt, int was)  //Funktion schreibt die Punkte i
 }
 
 
-void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
+/*void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
 {
     int* Reihenfolge = new int[Spieleranzahl];
 
@@ -285,4 +285,4 @@ void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
     }
 
     cout << "Herzlichen Glueckwunsch  " << spielerptr[Reihenfolge[Spieleranzahl-1]].get_Name() << "!  Du hast gewonnen." << endl;
-}
+}*/

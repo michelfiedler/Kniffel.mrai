@@ -18,10 +18,9 @@ ZweiSpielerDialog::~ZweiSpielerDialog()
 
 void ZweiSpielerDialog::on_buttonBox_accepted()
 {
-    Spieler spieler;
 
     data::spieler[0].mName = ui ->nameEins->text().trimmed();               //Die eingegebenen Namen werden gespeichert.
-    data::spieler[1].mName = ui ->name22->text().trimmed();
+    data::spieler[1].mName = ui ->spielerName22->text().trimmed();
 
     this->close();
 }

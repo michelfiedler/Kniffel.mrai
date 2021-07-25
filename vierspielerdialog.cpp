@@ -18,7 +18,6 @@ VierSpielerDialog::~VierSpielerDialog()
 
 void VierSpielerDialog::on_buttonBox_accepted()
 {
-    Spieler spieler;
 
     data::spieler[0].mName = ui ->spielerName41->text().trimmed();
     data::spieler[1].mName = ui ->spielerName42->text().trimmed();

@@ -7,8 +7,7 @@ using namespace std;
 //Konstruktordefinition
 Spieler::Spieler()
 {
-    Spielstand = new int [13];
-    Spielstand = NULL;
+
 }
 //Methodendefinitionen
 

@@ -16,6 +16,7 @@ SOURCES += \
         sechsspielerdialog.cpp \
         siebenspielerdialog.cpp \
         singleplayerdialog.cpp \
+        spieler.cpp \
         vierspielerdialog.cpp \
         zweispielerdialog.cpp
 

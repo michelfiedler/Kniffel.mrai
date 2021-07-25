@@ -18,7 +18,6 @@ FuenfSpielerDialog::~FuenfSpielerDialog()
 
 void FuenfSpielerDialog::on_buttonBox_accepted()
 {
-    Spieler spieler;
 
     data::spieler[0].mName = ui ->spielerName51->text().trimmed();
     data::spieler[1].mName = ui ->spielerName52->text().trimmed();

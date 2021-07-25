@@ -18,6 +18,7 @@ public:
     static int wievielterWurf;
     static int spieleranzahl;
     static Spieler* spieler;
+    static int Zug;
 };
 
 #endif // DATA_H

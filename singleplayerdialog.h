@@ -34,11 +34,13 @@ private slots:
 
 public slots:
     void neuWaehlen();
+    void KIZug();
 
 
 public:
 signals:
     void besetzt();
+    void KIistdran();
 
 
 private:

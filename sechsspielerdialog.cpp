@@ -18,7 +18,6 @@ SechsSpielerDialog::~SechsSpielerDialog()
 
 void SechsSpielerDialog::on_buttonBox_accepted()
 {
-    Spieler spieler;
 
     data::spieler[0].mName = ui ->spielerName61->text().trimmed();
     data::spieler[1].mName = ui ->spielerName62->text().trimmed();

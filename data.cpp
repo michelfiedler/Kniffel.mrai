@@ -11,4 +11,6 @@ Spieler data::KI;
 int data::Spielmodus=0;
 int data::wievielterWurf=0;
 int data::spieleranzahl=0;
+int data::Zug=0;
 Spieler* data::spieler;
+
