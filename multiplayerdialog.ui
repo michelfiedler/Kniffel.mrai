@@ -14,20 +14,32 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="3" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Anzahl Spieler angeben:</string>
+      <string>Namen eintragen:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="pBNamenEintragen">
+     <property name="text">
+      <string>Ok</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="cBSpieleranzahl">
-     <item>
-      <property name="text">
-       <string>1 Spieler</string>
-      </property>
-     </item>
      <item>
       <property name="text">
        <string>2 Spieler</string>
@@ -60,17 +72,55 @@
      </item>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QTableView" name="tBSpielernamen"/>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Anzahl Spieler angeben:</string>
+     </property>
+    </widget>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
+   <item row="2" column="0">
+    <widget class="QTableWidget" name="tBSpielernamen">
+     <row>
+      <property name="text">
+       <string>Spieler 1</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>Spieler 2</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>Spieler 3</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>Spieler 4</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>Spieler 5</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>Spieler 6</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>Spieler 7</string>
+      </property>
+     </row>
+     <column>
+      <property name="text">
+       <string>Namen</string>
+      </property>
+     </column>
     </widget>
    </item>
   </layout>

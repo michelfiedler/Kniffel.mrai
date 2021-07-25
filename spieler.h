@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include  <QString>
 using namespace std;
 
 //Klassendefinition
@@ -11,6 +12,14 @@ class Spieler
 {
     public:             //muss public sein, um ihn für die Bestenliste neu zuordnen zu können
         char Name[15];
+        enum eSpieleranzahl{
+            Zwei,
+            Drei,
+            Vier,
+            Fuenf,
+            Sechs,
+            Sieben};
+
 
     public:
         Spieler();
@@ -23,6 +32,15 @@ class Spieler
         void showscore();
         void reset_Spielstand();
         int getSpielstand(int);
+
+        QString mName1;
+        QString mName2;
+        QString mName3;
+        QString mName4;
+        QString mName5;
+        QString mName6;
+        QString mName7;
+
 };
 
 
