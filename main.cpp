@@ -162,13 +162,20 @@ int main(int argc, char *argv[])
                                   for(int i=3; i<6; i++) EintragTemp[i]+=7; //damit nicht einer der Päsche eingetragen wird.
                                   sort(EintragTemp, order, 13);
 
+                                  /*  Die Funktion EintragLetzterWurf trägt den möglicherweise besten Wert ein und gibt true zurück, falls ein wert eingrtragen wurde.
+                                   *  Da Sie Funktion viele if-Schaltungen enthält, laufen die Abfragen in wenigen Spezialfällen ins Leere und es kann vorkommen,
+                                   *  dass kein Wert ins Gewinnblatt eingetragen wird. Um diesen Bug zu verhindern, wird abgefragt, ob etwas eingetragen wurde. Falls nicht,
+                                   *  soll einfach das ereignis mit dem H´höchstmöglichen Wert eingetragen werden.
+                                   *      ÜBRIGENS: Das Ereignis mit dem höchstmöclichen Wert ist NICHT immer automatisch die beste Wahl, da es dadurch möglicherweise
+                                   *      nicht mehr möglich ist, den Bonus zu erhalten!
+                                   */
                                   if(!EintragLetzterWurf(data::KI.Spielstand, order, dice, Zug))
                                   {
                                       for (int i=0; i<13; i++)
                                       {
                                           if (data::KI.Spielstand[order[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
                                           {
-                                              write(dice, order[12-i]+1, data::KI.Spielstand);
+                                              write(dice, data::KI.Spielstand, order[12-i]+1);
                                               i = 13;
                                           }
                                       }
