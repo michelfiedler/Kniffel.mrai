@@ -2,6 +2,7 @@
 #include "ui_sechsspielerdialog.h"
 
 #include "spieler.h"
+#include "data.h"
 
 SechsSpielerDialog::SechsSpielerDialog(QWidget *parent) :
     QDialog(parent),
@@ -19,12 +20,14 @@ void SechsSpielerDialog::on_buttonBox_accepted()
 {
     Spieler spieler;
 
-    spieler.mName1 = ui ->spielerName61->text().trimmed();              //Die eingegebenen Namen werden gespeichert.
-    spieler.mName2 = ui ->spielerName62->text().trimmed();
-    spieler.mName3 = ui ->spielerName63->text().trimmed();
-    spieler.mName4 = ui ->spielerName64->text().trimmed();
-    spieler.mName5 = ui ->spielerName65->text().trimmed();
-    spieler.mName6 = ui ->spielerName66->text().trimmed();
+    data::spieler[0].mName = ui ->spielerName61->text().trimmed();
+    data::spieler[1].mName = ui ->spielerName62->text().trimmed();
+    data::spieler[2].mName = ui ->spielerName63->text().trimmed();
+    data::spieler[3].mName = ui ->spielerName64->text().trimmed();
+    data::spieler[4].mName = ui ->spielerName65->text().trimmed();
+    data::spieler[5].mName = ui ->spielerName66->text().trimmed();
+
+
 
     this->close();
 }

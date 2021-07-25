@@ -8,8 +8,10 @@
 #include "fuenfspielerdialog.h"
 #include "sechsspielerdialog.h"
 #include "siebenspielerdialog.h"
-#include "QTableWidget"
 
+#include "QTableWidget"
+#include "data.h"
+#include <QString>
 MultiplayerDialog::MultiplayerDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MultiplayerDialog)
@@ -28,17 +30,19 @@ MultiplayerDialog::~MultiplayerDialog()
 void MultiplayerDialog::on_pBNamenEintragen_clicked()
 {
 
-    int mSpieleranzahl = (Spieler::eSpieleranzahl) ui-> cBSpieleranzahl->currentIndex(); // Die Anzahl der Spieler wird in der Combobox angegen
-                                                                                         //und in der Variable mSpieleranzahl gespeichert.
+    data::spieleranzahl = (Spieler::eSpieleranzahl) ui-> cBSpieleranzahl->currentIndex(); // Die Anzahl der Spieler wird in der Combobox angegen
+                                                                                        //und in der Variable mSpieleranzahl gespeichert.
 
+    data::spieler = new Spieler[data::spieleranzahl];
 
-    switch (mSpieleranzahl)             //Abhängigt von der Spieleranzahl öffnet sich ein neues Fenster, in der passend zur Anzahl der Spieler die Namen eingetragen werden können
+    switch (data::spieleranzahl)             //Abhängigt von der Spieleranzahl öffnet sich ein neues Fenster, in der passend zur Anzahl der Spieler die Namen eingetragen werden können
     {
         case 0:                     //Das Fenster zur Eingabe von zwei Spielernamen öffnet sich.
         {
             ZweiSpielerDialog* zweiSpielerDialog = new ZweiSpielerDialog(this);
             zweiSpielerDialog->show();
-             break;
+
+            break;
 
         }
 
@@ -79,7 +83,7 @@ void MultiplayerDialog::on_pBNamenEintragen_clicked()
 
 }
 
-/*void MultiplayerDialog::fillNameTable()
+void MultiplayerDialog::fillNameTable()
 {
     int mSpieleranzahl = (Spieler::eSpieleranzahl) ui-> cBSpieleranzahl->currentIndex();
 
@@ -92,47 +96,87 @@ void MultiplayerDialog::on_pBNamenEintragen_clicked()
             ui->tBSpielernamen->setRowCount(0);
 
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidgetItem(QString(data::spieler[0].mName)));
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName2));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,1, new QTableWidgetItem(QString(data::spieler[1].mName)));
+
         }
     case 1:
         {
             ui->tBSpielernamen->setRowCount(0);
 
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidgetItem(QString(data::spieler[0].mName)));
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,1, new QTableWidgetItem(QString(data::spieler[1].mName)));
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,2, new QTableWidgetItem(QString(data::spieler[2].mName)));
         }
     case 2:
         {
             ui->tBSpielernamen->setRowCount(0);
 
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidgetItem(QString(data::spieler[0].mName)));
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,1, new QTableWidgetItem(QString(data::spieler[1].mName)));
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,2, new QTableWidgetItem(QString(data::spieler[2].mName)));
             ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
-            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,3, new QTableWidgetItem(QString(data::spieler[3].mName)));
 
         }
     case 3:
         {
             ui->tBSpielernamen->setRowCount(0);
+
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidgetItem(QString(data::spieler[0].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,1, new QTableWidgetItem(QString(data::spieler[1].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,2, new QTableWidgetItem(QString(data::spieler[2].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,3, new QTableWidgetItem(QString(data::spieler[3].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,4, new QTableWidgetItem(QString(data::spieler[4].mName)));
         }
 
     case 4:
         {
             ui->tBSpielernamen->setRowCount(0);
+
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidgetItem(QString(data::spieler[0].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,1, new QTableWidgetItem(QString(data::spieler[1].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,2, new QTableWidgetItem(QString(data::spieler[2].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,3, new QTableWidgetItem(QString(data::spieler[3].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,4, new QTableWidgetItem(QString(data::spieler[4].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,5, new QTableWidgetItem(QString(data::spieler[5].mName)));
         }
     case 5:
         {
             ui->tBSpielernamen->setRowCount(0);
+
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidgetItem(QString(data::spieler[0].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,1, new QTableWidgetItem(QString(data::spieler[1].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,2, new QTableWidgetItem(QString(data::spieler[2].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,3, new QTableWidgetItem(QString(data::spieler[3].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,4, new QTableWidgetItem(QString(data::spieler[4].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,5, new QTableWidgetItem(QString(data::spieler[5].mName)));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,6, new QTableWidgetItem(QString(data::spieler[6].mName)));
         }
 
     }
@@ -141,5 +185,5 @@ void MultiplayerDialog::on_pBNamenEintragen_clicked()
 
 
 
-}*/
+}
 

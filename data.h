@@ -16,6 +16,8 @@ public:
     static Spieler KI;
     static int Spielmodus;
     static int wievielterWurf;
+    static int spieleranzahl;
+    static Spieler* spieler;
 };
 
 #endif // DATA_H

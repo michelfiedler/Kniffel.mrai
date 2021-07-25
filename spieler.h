@@ -33,13 +33,8 @@ class Spieler
         void reset_Spielstand();
         int getSpielstand(int);
 
-        QString mName1;
-        QString mName2;
-        QString mName3;
-        QString mName4;
-        QString mName5;
-        QString mName6;
-        QString mName7;
+        QString mName;
+
 
 };
 

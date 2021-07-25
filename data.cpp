@@ -10,3 +10,5 @@ Spieler data::singleSpieler;        //Objekt singleSpieler erstellen vom Typ Spi
 Spieler data::KI;
 int data::Spielmodus=0;
 int data::wievielterWurf=0;
+int data::spieleranzahl=0;
+Spieler* data::spieler;
