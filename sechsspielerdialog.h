@@ -15,6 +15,9 @@ public:
     explicit SechsSpielerDialog(QWidget *parent = nullptr);
     ~SechsSpielerDialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::SechsSpielerDialog *ui;
 };

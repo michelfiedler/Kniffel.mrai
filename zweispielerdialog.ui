@@ -46,7 +46,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Bitte trage die Namen der Spieler ein.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="nameEins"/>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
@@ -74,14 +74,14 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit_2"/>
+     <widget class="QLineEdit" name="spielerName22"/>
     </item>
    </layout>
   </widget>
  </widget>
  <tabstops>
   <tabstop>textBrowser</tabstop>
-  <tabstop>lineEdit</tabstop>
+  <tabstop>nameEins</tabstop>
  </tabstops>
  <resources/>
  <connections>

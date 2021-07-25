@@ -15,6 +15,9 @@ public:
     explicit VierSpielerDialog(QWidget *parent = nullptr);
     ~VierSpielerDialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::VierSpielerDialog *ui;
 };

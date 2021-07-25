@@ -8,6 +8,7 @@
 #include "fuenfspielerdialog.h"
 #include "sechsspielerdialog.h"
 #include "siebenspielerdialog.h"
+#include "QTableWidget"
 
 MultiplayerDialog::MultiplayerDialog(QWidget *parent) :
     QDialog(parent),
@@ -77,4 +78,68 @@ void MultiplayerDialog::on_pBNamenEintragen_clicked()
 
 
 }
+
+/*void MultiplayerDialog::fillNameTable()
+{
+    int mSpieleranzahl = (Spieler::eSpieleranzahl) ui-> cBSpieleranzahl->currentIndex();
+
+
+
+    switch (mSpieleranzahl)
+    {
+    case 0:
+        {
+            ui->tBSpielernamen->setRowCount(0);
+
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName2));
+        }
+    case 1:
+        {
+            ui->tBSpielernamen->setRowCount(0);
+
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+        }
+    case 2:
+        {
+            ui->tBSpielernamen->setRowCount(0);
+
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+            ui->tBSpielernamen->insertRow(ui->tBSpielernamen->rowCount());
+            ui->tBSpielernamen->setItem(ui->tBSpielernamen->rowCount() -1,0, new QTableWidget(spieler.mName1));
+
+        }
+    case 3:
+        {
+            ui->tBSpielernamen->setRowCount(0);
+        }
+
+    case 4:
+        {
+            ui->tBSpielernamen->setRowCount(0);
+        }
+    case 5:
+        {
+            ui->tBSpielernamen->setRowCount(0);
+        }
+
+    }
+
+
+
+
+
+}*/
 

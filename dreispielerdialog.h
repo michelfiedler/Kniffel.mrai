@@ -15,6 +15,9 @@ public:
     explicit DreiSpielerDialog(QWidget *parent = nullptr);
     ~DreiSpielerDialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::DreiSpielerDialog *ui;
 };

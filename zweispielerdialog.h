@@ -15,6 +15,9 @@ public:
     explicit ZweiSpielerDialog(QWidget *parent = nullptr);
     ~ZweiSpielerDialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::ZweiSpielerDialog *ui;
 };

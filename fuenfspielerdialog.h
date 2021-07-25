@@ -15,6 +15,9 @@ public:
     explicit FuenfSpielerDialog(QWidget *parent = nullptr);
     ~FuenfSpielerDialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::FuenfSpielerDialog *ui;
 };
