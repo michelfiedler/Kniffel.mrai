@@ -17,7 +17,10 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
 
 
     data::singleSpieler.Spielstand = new int [13]; //Ein Spielstand Feld für den SinglePlayer erstellen
-    for (int i=0; i<13; i++) {data::singleSpieler.Spielstand[i]=0;} //Alle Einträge des Spielstandes auf 0 setzen
+    data::singleSpieler.reset_Spielstand();
+    data::KI.Spielstand = new int[13];
+    data::KI.reset_Spielstand();
+    //for (int i=0; i<13; i++) {data::singleSpieler.Spielstand[i]=0;} //Alle Einträge des Spielstandes auf 0 setzen
 
     QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);    //Der Slot neuWaehlen und das Signal besetzt werden verknüpft
     QObject::connect(this, &singleplayerDialog::KIistdran, this, &singleplayerDialog::KIZug);
@@ -52,7 +55,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(0,0))) { write (dice, data::singleSpieler.Spielstand, 1); //Testen, ob schon ein Item existiert und wenn nicht, den Spielstand beschreiben
                 QTableWidgetItem *item= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[0])); //ein Item für die Tabelle erstellen und den Eintrag in einen integer umwandeln, um die Punkte des Spielstandes einzutragen
-                ui->tW_SpielstandSingle->setItem(0,0, item);} //Das Item in die Tabelle einfügen
+                ui->tW_SpielstandSingle->setItem(0,0, item);
+                emit KIistdran();
+            } //Das Item in die Tabelle einfügen
             else {emit besetzt();}            //Signal für erneute Feldauswahl, falls in diesem Feld schon Punkte eingetragen wurden
 
         }
@@ -60,7 +65,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(1,0))) {write (dice, data::singleSpieler.Spielstand, 2);
                 QTableWidgetItem *item1= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[1]));
-                ui->tW_SpielstandSingle->setItem (1,0,item1);}
+                ui->tW_SpielstandSingle->setItem (1,0,item1);
+                emit KIistdran();
+            }
             else {emit besetzt();}
 
         }
@@ -68,7 +75,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(2,0))) {write (dice, data::singleSpieler.Spielstand, 3);
                 QTableWidgetItem *item2= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[2]));
-                ui->tW_SpielstandSingle->setItem (2,0,item2);}
+                ui->tW_SpielstandSingle->setItem (2,0,item2);
+                emit KIistdran();
+            }
             else {emit besetzt();}
 
         }
@@ -76,7 +85,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(3,0))) {write (dice, data::singleSpieler.Spielstand, 4);
                 QTableWidgetItem *item3= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[3]));
-                ui->tW_SpielstandSingle->setItem (3,0,item3);}
+                ui->tW_SpielstandSingle->setItem (3,0,item3);
+                emit KIistdran();
+            }
             else {emit besetzt();}
 
         }
@@ -84,7 +95,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(4,0))) {write (dice, data::singleSpieler.Spielstand, 5);
                 QTableWidgetItem *item4= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[4]));
-                ui->tW_SpielstandSingle->setItem (4,0,item4);}
+                ui->tW_SpielstandSingle->setItem (4,0,item4);
+                emit KIistdran();
+            }
             else {emit besetzt();}
 
         }
@@ -92,7 +105,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(5,0))) {write (dice, data::singleSpieler.Spielstand, 6);
                 QTableWidgetItem *item5= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[5]));
-                ui->tW_SpielstandSingle->setItem (5,0,item5);}
+                ui->tW_SpielstandSingle->setItem (5,0,item5);
+                emit KIistdran();
+            }
             else {emit besetzt();}
 
         }
@@ -100,7 +115,9 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(6,0))) {write (dice, data::singleSpieler.Spielstand, 7);
                 QTableWidgetItem *item6= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[6]));
-                ui->tW_SpielstandSingle->setItem(6,0,item6);}
+                ui->tW_SpielstandSingle->setItem(6,0,item6);
+                emit KIistdran();
+            }
             else {emit besetzt();}
 
         }
@@ -108,48 +125,59 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
         {
             if (!(ui->tW_SpielstandSingle->item(7,0))) {write (dice, data::singleSpieler.Spielstand, 8);
                 QTableWidgetItem *item7= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[7]));
-                ui->tW_SpielstandSingle->setItem(7,0,item7);}
+                ui->tW_SpielstandSingle->setItem(7,0,item7);
+                emit KIistdran();
+            }
             else {emit besetzt();}
         }
         else if (row==8) //FullHouse
         {
            if (!(ui->tW_SpielstandSingle->item(8,0))) {write (dice, data::singleSpieler.Spielstand, 9);
                QTableWidgetItem *item8= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[8]));
-                ui->tW_SpielstandSingle->setItem(8,0,item8);}
+                ui->tW_SpielstandSingle->setItem(8,0,item8);
+            emit KIistdran();
+           }
            else {emit besetzt();}
         }
         else if (row==9) //kl Strasse
         {
             if (!(ui->tW_SpielstandSingle->item(9,0))) {write (dice, data::singleSpieler.Spielstand, 10);
                 QTableWidgetItem *item9= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[9]));
-                ui->tW_SpielstandSingle->setItem(9,0,item9);}
+                ui->tW_SpielstandSingle->setItem(9,0,item9);
+                emit KIistdran();
+            }
             else {emit besetzt();}
         }
         else if (row==10) //gr Strasse
         {
             if (!(ui->tW_SpielstandSingle->item(10,0))) {write (dice, data::singleSpieler.Spielstand, 11);
                 QTableWidgetItem *item10= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[10]));
-                ui->tW_SpielstandSingle->setItem(10,0,item10);}
+                ui->tW_SpielstandSingle->setItem(10,0,item10);
+                emit KIistdran();
+            }
             else {emit besetzt();}
         }
         else if (row==11) //Kniffel
         {
             if (!(ui->tW_SpielstandSingle->item(11,0))) {write (dice, data::singleSpieler.Spielstand, 12);
                 QTableWidgetItem *item11= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[11]));
-                ui->tW_SpielstandSingle->setItem(11,0,item11);}
+                ui->tW_SpielstandSingle->setItem(11,0,item11);
+                emit KIistdran();
+            }
             else {emit besetzt();}
         }
         else if (row==12) //Chance
         {
             if (!(ui->tW_SpielstandSingle->item(12,0))) {write (dice, data::singleSpieler.Spielstand, 13);
                 QTableWidgetItem *item12= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[12]));
-                ui->tW_SpielstandSingle->setItem(12,0,item12);}
+                ui->tW_SpielstandSingle->setItem(12,0,item12);
+                emit KIistdran();
+            }
             else {emit besetzt();}
         }
     }
     else {emit besetzt();}        //Signal für erneute Feldauswahl
 
-    emit KIistdran();
 }
 
 void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
@@ -348,7 +376,6 @@ void singleplayerDialog::KIZug()
                     {
                         m_temp = i;
                         setGoal(dice, keep, order[12-i], 0);
-                        cout<<order[12-i]<<endl;
                         //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
                         i = 13;
                     }
@@ -382,7 +409,6 @@ void singleplayerDialog::KIZug()
                     {
                         m_temp = i;
                         setGoal(dice, keep, order[12-i], 1);
-                        cout<<order[12-i]<<endl;
 
                         //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
                         i = 13;
@@ -391,7 +417,7 @@ void singleplayerDialog::KIZug()
             }
 
 
-
+            //Vorzeitig ein Ziel erreicht --------------------------------------------------------------------------------------------------------------------
             if((Wurf==0||Wurf==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
             {
                 write(dice, data::KI.Spielstand, order[12-m_temp]+1);
@@ -427,6 +453,7 @@ void singleplayerDialog::KIZug()
                             write(dice, data::KI.Spielstand, order[12-i]+1);
                             i = 13;
                             ui->tW_SpielstandSingle->setItem(order[12-i],1,new QTableWidgetItem(QString::number(data::KI.Spielstand[order[12-i]])));
+
                         }
                     }
                 }
