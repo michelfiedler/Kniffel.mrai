@@ -36,6 +36,34 @@ singleplayerDialog::~singleplayerDialog()
 
 }
 
+void singleplayerDialog::refreshTable()
+{
+    for(int i=0; i<13; i++)
+    {
+        if(data::singleSpieler.Spielstand[i] == 888)
+        {
+            ui->tW_SpielstandSingle->setItem(i, 0, new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[i])));
+        }
+        else
+        {
+            ui->tW_SpielstandSingle->setItem(i, 0, new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[i])));
+        }
+
+        if(data::KI.Spielstand[i] == 888)
+        {
+            ui->tW_SpielstandSingle->setItem(i, 1, new QTableWidgetItem(QString::number(data::KI.Spielstand[i])));
+        }
+        else
+        {
+            ui->tW_SpielstandSingle->setItem(i, 1, new QTableWidgetItem(QString::number(data::KI.Spielstand[i])));
+        }
+    }
+
+
+    //ui->tW_SpielstandSingle->setItem(order[12-m_temp],1,new QTableWidgetItem(QString::number(data::KI.Spielstand[order[12-m_temp]])));
+
+}
+
 
 //Slots
 
@@ -44,7 +72,7 @@ void singleplayerDialog::on_buttonBox_rejected()        //Der SingleplayerModus 
     this->close();
 }
 
-void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)    //Wenn ein besetimmtes Feld im Gewinnblatt geklickt wird, soll der entsprechende Spielstand eingetragen werden
+/*void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)    //Wenn ein besetimmtes Feld im Gewinnblatt geklickt wird, soll der entsprechende Spielstand eingetragen werden
 {
     ui->tW_SpielstandSingle->setSortingEnabled(false);  //Sortieren der Tabelle abschalten
 
@@ -178,6 +206,25 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
     }
     else {emit besetzt();}        //Signal für erneute Feldauswahl
 
+}*/
+
+
+
+void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)    //Wenn ein besetimmtes Feld im Gewinnblatt geklickt wird, soll der entsprechende Spielstand eingetragen werden
+{
+    ui->tW_SpielstandSingle->setSortingEnabled(false);  //Sortieren der Tabelle abschalten
+
+    if (column!=1)       //Dafür sorgen, dass nur ins Spieler-Feld und nicht ins KI-Feld eingetragen wird
+    {
+        if (data::singleSpieler.Spielstand[row] == 888) { write (dice, data::singleSpieler.Spielstand, row+1); //Testen, ob schon ein Item existiert und wenn nicht, den Spielstand beschreiben
+            QTableWidgetItem *item= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[row])); //ein Item für die Tabelle erstellen und den Eintrag in einen integer umwandeln, um die Punkte des Spielstandes einzutragen
+            ui->tW_SpielstandSingle->setItem(row,0, item);
+            emit KIistdran();
+        } //Das Item in die Tabelle einfügen
+        else {emit besetzt();}            //Signal für erneute Feldauswahl, falls in diesem Feld schon Punkte eingetragen wurden
+    }
+    else {emit besetzt();}        //Signal für erneute Feldauswahl
+
 }
 
 void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
@@ -306,6 +353,7 @@ void singleplayerDialog::KIZug()
         for (int i=0; i<5; i++) {keep[i]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
         for (int Wurf=0; Wurf<3; Wurf++)                         // Nun beginnen die drei Würfe pro Spieler
         {
+
             rolldice(dice, keep);
 
             //Für den gewürfelten Wert von Würfel 1 das entsprechende Bild einfügen
@@ -463,6 +511,7 @@ void singleplayerDialog::KIZug()
 
             }
         data::Zug++;
+        refreshTable();
 
 
         delete[] Erwartungswerte;
