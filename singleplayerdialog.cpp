@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QLCDNumber>
 #include <QLabel>
+#include <windows.h>
 
 singleplayerDialog::singleplayerDialog(QWidget *parent) :
     QDialog(parent),
@@ -396,6 +397,9 @@ void singleplayerDialog::KIZug()
             if(dice[4]==5) {ui->qlW5->setPixmap(KIaugen5);}
             if(dice[4]==6) {ui->qlW5->setPixmap(KIaugen6);}
 
+            //Sleep(3000);
+
+
             for (int i=0; i<5; i++) {keep[i]=0;}            //??? unsicher: muss das keep feld genau hier hin??
             //----------------------------------------------------------------------------------------------------------------------------------------------
             //Erster Wurf der KI
@@ -513,6 +517,8 @@ void singleplayerDialog::KIZug()
         data::Zug++;
         refreshTable();
 
+        for(int i=0; i<5; i++) keep[i] = 0;
+        singleplayerDialog::on_pBwuerfeln_clicked();
 
         delete[] Erwartungswerte;
         Erwartungswerte = NULL;
