@@ -343,6 +343,8 @@ void singleplayerDialog::KIZug()
     int* order = new int[13];
     int m_temp = 0;
 
+    cout<<endl<<"testtestTESTTESTTESTTEST"<<endl<<endl<<endl;
+
     //Variablen für die Bilder der Würfel anlegen
     QPixmap KIaugen1 (":/MyImages/imageWuerfel1.png");
     QPixmap KIaugen2 (":/MyImages/imageWuerfel2.png");

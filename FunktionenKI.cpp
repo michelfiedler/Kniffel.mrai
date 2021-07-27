@@ -218,7 +218,7 @@ void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
             if (zwilling == 2 && drilling == 0)
             {
                 int ZW1 = 0;
-                for (int i=0; i<6; i++)
+                for (int i=0; i<5; i++)
                 {
                     if (anzahl[ZW1] < anzahl[i+1])
                     {
@@ -236,7 +236,26 @@ void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
     }
     case 9:
     {
-        if(klstrasse(wuerfel, 5)) for(int i=0; i<5; i++) behalten[i]=1;
+        if(klstrasse(wuerfel, 5)) //damit er noch die Chance auf die große Straße behält
+        {
+            pick(wuerfel, behalten, 3, 1);
+            pick(wuerfel, behalten, 4, 1);
+            if(countN(wuerfel, 5, 2) && countN(wuerfel, 5, 5))
+            {
+                pick(wuerfel, behalten, 2, 1);
+                pick(wuerfel, behalten, 5, 1);
+            }
+            else if(countN(wuerfel, 5, 2) && countN(wuerfel, 5, 1))
+            {
+                pick(wuerfel, behalten, 2, 1);
+                pick(wuerfel, behalten, 1, 1);
+            }
+            else if(countN(wuerfel, 5, 5) && countN(wuerfel, 5, 6))
+            {
+                pick(wuerfel, behalten, 5, 1);
+                pick(wuerfel, behalten, 6, 1);
+            }
+        }
         else
         {
             pick(wuerfel, behalten, 3, 1);
@@ -374,7 +393,7 @@ double ErwartungswertDreierPasch1 (int* feld)
     //Zählen der jeweils vorliegenden Würfel
     for (int i=0; i<6; i++)
     {
-       anzahl[i] = countN(feld, 5, i);
+       anzahl[i] = countN(feld, 5, i+1);
     }
 
     int mostFrqN = maxindex(anzahl,6)+1;
@@ -424,7 +443,7 @@ double ErwartungswertDreierPasch2 (int* feld)
 
     for (int i=0; i<6; i++)
     {
-       anzahl[i] = countN(feld, 5, i);
+       anzahl[i] = countN(feld, 5, i+1);
     }
 
     int mostFrqN = maxindex(anzahl,6)+1;
@@ -461,7 +480,8 @@ double ErwartungswertDreierPasch2 (int* feld)
             if (anzahl[3]%3 == 0 && anzahl[4]%3 == 0 && anzahl[5]%3 == 2) return 12 + 3*mostFrqN;
             if (anzahl[3]%3 == 1 && anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 9 + 3*mostFrqN;
             if (anzahl[3]%3 == 0 && anzahl[4]%3 == 1 && anzahl[5]%3 == 1) return 11 + 3*mostFrqN;
-            if (anzahl[3]%3 == 1 && anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 12 + 3*mostFrqN;
+            if (anzahl[3]%3 == 1 && anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 10 + 3*mostFrqN;
+            else return 0;
             break;
         }
     }
@@ -627,6 +647,8 @@ double ErwartungswertFullhouse2 (int* feld) //Selbes Vorgehen wie oben, nur nach
 
 double ErwartungswertklStrasse1 (int* feld)
 {
+    if (klstrasse(feld,5)) return 30;           //Falls kleine Straße schon vorhanden: Erwartungswert ist 30
+
     //Die folgenden Variablen dienen der späteren Fallunterscheidung. Sie beschreiben, ob die entsprechenden Zahlen im Würfelfeld NICHT vorhanden sind
     int miss34 = 0;             //Zählt fehlende 3en und 4en
     int miss25 = 0;             //Zählt fehlende 2en und 5en
@@ -637,8 +659,6 @@ double ErwartungswertklStrasse1 (int* feld)
     if (countN(feld,5,4) == 0) miss34++;
     if (countN(feld,5,2) == 0 && countN(feld,5,5) == 0) miss25 = 1;     //weder 2 noch 5 vorhanden: 1, entweder 2 oder 5 vorhanden oder beide: 0
     if (countN(feld,5,1) == 0 && countN(feld,5,6) == 0) miss16 = 1;     //weder 1 noch 6 vorhanden: 1, entweder 1 oder 6 vorhanden oder beide: 0
-
-    if (klstrasse(feld,5)) return 30;           //Falls kleine Straße schon vorhanden: Erwartungswert ist 30
 
     //Die zu den Erwartungswerten zugehörigen Wahrscheinlichkeiten wurden teilweise mittels Simulation bestimmt, teils berechnet
     if (miss34==0 && miss25==0 && miss16==0) return 30*65.0/81.0;
@@ -712,6 +732,8 @@ double ErwartungswertklStrasse2 (int* feld)
 //Berechnung des Erwartungswertes für eine große Straße nach dem ersten Wurf
 double ErwartungswertgrStrasse1 (int* feld)
 {
+    if (grstrasse(feld,5)) return 40;
+
     double erwartungswert;
     int missingones = 0;        //entspricht den fehlenden Würfeln, hier 1 und 6
     int keymissingones = 0;     //entspricht den wichtigen fehlende Würfeln, hier 2,3,4 und 5, da diese immer für eine große Straße benötigt werden
@@ -733,7 +755,6 @@ double ErwartungswertgrStrasse1 (int* feld)
 
     //Fallunterscheidung bezüglich der fehlenden Würfel
     //Berechnung der Werte mit dem Simulationsprogramm
-    if (grstrasse(feld,5)) return 40;
     if (keymissingones==0) erwartungswert = 5.0/9.0;
     if (keymissingones==1 && missingones==0) erwartungswert = 11.0/36.0;
     if (keymissingones==1 && missingones==1) erwartungswert = 19.0/72.0;
@@ -750,6 +771,8 @@ double ErwartungswertgrStrasse1 (int* feld)
 //Berechnung des Erwartungswertes nach dem zweiten Wurf (selbes Vorgehen wie nach dem ersten Wurf)
 double ErwartungswertgrStrasse2 (int* feld)
 {
+    if (grstrasse(feld,5)) return 40;
+
     double erwartungswert;
     int missingones = 0;
     int keymissingones = 0;
@@ -767,7 +790,6 @@ double ErwartungswertgrStrasse2 (int* feld)
     if (anzahl[0]==0||anzahl[5]==0)missingones++;
 
     //Fallunterscheidung
-    if (grstrasse(feld,5)) return 40;
     if (keymissingones==0) erwartungswert = 1.0/3.0;
     if (keymissingones==1 && missingones==0) erwartungswert = 1.0/6.0;
     if (keymissingones==1 && missingones==1) erwartungswert = 1.0/9.0;
