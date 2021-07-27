@@ -21,6 +21,7 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
 
     QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);    //Der Slot neuWaehlen und das Signal besetzt werden verknüpft
     QObject::connect(this, &singleplayerDialog::KIistdran, this, &singleplayerDialog::KIZug);
+    QObject::connect(this, &singleplayerDialog::spielEnde, this, &singleplayerDialog::wertung);
 
 }
 
@@ -437,6 +438,8 @@ void singleplayerDialog::KIZug()
             }
         data::Zug++;
 
+        if(data::Zug==13) {emit spielEnde();}   //Signal für das Ende des Spiels aussenden
+
 
         delete[] Erwartungswerte;
         Erwartungswerte = NULL;
@@ -446,3 +449,8 @@ void singleplayerDialog::KIZug()
 
 }
 
+void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen
+{
+    wertungDialog* wertung= new wertungDialog(this);
+    wertung->exec();
+}
