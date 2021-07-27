@@ -18,6 +18,7 @@ SOURCES += \
         singleplayerdialog.cpp \
         spieler.cpp \
         vierspielerdialog.cpp \
+        wertungdialog.cpp \
         zweispielerdialog.cpp
 
 HEADERS += \
@@ -34,6 +35,7 @@ HEADERS += \
     singleplayerdialog.h \
     spieler.h \
     vierspielerdialog.h \
+    wertungdialog.h \
     zweispielerdialog.h
 
 FORMS += \
@@ -45,6 +47,7 @@ FORMS += \
     siebenspielerdialog.ui \
     singleplayerdialog.ui \
     vierspielerdialog.ui \
+    wertungdialog.ui \
     zweispielerdialog.ui
 
 RESOURCES += \

@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "wertungdialog.h"
+
 namespace Ui {
 class singleplayerDialog;
 }
@@ -36,12 +38,14 @@ private slots:
 public slots:
     void neuWaehlen();
     void KIZug();
+    void wertung();
 
 
 public:
 signals:
     void besetzt();
     void KIistdran();
+    void spielEnde();
 
 
 private:
