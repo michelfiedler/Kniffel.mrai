@@ -343,8 +343,6 @@ void singleplayerDialog::KIZug()
     int* order = new int[13];
     int m_temp = 0;
 
-    cout<<endl<<"testtestTESTTESTTESTTEST"<<endl<<endl<<endl;
-
     //Variablen für die Bilder der Würfel anlegen
     QPixmap KIaugen1 (":/MyImages/imageWuerfel1.png");
     QPixmap KIaugen2 (":/MyImages/imageWuerfel2.png");
@@ -358,6 +356,11 @@ void singleplayerDialog::KIZug()
         {
 
             rolldice(dice, keep);
+
+            //Bildschirmausganbe, um Aktionen zu prüfen
+                    cout<<"WUERFEL"<<endl;
+                    for(int i=0; i<5; i++) cout<<dice[i]<<"   ";
+                    cout<<endl;
 
             //Für den gewürfelten Wert von Würfel 1 das entsprechende Bild einfügen
             if(dice[0]==1) {ui->qlW1->setPixmap(KIaugen1);}
@@ -408,6 +411,8 @@ void singleplayerDialog::KIZug()
 
             if(Wurf==0)
             {
+                cout<<"NACH ERSTEM WURF"<<endl;
+
                 Erwartungswerte[0] = ErwartungswertOben1(dice, 1);
                 Erwartungswerte[1] = ErwartungswertOben1(dice, 2);
                 Erwartungswerte[2] = ErwartungswertOben1(dice, 3);
@@ -424,6 +429,11 @@ void singleplayerDialog::KIZug()
 
                 sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
 
+                //Bildschirmausganbe, um Aktionen zu prüfen
+                        cout<<"ERWARTUNGSWERTE und REIHENFOLGE"<<endl;
+                        for(int i=0; i<13; i++) cout<<i<<": "<<Erwartungswerte[i]<<"               "<<order[i]<<endl;
+                        cout<<endl;
+
                 for (int i=0; i<13; i++)
                 {
                     if (data::KI.Spielstand[order[12-i]] == 888)
@@ -434,6 +444,10 @@ void singleplayerDialog::KIZug()
                         i = 13;
                     }
                 }
+
+                cout<<"Ziel: "<<order[12-m_temp]<<endl;
+                for(int i=0; i<5; i++)cout<<keep[i]<<"   ";
+                cout<<endl;
             }
 
             //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -441,6 +455,8 @@ void singleplayerDialog::KIZug()
 
             if(Wurf==1)
             {
+                cout<<"NACH ZWEITEM WURF"<<endl;
+
                 Erwartungswerte[0] = ErwartungswertOben2(dice, 1);
                 Erwartungswerte[1] = ErwartungswertOben2(dice, 2);
                 Erwartungswerte[2] = ErwartungswertOben2(dice, 3);
@@ -457,6 +473,11 @@ void singleplayerDialog::KIZug()
 
                 sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
 
+                //Bildschirmausganbe, um Aktionen zu prüfen
+                        cout<<"ERWARTUNGSWERTE und REIHENFOLGE"<<endl;
+                        for(int i=0; i<13; i++) cout<<i<<": "<<Erwartungswerte[i]<<"               "<<order[i]<<endl;
+                        cout<<endl;
+
                 for (int i=0; i<13; i++)
                 {
                     if (data::KI.Spielstand[order[12-i]] == 888)
@@ -468,6 +489,9 @@ void singleplayerDialog::KIZug()
                         i = 13;
                     }
                 }
+                cout<<"Ziel: "<<order[12-m_temp]<<endl;
+                for(int i=0; i<5; i++)cout<<keep[i]<<"   ";
+                cout<<endl;
             }
 
 
@@ -477,11 +501,15 @@ void singleplayerDialog::KIZug()
                 write(dice, data::KI.Spielstand, order[12-m_temp]+1);
                 ui->tW_SpielstandSingle->setItem(order[12-m_temp],1,new QTableWidgetItem(QString::number(data::KI.Spielstand[order[12-m_temp]])));
 
+                cout<<order[12-m_temp]<<" eingetragen"<<endl;
+
                 Wurf=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
             }
             //Nach dem dritten Wurf --------------------------------------------------------------------------------------------------------------------------
             if(Wurf==2)
             {
+                cout<<"NACH DRITTEM WURF"<<endl;
+
                 for (int i=0; i<13; i++)
                 {
                     write(dice, EintragTemp, i+1);
@@ -490,6 +518,11 @@ void singleplayerDialog::KIZug()
                 for(int i=0; i<3; i++) EintragTemp[i]+=9; //Kniffelbonus wird höher gewichtet!
                 for(int i=3; i<6; i++) EintragTemp[i]+=7; //damit nicht einer der Päsche eingetragen wird.
                 sort(EintragTemp, order, 13);
+
+                //Bildschirmausganbe, um Aktionen zu prüfen
+                        cout<<"TEMP-EINTRÄGE und REIHENFOLGE"<<endl;
+                        for(int i=0; i<13; i++) cout<<i<<": "<<EintragTemp[i]<<"               "<<order[12-i]<<endl;
+                        cout<<endl;
 
                 /*  Die Funktion EintragLetzterWurf trägt den möglicherweise besten Wert ein und gibt true zurück, falls ein wert eingrtragen wurde.
                  *  Da Sie Funktion viele if-Schaltungen enthält, laufen die Abfragen in wenigen Spezialfällen ins Leere und es kann vorkommen,
@@ -507,6 +540,8 @@ void singleplayerDialog::KIZug()
                             write(dice, data::KI.Spielstand, order[12-i]+1);
                             i = 13;
                             ui->tW_SpielstandSingle->setItem(order[12-i],1,new QTableWidgetItem(QString::number(data::KI.Spielstand[order[12-i]])));
+
+                            cout<<order[12-i]<<" eingetragen"<<endl;
 
                         }
                     }
