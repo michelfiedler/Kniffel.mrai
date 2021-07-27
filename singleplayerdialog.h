@@ -16,6 +16,7 @@ class singleplayerDialog : public QDialog
 public:
     explicit singleplayerDialog(QWidget *parent = nullptr);
     ~singleplayerDialog();
+    void refreshTable();
 
 private slots:
     void on_buttonBox_rejected();
