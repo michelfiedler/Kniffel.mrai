@@ -18,3 +18,8 @@ void wertungDialog::on_buttonBox_accepted()
     this->close();
 }
 
+
+void wertungDialog::on_textEdit_textChanged()
+{
+
+}
