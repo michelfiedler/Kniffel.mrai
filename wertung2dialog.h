@@ -4,22 +4,22 @@
 #include <QDialog>
 
 namespace Ui {
-class wertung2dialog;
+class wertung2Dialog;
 }
 
-class wertung2dialog : public QDialog
+class wertung2Dialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit wertung2dialog(QWidget *parent = nullptr);
-    ~wertung2dialog();
+    explicit wertung2Dialog(QWidget *parent = nullptr);
+    ~wertung2Dialog();
 
 private slots:
     void on_buttonBox_accepted();
 
 private:
-    Ui::wertung2dialog *ui;
+    Ui::wertung2Dialog *ui;
 };
 
 #endif // WERTUNG2DIALOG_H

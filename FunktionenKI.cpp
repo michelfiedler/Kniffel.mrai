@@ -56,7 +56,7 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
         if (Spielstand[Reihenfolge[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
         {
             //Wenn kein gutes Ergebnis für 3en, 4en, 5en oder 6en vorliegt, dieses aber eingetragen werden würde
-            if(Reihenfolge[12-i]<6 && Reihenfolge[12-i]>1 && countN(wuerfel, 5, Reihenfolge[12-i]+1)<3 && Zug<9)
+            if(Reihenfolge[12-i]<6 && Reihenfolge[12-i]>1 && countN(wuerfel, 5, Reihenfolge[12-i]+1)<3)
             {
                 //-----------------------------------------------------------
                 //Streichpriorisierung

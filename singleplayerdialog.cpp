@@ -46,7 +46,7 @@ void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen, abhängig
 
 void singleplayerDialog::wertung2()
 {
-    wertungDialog* wertung2= new wertungDialog(this);
+    wertung2Dialog* wertung2= new wertung2Dialog(this);
     wertung2->exec();
 }
 
@@ -593,10 +593,10 @@ void singleplayerDialog::KIZug()
             refreshEndTabelle();
 
             //Ausgabe des Sieges oder der Niederlage
-            if (data::singleSpieler.Endpunktzahl> data::KI.Endpunktzahl)
+            if (data::singleSpieler.Endpunktzahl>data::KI.Endpunktzahl)
             {
 
-                emit SiegDu();  //Signal für das Ende des Spiels aussenden
+                emit SiegDu();  //Signal für den Sieg des Singlespielers aussenden
             }
             else
             {
