@@ -25,8 +25,8 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
 
     QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);    //Der Slot neuWaehlen und das Signal besetzt werden verknüpft
     QObject::connect(this, &singleplayerDialog::KIistdran, this, &singleplayerDialog::KIZug);
-    QObject::connect(this, &singleplayerDialog::spielEnde, this, &singleplayerDialog::wertung);
-
+    QObject::connect(this, &singleplayerDialog::SiegDu, this, &singleplayerDialog::wertung);
+    QObject::connect(this, &singleplayerDialog::SiegKI, this, &singleplayerDialog::wertung2);
 }
 
 singleplayerDialog::~singleplayerDialog()
@@ -66,6 +66,12 @@ void singleplayerDialog::refreshTable()
 
 }
 
+void singleplayerDialog::refreshEndTabelle()
+{
+    ui->tW_SpielstandSingle->setItem(13, 0, new QTableWidgetItem(QString::number(data::singleSpieler.Endpunktzahl)));
+    ui->tW_SpielstandSingle->setItem(13, 1, new QTableWidgetItem(QString::number(data::KI.Endpunktzahl)));
+
+}
 
 //Slots
 
@@ -557,7 +563,26 @@ void singleplayerDialog::KIZug()
 
         for(int i=0; i<5; i++) keep[i] = 0;
         singleplayerDialog::on_pBwuerfeln_clicked();
-        if(data::Zug==13) {emit spielEnde();}   //Signal für das Ende des Spiels aussenden
+
+        if(data::Zug==13)
+        {
+            //Endpunktzahlen berechnen
+            data::KI.Endpunktzahl = sum(data::KI.Spielstand, 13);
+            if(sum(data::KI.Spielstand, 6) > 62) data::KI.Endpunktzahl +=35;
+            data::singleSpieler.Endpunktzahl = sum(data::singleSpieler.Spielstand, 13);
+            if(sum(data::singleSpieler.Spielstand, 6) > 62) data::singleSpieler.Endpunktzahl +=35;
+
+            refreshEndTabelle();
+        }
+        if (data::singleSpieler.Endpunktzahl> data::KI.Endpunktzahl)
+        {
+
+            emit SiegDu();  //Signal für das Ende des Spiels aussenden
+        }
+        else
+        {
+            emit SiegKI();
+        }
 
 
         delete[] Erwartungswerte;
@@ -568,8 +593,14 @@ void singleplayerDialog::KIZug()
 
 }
 
-void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen
+void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen, abhängig vom Sieger
 {
     wertungDialog* wertung= new wertungDialog(this);
     wertung->exec();
+}
+
+void singleplayerDialog::wertung2()
+{
+    wertungDialog* wertung2= new wertungDialog(this);
+    wertung2->exec();
 }

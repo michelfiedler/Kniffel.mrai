@@ -17,6 +17,7 @@ public:
     explicit singleplayerDialog(QWidget *parent = nullptr);
     ~singleplayerDialog();
     void refreshTable();
+    void refreshEndTabelle();
 
 private slots:
     void on_buttonBox_rejected();
@@ -39,13 +40,14 @@ public slots:
     void neuWaehlen();
     void KIZug();
     void wertung();
-
+    void wertung2();
 
 public:
 signals:
     void besetzt();
     void KIistdran();
-    void spielEnde();
+    void SiegDu();
+    void SiegKI();
 
 
 private:

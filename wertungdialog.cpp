@@ -1,5 +1,9 @@
 #include "wertungdialog.h"
 #include "ui_wertungdialog.h"
+#include <data.h>
+#include <QObject>
+#include <QLabel>
+#include <windows.h>
 
 wertungDialog::wertungDialog(QWidget *parent) :
     QDialog(parent),
@@ -18,8 +22,3 @@ void wertungDialog::on_buttonBox_accepted()
     this->close();
 }
 
-
-void wertungDialog::on_textEdit_textChanged()
-{
-
-}
