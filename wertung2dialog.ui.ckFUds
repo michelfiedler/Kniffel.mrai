@@ -6,14 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>411</width>
+    <height>166</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QPlainTextEdit" name="plainTextEdit">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="plainText">
+      <string>Du hast leider verloren. Viel Glück beim nächsten Mal!</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">

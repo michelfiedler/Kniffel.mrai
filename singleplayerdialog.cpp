@@ -38,6 +38,18 @@ singleplayerDialog::~singleplayerDialog()
 
 }
 
+void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen, abhängig vom Sieger
+{
+    wertungDialog* wertung= new wertungDialog(this);
+    wertung->exec();
+}
+
+void singleplayerDialog::wertung2()
+{
+    wertungDialog* wertung2= new wertungDialog(this);
+    wertung2->exec();
+}
+
 void singleplayerDialog::refreshTable()
 {
     for(int i=0; i<13; i++)
@@ -342,6 +354,7 @@ void singleplayerDialog::on_pBW5_clicked()
     else keep[4]=0;
 }
 
+//NUN IST DIE KI DRAN!
 void singleplayerDialog::KIZug()
 {
 
@@ -412,7 +425,7 @@ void singleplayerDialog::KIZug()
             //Sleep(3000);
 
 
-            for (int i=0; i<5; i++) {keep[i]=0;}            //??? unsicher: muss das keep feld genau hier hin??
+            for (int i=0; i<5; i++) {keep[i]=0;} //Das Würfelbehaltenfeld wird erneut mit Nullen beschrieben!
             //----------------------------------------------------------------------------------------------------------------------------------------------
             //Erster Wurf der KI
 
@@ -420,6 +433,7 @@ void singleplayerDialog::KIZug()
             {
                 cout<<"NACH ERSTEM WURF"<<endl;
 
+                //Berechnen der Erwartungswerte mit der jeweiligen Funktion nach dem ersten Wurf
                 Erwartungswerte[0] = ErwartungswertOben1(dice, 1);
                 Erwartungswerte[1] = ErwartungswertOben1(dice, 2);
                 Erwartungswerte[2] = ErwartungswertOben1(dice, 3);
@@ -464,6 +478,7 @@ void singleplayerDialog::KIZug()
             {
                 cout<<"NACH ZWEITEM WURF"<<endl;
 
+                //Berechnen der Erwartungswerte mit den jeweiligen Funktionen nach dem zweiten Wurf
                 Erwartungswerte[0] = ErwartungswertOben2(dice, 1);
                 Erwartungswerte[1] = ErwartungswertOben2(dice, 2);
                 Erwartungswerte[2] = ErwartungswertOben2(dice, 3);
@@ -491,7 +506,6 @@ void singleplayerDialog::KIZug()
                     {
                         m_temp = i;
                         setGoal(dice, keep, order[12-i], 1);
-
                         //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
                         i = 13;
                     }
@@ -505,6 +519,7 @@ void singleplayerDialog::KIZug()
             //Vorzeitig ein Ziel erreicht --------------------------------------------------------------------------------------------------------------------
             if((Wurf==0||Wurf==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
             {
+                //Eintragen des ermittelten Ereignisses ins Kniffel-Gewinnblatt
                 write(dice, data::KI.Spielstand, order[12-m_temp]+1);
                 ui->tW_SpielstandSingle->setItem(order[12-m_temp],1,new QTableWidgetItem(QString::number(data::KI.Spielstand[order[12-m_temp]])));
 
@@ -523,7 +538,7 @@ void singleplayerDialog::KIZug()
                 }
                 EintragTemp[12] = 0;
                 for(int i=0; i<3; i++) EintragTemp[i]+=9; //Kniffelbonus wird höher gewichtet!
-                for(int i=3; i<6; i++) EintragTemp[i]+=7; //damit nicht einer der Päsche eingetragen wird.
+                for(int i=3; i<6; i++) EintragTemp[i]+=7; //Bevorzugtes Eintragen in den oberen Zahlenblock anstatt einen der Päsche einzugetragen.
                 sort(EintragTemp, order, 13);
 
                 //Bildschirmausganbe, um Aktionen zu prüfen
@@ -558,12 +573,14 @@ void singleplayerDialog::KIZug()
               }
 
             }
-        data::Zug++;
-        refreshTable();
+        data::Zug++; //Nun ist der erste Zug durchgeführt und die Zugvariable wird um eins erhöht
+        refreshTable(); //Das Kniffel-Gewinnblatt wird aktualisiert
 
+        //Die folgende Schleife dient dazu, dass der Singlespieler die Würfel der KI nicht mehr für sich eintragen kann.
         for(int i=0; i<5; i++) keep[i] = 0;
         singleplayerDialog::on_pBwuerfeln_clicked();
 
+        //Spielende---------------------------------------------------------------------------------------------------------------------------------------------------
         if(data::Zug==13)
         {
             //Endpunktzahlen berechnen
@@ -572,8 +589,10 @@ void singleplayerDialog::KIZug()
             data::singleSpieler.Endpunktzahl = sum(data::singleSpieler.Spielstand, 13);
             if(sum(data::singleSpieler.Spielstand, 6) > 62) data::singleSpieler.Endpunktzahl +=35;
 
+            //Endpunktzahlen werden in die Tabelle miteingefügt
             refreshEndTabelle();
         }
+        //Ausgabe des Sieges oder der Niederlage
         if (data::singleSpieler.Endpunktzahl> data::KI.Endpunktzahl)
         {
 
@@ -593,14 +612,3 @@ void singleplayerDialog::KIZug()
 
 }
 
-void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen, abhängig vom Sieger
-{
-    wertungDialog* wertung= new wertungDialog(this);
-    wertung->exec();
-}
-
-void singleplayerDialog::wertung2()
-{
-    wertungDialog* wertung2= new wertungDialog(this);
-    wertung2->exec();
-}

@@ -15,6 +15,9 @@ public:
     explicit wertung2dialog(QWidget *parent = nullptr);
     ~wertung2dialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::wertung2dialog *ui;
 };
