@@ -591,16 +591,17 @@ void singleplayerDialog::KIZug()
 
             //Endpunktzahlen werden in die Tabelle miteingefügt
             refreshEndTabelle();
-        }
-        //Ausgabe des Sieges oder der Niederlage
-        if (data::singleSpieler.Endpunktzahl> data::KI.Endpunktzahl)
-        {
 
-            emit SiegDu();  //Signal für das Ende des Spiels aussenden
-        }
-        else
-        {
-            emit SiegKI();
+            //Ausgabe des Sieges oder der Niederlage
+            if (data::singleSpieler.Endpunktzahl> data::KI.Endpunktzahl)
+            {
+
+                emit SiegDu();  //Signal für das Ende des Spiels aussenden
+            }
+            else
+            {
+                emit SiegKI();
+            }
         }
 
 
