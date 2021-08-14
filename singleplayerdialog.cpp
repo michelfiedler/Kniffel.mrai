@@ -46,7 +46,7 @@ void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen, abhängig
 
 void singleplayerDialog::wertung2()
 {
-    wertung2Dialog* wertung2= new wertung2Dialog(this);
+    wertung2dialog* wertung2= new wertung2dialog(this);
     wertung2->exec();
 }
 

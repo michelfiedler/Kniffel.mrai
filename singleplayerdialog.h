@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "wertungdialog.h"
+#include "wertung2dialog.h"
 
 namespace Ui {
 class singleplayerDialog;

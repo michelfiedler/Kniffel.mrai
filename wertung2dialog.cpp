@@ -5,19 +5,19 @@
 #include <QLabel>
 #include <windows.h>
 
-wertung2Dialog::wertung2Dialog(QWidget *parent) :
+wertung2dialog::wertung2dialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::wertung2Dialog)
+    ui(new Ui::wertung2dialog)
 {
     ui->setupUi(this);
 }
 
-wertung2Dialog::~wertung2Dialog()
+wertung2dialog::~wertung2dialog()
 {
     delete ui;
 }
 
-void wertung2Dialog::on_buttonBox_accepted()
+void wertung2dialog::on_buttonBox_accepted()
 {
     this->close();
 }
