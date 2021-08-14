@@ -55,7 +55,11 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
             write (dice, data::spieler[data::welcherSpieler].Spielstand, row+1); //Testen, ob schon ein Item existiert und wenn nicht, den Spielstand beschreiben
             QTableWidgetItem *item= new QTableWidgetItem(QString::number(data::spieler[data::welcherSpieler].Spielstand[row])); //ein Item für die Tabelle erstellen und den Eintrag in einen integer umwandeln, um die Punkte des Spielstandes einzutragen
             ui->tW_SpielstandMulti->setItem(row,data::welcherSpieler, item);
-            if(data::welcherSpieler==data::spieleranzahl+1) {data::welcherSpieler=0;}   //War der letzte Spieler der Gruppe dran, wird definiert, dass wieder der Erste dran ist.
+            if(data::welcherSpieler==data::spieleranzahl+1) //War der letzte Spieler der Gruppe dran, wird definiert, dass wieder der Erste dran ist.
+            {
+                data::welcherSpieler=0;
+                data::Zug++;
+            }
             else {data::welcherSpieler+=1;} //Definieren, dass der nächste Spieler dran ist.
         }
         else {emit wrongCell();}
@@ -68,5 +72,11 @@ void spielmodusMultiDialog::chooseNewCell()
     QMessageBox myMsgBox;
     myMsgBox.setText("Dieses Feld kannst Du nicht beschreiben. Bitte wähle ein anderes aus.");
     myMsgBox.exec();
+}
+
+
+void spielmodusMultiDialog::on_pBwuerfeln_clicked()
+{
+
 }
 
