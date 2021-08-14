@@ -4,6 +4,8 @@
 
 #include <vector>
 #include <algorithm>
+#include <fstream>
+#include <string>
 #include <sstream>
 #include <cstdlib>
 #include <QObject>
@@ -13,7 +15,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    fillBestenliste();      //Die Bestenliste wird bei Programmstart gefüllt
+
+    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert (evtl. Kommata in Leerzeichen ändern, siehe Video)
+    /*ifstream datei;
+    datei.open("bestenliste");
+    string line;
+    if(datei.is_open())
+    {
+        while(getline(datei,line))
+        {
+            stringstream linebuffer(line);
+            linebuffer>>data::bestenliste.platz1>>data::bestenliste.name1>>data::bestenliste.platz2>>data::bestenliste.name2>>data::bestenliste.platz3>>data::bestenliste.name3
+                    >>data::bestenliste.platz4>>data::bestenliste.name4>>data::bestenliste.platz5>>data::bestenliste.name5;
+        }
+        datei.close();
+    }*/
+    fillBestenliste();      //Die Highscoreliste wird mit den ausgelesenen Variablen gefüllt
 
     QObject::connect(&data::bestenliste, &Bestenliste::UpdateBestenliste, this, &MainWindow::fillBestenliste);  //Der Slot fillBestenliste und das Signal, dass die
 }                                                                                                               //Bestenliste verändert wurde, werden verknüpft
@@ -26,6 +43,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionBeenden_triggered()    //Das Programm "Kniffel" wird geschlossen
 {
+    //Bei Programmende werden die aktuellen Highscores in einer Datei gespeichert (evtl. mit Kommata einlesen)
+    /*ofstream file;
+    file.open("bestenliste");
+    if(file.is_open())
+    {
+        file<<data::bestenliste.platz1<<' '<<data::bestenliste.name1<<' '<<data::bestenliste.platz2<<' '<<data::bestenliste.name2<<' '<<data::bestenliste.platz3<<' '<<data::bestenliste.name3
+           <<' '<<data::bestenliste.platz4<<' '<<data::bestenliste.name4<<' '<<data::bestenliste.platz5<<' '<<data::bestenliste.name5;
+        file.close();
+    }*/
+
     this->close();
 }
 
