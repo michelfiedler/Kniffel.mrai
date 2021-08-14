@@ -109,7 +109,82 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item row="1" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="qlW1">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="qlW2">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="qlW3">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="qlW4">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="qlW5">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="1">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pBW1">
+       <property name="text">
+        <string>behalten</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="pBW4">
+       <property name="text">
+        <string>behalten</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="pBW3">
+       <property name="text">
+        <string>behalten</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pBW2">
+       <property name="text">
+        <string>behalten</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="pBW5">
+       <property name="text">
+        <string>behalten</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item row="3" column="1">
     <widget class="QPushButton" name="pBwuerfeln">
@@ -127,9 +202,6 @@ p, li { white-space: pre-wrap; }
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
-   </item>
-   <item row="2" column="1">
-    <layout class="QGridLayout" name="gridLayout_3"/>
    </item>
   </layout>
  </widget>
