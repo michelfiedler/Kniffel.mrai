@@ -19,6 +19,7 @@ public:
     static int spieleranzahl;
     static Spieler* spieler;
     static int Zug;
+    static int welcherSpieler;
 };
 
 #endif // DATA_H

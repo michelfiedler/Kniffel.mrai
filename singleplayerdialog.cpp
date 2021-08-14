@@ -232,7 +232,7 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
 void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
 {
     QMessageBox msgBox;
-    msgBox.setText("Dieses Feld kann nicht beschrieben werden. Bitte wählen Sie ein anderes aus.");
+    msgBox.setText("Dieses Feld kann nicht beschrieben werden. Bitte wähle ein anderes aus.");
     msgBox.exec();
 }
 

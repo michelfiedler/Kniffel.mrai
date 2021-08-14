@@ -15,6 +15,17 @@ public:
     explicit spielmodusMultiDialog(QWidget *parent = nullptr);
     ~spielmodusMultiDialog();
 
+private slots:
+    void on_buttonBox_rejected();
+
+    void on_tW_SpielstandMulti_cellClicked(int row, int column);
+
+public slots:
+    void chooseNewCell();
+
+signals:
+    void wrongCell();
+
 private:
     Ui::spielmodusMultiDialog *ui;
 };
