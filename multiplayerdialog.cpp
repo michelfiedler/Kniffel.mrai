@@ -8,6 +8,7 @@
 #include "fuenfspielerdialog.h"
 #include "sechsspielerdialog.h"
 #include "siebenspielerdialog.h"
+#include "spielmodusmultidialog.h"
 
 #include "QTableWidget"
 #include "data.h"
@@ -186,5 +187,12 @@ void MultiplayerDialog::fillNameTable()
 
 
 
+}
+
+
+void MultiplayerDialog::on_buttonBox_accepted()
+{
+    spielmodusMultiDialog* SpielmodusMultiDialog = new spielmodusMultiDialog(this);
+    SpielmodusMultiDialog->exec();
 }
 
