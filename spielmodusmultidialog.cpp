@@ -139,3 +139,38 @@ void spielmodusMultiDialog::on_pBwuerfeln_clicked()
     }
 }
 
+//Wenn die Buttons "behalten" gedrückt werden, soll der Würfel behalten werden->der behalten Button "leuchtet" in dem Fall
+void spielmodusMultiDialog::on_pBW1_clicked()
+{
+    if(ui->pBW1->isChecked())keep[0]=1;
+    else keep[0]=0;
+}
+
+
+void spielmodusMultiDialog::on_pBW2_clicked()
+{
+    if(ui->pBW2->isChecked())keep[1]=1;
+    else keep[1]=0;
+}
+
+
+void spielmodusMultiDialog::on_pBW3_clicked()
+{
+    if(ui->pBW3->isChecked())keep[2]=1;
+    else keep[2]=0;
+}
+
+
+void spielmodusMultiDialog::on_pBW4_clicked()
+{
+    if(ui->pBW4->isChecked())keep[3]=1;
+    else keep[3]=0;
+}
+
+
+void spielmodusMultiDialog::on_pBW5_clicked()
+{
+    if(ui->pBW5->isChecked())keep[4]=1;
+    else keep[4]=0;
+}
+
