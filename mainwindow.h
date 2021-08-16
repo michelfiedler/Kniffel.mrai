@@ -25,7 +25,9 @@ private slots:
 
     void on_pBmulti_clicked();
 
-    void on_pB_Bestenliste_clicked();
+public slots:
+    void fillBestenliste();
+
 
 private:
     Ui::MainWindow *ui;

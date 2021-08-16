@@ -1,18 +1,40 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "bestenliste.h"
+#include "data.h"
 
 #include <vector>
 #include <algorithm>
+#include <fstream>
+#include <string>
 #include <sstream>
 #include <cstdlib>
+#include <QObject>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-}
+
+    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert (evtl. zuerst Leerzeichen streichen (aus namensausgabe) und dann Kommata in Leerzeichen ändern, siehe Video)
+    /*ifstream datei;
+    datei.open("bestenliste");
+    string line;
+    if(datei.is_open())
+    {
+        while(getline(datei,line))
+        {
+            stringstream linebuffer(line);
+            linebuffer>>data::bestenliste.platz1>>data::bestenliste.name1>>data::bestenliste.platz2>>data::bestenliste.name2>>data::bestenliste.platz3>>data::bestenliste.name3
+                    >>data::bestenliste.platz4>>data::bestenliste.name4>>data::bestenliste.platz5>>data::bestenliste.name5;
+        }
+        datei.close();
+    }*/
+    fillBestenliste();      //Die Highscoreliste wird mit den ausgelesenen Variablen gefüllt
+
+    QObject::connect(&data::bestenliste, &Bestenliste::UpdateBestenliste, this, &MainWindow::fillBestenliste);  //Der Slot fillBestenliste und das Signal, dass die
+}                                                                                                               //Bestenliste verändert wurde, werden verknüpft
+
 
 MainWindow::~MainWindow()
 {
@@ -21,6 +43,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionBeenden_triggered()    //Das Programm "Kniffel" wird geschlossen
 {
+    //Bei Programmende werden die aktuellen Highscores in einer Datei gespeichert (evtl. mit Kommata einlesen)
+    /*ofstream file;
+    file.open("bestenliste");
+    if(file.is_open())
+    {
+        file<<data::bestenliste.platz1<<' '<<data::bestenliste.name1<<' '<<data::bestenliste.platz2<<' '<<data::bestenliste.name2<<' '<<data::bestenliste.platz3<<' '<<data::bestenliste.name3
+           <<' '<<data::bestenliste.platz4<<' '<<data::bestenliste.name4<<' '<<data::bestenliste.platz5<<' '<<data::bestenliste.name5;
+        file.close();
+    }*/
+
     this->close();
 }
 
@@ -29,68 +61,37 @@ void MainWindow::on_pBsingle_clicked()          //Button Singleplayer wurde ausg
 {
     singleplayerDialog* singleDialog = new singleplayerDialog (this);
     singleDialog->exec();
+    data::Spielmodus=0;     //Spielmodus als SinglePlayer festlegen
 }
 
 
-void MainWindow::on_pBmulti_clicked()           //Button Multiplayer wurde ausgewählt
+void MainWindow::on_pBmulti_clicked()           //Button Multiplayer wurde ausgewählt und öffnet ein neues Fenster, um im MultiplayerModus zu spielen.
 {
         MultiplayerDialog* multiplayerDialog = new MultiplayerDialog(this);
         multiplayerDialog->show();
+        data::Spielmodus=1;     //Spielmodus Multiplayer festlegen
 }
 
 
-void MainWindow::on_pB_Bestenliste_clicked()    //Button, um die Bestenliste anzuzeigen
+void MainWindow::fillBestenliste()
 {
-    int num;
-    int count=0;
-    string line;
+    ui->tW_Bestenliste->setRowCount(0); //Bisherige Einträge der Bestenliste werden gelöscht
 
-    //Die Datei öffnen und die Zeilen zählen
-
-    ifstream bestenlisteLesenFile1;
-    bestenlisteLesenFile1.open("Bestenliste.conf");
-    while (getline(bestenlisteLesenFile1, line))
-        count++;
-    bestenlisteLesenFile1.close();
-
-    //Die Datei auslesen Zeile um Zeile
-
-    ifstream bestenlisteLesenFile2;
-    bestenlisteLesenFile2.open("Bestenliste.conf");
-    if (bestenlisteLesenFile2.is_open())
-    {
-        string sLine;
-
-        int i=0;
-        vector<person> people(count);                               //Vector mit Struct-Einträgen (erstmal leer)
-
-        while(getline(bestenlisteLesenFile2, sLine))
-        {
-            string delimiter = ":";
-            string punkte = sLine.substr(0,sLine.find(delimiter));  //Lesen bis zum Doppelpunkt für die Punktzahl
-            string name = sLine.substr(sLine.find(delimiter)+1);    //Danach ist alles der Name
-
-            stringstream ss;
-            ss << punkte;
-            ss >> num;          //String to Int
-
-            people[i].name = name;      //Befüllen des structs mit den Namen
-            people[i].punkte = num;     //Befüllen des structs mit den Punkten
-            i = i+1;
-        }
-
-        bestenlisteLesenFile2.close();
-
-        sort (people.begin(), people.end(),                         //Sort Algorithmus --> die Liste sortieren
-              [] (const person &left, const person &right)
-        {return (left.punkte > right.punkte);});
-
-        int anzahlEintraege = people.size();                        //Länge des Struct-Vektors
-        for (int i=0; i<anzahlEintraege; i++)
-        {
-            cout << people[i].name << "\t\t" << people[i].punkte << endl;       //Print der Einträge
-        }
-
-    }
+        //Nun wird immer eine Zeile zur Bestenliste hinzugefügt und darin in Absteigender Reihenfolge die Punkte und Namen der Plätze 1 bis 5 eingefügt
+        ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz1)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name1)));
+        ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz2)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name2)));
+        ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz3)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name3)));
+        ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz4)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name4)));
+        ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz5)));
+        ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name5)));
 }
 

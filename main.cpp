@@ -10,8 +10,8 @@
 
 #include "mainwindow.h"
 #include "Funktionen.h"
-#include "spieler.h"
-#include "bestenliste.h"
+#include "FunktionenKI.h"
+#include "data.h"
 
 using namespace std;
 
@@ -26,31 +26,170 @@ int main(int argc, char *argv[])
 
     srand((unsigned)time(NULL));                //Zufallsfunktion wird mit time initialiesiert
 
-    int* dice = new int[5];						//dice gibt die Würfelergebnisse an
-    for (int i=0; i<5; i++) dice[i]=1;
-    int* keep = new int[5];					//keep gibt an, welche Würfel behalten werden sollen
-    int Spielmodus;
+    //int* dice = new int[5];						//wurde schon in funktionen.cpp definiert
+    for (int i=0; i<5; i++) dice[i]=1;              //alle Würfel werden auf 1 gesetzt
+    //int* keep = new int[5];					//keep gibt an, welche Würfel behalten werden sollen
     int Spieleranzahl;
     int anzeige=0;
 
 
-    cout 	<<"Willkommen, hier kannst du mit dir selbst Kniffel spielen. Die KI folgt bald."<<endl
-            <<"Du kannst zwischendurch waehlen, ob du den Spielstand ansehen willst (1/0). Jetzt kanns losgehen!"<<endl<<endl;
+
+    //KI-MODUS-------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-    //Abfrage Single- oder Multiplayer
-    cout << "Moechtest du im [0]Single- oder [1]Multiplayermodus spielen?" << endl;
-    cin >> Spielmodus;
+        if (data::Spielmodus == 0)
+        {
+            char Name[15];
 
-    if (Spielmodus == 0)
-    {
-        cout << "Die KI kommt bald!" << endl;
-    }
+              //data::singleSpieler.Spielstand = new int [13]; ->wird ausgeführt wenn der singlePlayer Dialog gestartet wird // FEHLER REPRODUZIEREN: Diese Zeile löschen!
+              //data::singleSpieler.reset_Spielstand();
+              //Namen der KI noch beschreiben
+
+
+              data::KI.Spielstand = new int [13]; // FEHLER REPRODUZIEREN: Diese Zeile löschen!
+              data::KI.reset_Spielstand();
+
+
+         /*     for (int Zug=0; Zug<13; Zug++) // Durchlaufen der 13 Spielzüge
+              {
+                  for (int player=0; player<2; player++) // Durchlaufen der einzelnen Spieler, hier gibt es nur zwei!
+                  {
+                      //MessageBox wer an der Reihe ist
+
+
+                      if (player==1)
+                      {
+                          for (int i=0; i<5; i++) {keep[i]=0;}            // Beschreibt das Würfelbehaltenfeld mit Nullen
+                          for (int Wurf=0; Wurf<3; Wurf++)                         // Nun beginnen die drei Würfe pro Spieler
+                          {
+                              rolldice(dice, keep);
+                              for (int i=0; i<5; i++) {keep[i]=0;}            //??? unsicher: muss das keep feld genau hier hin??
+                              //----------------------------------------------------------------------------------------------------------------------------------------------
+                              //Erster Wurf der KI
+
+                              if(Wurf==0)
+                              {
+                                  Erwartungswerte[0] = ErwartungswertOben1(dice, 1);
+                                  Erwartungswerte[1] = ErwartungswertOben1(dice, 2);
+                                  Erwartungswerte[2] = ErwartungswertOben1(dice, 3);
+                                  Erwartungswerte[3] = ErwartungswertOben1(dice, 4);
+                                  Erwartungswerte[4] = ErwartungswertOben1(dice, 5);
+                                  Erwartungswerte[5] = ErwartungswertOben1(dice, 6);
+                                  Erwartungswerte[6] = ErwartungswertDreierPasch1(dice);
+                                  Erwartungswerte[7] = ErwartungswertViererPasch1(dice);
+                                  Erwartungswerte[8] = ErwartungswertFullhouse1(dice);
+                                  Erwartungswerte[9] = ErwartungswertklStrasse1(dice);
+                                  Erwartungswerte[10]= ErwartungswertgrStrasse1(dice);
+                                  Erwartungswerte[11]= ErwartungswertKniffel1(dice);
+                                  Erwartungswerte[12]= 0;                                 //Chance
+
+                                  sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
+
+                                  for (int i=0; i<13; i++)
+                                  {
+                                      if (data::KI.Spielstand[order[12-i]] == 888)
+                                      {
+                                          m_temp = i;
+                                          setGoal(dice, keep, order[12-i], 0);
+                                          cout<<order[12-i]<<endl;
+                                          //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
+                                          i = 13;
+                                      }
+                                  }
+                              }
+
+                              //--------------------------------------------------------------------------------------------------------------------------------------------
+                              //Zweiter Wurf der KI
+
+                              if(Wurf==1)
+                              {
+                                  Erwartungswerte[0] = ErwartungswertOben2(dice, 1);
+                                  Erwartungswerte[1] = ErwartungswertOben2(dice, 2);
+                                  Erwartungswerte[2] = ErwartungswertOben2(dice, 3);
+                                  Erwartungswerte[3] = ErwartungswertOben2(dice, 4);
+                                  Erwartungswerte[4] = ErwartungswertOben2(dice, 5);
+                                  Erwartungswerte[5] = ErwartungswertOben2(dice, 6);
+                                  Erwartungswerte[6] = ErwartungswertDreierPasch2(dice);
+                                  Erwartungswerte[7] = ErwartungswertViererPasch2(dice);
+                                  Erwartungswerte[8] = ErwartungswertFullhouse2(dice);
+                                  Erwartungswerte[9] = ErwartungswertklStrasse2(dice);
+                                  Erwartungswerte[10]= ErwartungswertgrStrasse2(dice);
+                                  Erwartungswerte[11]= ErwartungswertKniffel2(dice);
+                                  Erwartungswerte[12]= 0;                                 //Chance
+
+                                  sort(Erwartungswerte, order, 13);                   //Erwartungswerte[order[12]] ist der höchste, [0] der kleinste Eintrag
+
+                                  for (int i=0; i<13; i++)
+                                  {
+                                      if (data::KI.Spielstand[order[12-i]] == 888)
+                                      {
+                                          m_temp = i;
+                                          setGoal(dice, keep, order[12-i], 1);
+                                          cout<<order[12-i]<<endl;
+
+                                          //Ereignis mit dem höchsten Erwartungswert ist noch nicht belegt, es wird als Ziel für den nächsten Wurf gewählt
+                                          i = 13;
+                                      }
+                                  }
+                              }
+
+
+
+                              if((Wurf==0||Wurf==1)&&keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
+                              {
+                                  write(dice, data::KI.Spielstand, order[12-m_temp]+1);
+                                  Wurf=3;										//Für Schleifenabbruch sorgen, da alle Wuerfel behalten werden
+                              }
+                              //Nach dem dritten Wurf --------------------------------------------------------------------------------------------------------------------------
+                              if(Wurf==2)
+                              {
+                                  for (int i=0; i<13; i++)
+                                  {
+                                      write(dice, EintragTemp, i+1);
+                                  }
+                                  EintragTemp[12] = 0;
+                                  for(int i=0; i<3; i++) EintragTemp[i]+=9; //Kniffelbonus wird höher gewichtet!
+                                  for(int i=3; i<6; i++) EintragTemp[i]+=7; //damit nicht einer der Päsche eingetragen wird.
+                                  sort(EintragTemp, order, 13);
+
+                                  /*  Die Funktion EintragLetzterWurf trägt den möglicherweise besten Wert ein und gibt true zurück, falls ein wert eingrtragen wurde.
+                                   *  Da Sie Funktion viele if-Schaltungen enthält, laufen die Abfragen in wenigen Spezialfällen ins Leere und es kann vorkommen,
+                                   *  dass kein Wert ins Gewinnblatt eingetragen wird. Um diesen Bug zu verhindern, wird abgefragt, ob etwas eingetragen wurde. Falls nicht,
+                                   *  soll einfach das ereignis mit dem H´höchstmöglichen Wert eingetragen werden.
+                                   *      ÜBRIGENS: Das Ereignis mit dem höchstmöclichen Wert ist NICHT immer automatisch die beste Wahl, da es dadurch möglicherweise
+                                   *      nicht mehr möglich ist, den Bonus zu erhalten!
+
+                                  if(!EintragLetzterWurf(data::KI.Spielstand, order, dice, Zug))
+                                  {
+                                      for (int i=0; i<13; i++)
+                                      {
+                                          if (data::KI.Spielstand[order[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
+                                          {
+                                              write(dice, data::KI.Spielstand, order[12-i]+1);
+                                              i = 13;
+                                          }
+                                      }
+                                  }
+
+
+                                }
+
+                              }
+
+                      }
+
+                  }
+              }*/
+
+
+              /*delete [] data::singleSpieler.Spielstand;
+              data::singleSpieler.Spielstand = NULL;*/
+        }
 
     // ----------------------------------------------------------------------------------------------------------------------------------------------
     // Beginn Multiplayer
 
-        if (Spielmodus == 1)
+        if (data::Spielmodus == 1)
         {
 
         //Objektinstanzierung
@@ -211,7 +350,7 @@ int main(int argc, char *argv[])
 				
                     if(keep[0]==1&&keep[1]==1&&keep[2]==1&&keep[3]==1&&keep[4]==1)
                         {
-                            write(dice, spielerptr[l].Spielstand);
+                            //write(dice, spielerptr[l].Spielstand); -> das Eintragen passiert jetzt durch Anklicken des Gewinnblatts
                             j=3;										//Für Schleifenabbruch sorgen, wenn vor dem dritten Wurf alle Würfel behalten werden
                         }
 				
@@ -219,7 +358,7 @@ int main(int argc, char *argv[])
                 else                            //Im dritten Zug wird direkt etwas eingetragen
                 {
 				cout <<"gewuerfelt:			"; for(int k=0; k<5; k++) {cout <<dice[k]<<"   ";} cout<<endl;
-                write(dice, spielerptr[l].Spielstand);
+                //write(dice, spielerptr[l].Spielstand); -> -> das Eintragen passiert jetzt durch Anklicken des Gewinnblatts
                 }
             }
            }
@@ -233,14 +372,8 @@ int main(int argc, char *argv[])
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Bestenliste
 
-        ofstream bestenlisteFile;                                       //Erstellen einer Datei für die Bestenliste
-        bestenlisteFile.open ("Bestenliste.conf", ios::app);
-        for (int i=0; i<Spieleranzahl; i++)                             //Die Spieler mit ihrer Punktzahl in die Bestenliste einschreiben
-        {
-             bestenlisteFile << spielerptr[i].Endpunktzahl << ":    " << spielerptr[i].get_Name() << endl;
-
-        }
-        bestenlisteFile.close();
+    data::bestenliste.fuellenBestenliste(punktzahlBesterSpieler, nameBesterSpieler);        //Überprüfen, ob der Spieler mit den meisten Punkten in die
+                                                                                            //Bestenliste mit aufgenommen werden soll
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -252,6 +385,7 @@ int main(int argc, char *argv[])
     keep = NULL;
     delete[] spielerptr;
     spielerptr = NULL;
+
 
     return 0;
 

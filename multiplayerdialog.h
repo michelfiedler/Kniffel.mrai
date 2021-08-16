@@ -15,6 +15,16 @@ public:
     explicit MultiplayerDialog(QWidget *parent = nullptr);
     ~MultiplayerDialog();
 
+public slots:
+    void fillNameTable();
+
+private slots:
+
+
+    void on_pBNamenEintragen_clicked();
+
+    void on_buttonBox_accepted();
+
 private:
     Ui::MultiplayerDialog *ui;
 };

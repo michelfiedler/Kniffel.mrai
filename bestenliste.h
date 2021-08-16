@@ -1,16 +1,29 @@
 #ifndef BESTENLISTE_H
 #define BESTENLISTE_H
 
-#include <string>
+#include "mainwindow.h"
+
 #include <iostream>
-#include <fstream>
+#include <QObject>
 
 using namespace std;
 
-struct person               //Für die Bestenliste eine Struktur für die Entitäten in der Bestenliste-File erstellen
+class Bestenliste : public QObject //Klasse Bestenliste erstellen, die die Punktzahl und die Namen der Liste enthält und zuordnen kann
 {
-    string name;
-    int punkte;
+    Q_OBJECT
+
+public:
+    int platz1, platz2, platz3, platz4, platz5;           //Punkte Platz 1 bis 5
+    char name1[15], name2[15], name3[15], name4[15], name5[15];     //Namen Platz 1 bis 5
+
+public:
+    void fuellenBestenliste(int punktzahl, char* name);
+    void set_name(char*, char*);
+
+signals:
+   void UpdateBestenliste();
 };
 
 #endif // BESTENLISTE_H
+
+
