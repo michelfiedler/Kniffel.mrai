@@ -65,11 +65,9 @@ void singleplayerDialog::refreshTable()
         }
     }
 
-
-    //ui->tW_SpielstandSingle->setItem(order[12-m_temp],1,new QTableWidgetItem(QString::number(data::KI.Spielstand[order[12-m_temp]])));
-
 }
 
+//Hinzufügen der Endpunktzahlen ins Kniffel-Gewinnblatt
 void singleplayerDialog::refreshEndTabelle()
 {
     ui->tW_SpielstandSingle->setItem(13, 0, new QTableWidgetItem(QString::number(data::singleSpieler.Endpunktzahl)));

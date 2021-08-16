@@ -70,6 +70,44 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
         else {emit wrongCell();}
     }
     else {emit wrongCell();}
+
+
+    //Spielende--------------------------------------------------------------------------------------------------------------------------
+    //Endpunktzahlen werden berechnet
+    if (data::Zug ==13)
+    {
+        int* Endpunktzahlen = new int [data::spieleranzahl];
+        int* order = new int [data::spieleranzahl];
+        for (int i=0; i<data::spieleranzahl; i++)
+        {
+            data::spieler[i].Endpunktzahl = sum(data::spieler[i].Spielstand, 13);
+            if(sum(data::spieler[i].Spielstand, 6) > 62) data::spieler[i].Endpunktzahl +=35;
+        }
+        refreshEndTabelle();
+        for(int i=0; i<data::spieleranzahl; i++) order[i] = i;
+        for(int i=0; i<data::spieleranzahl; i++) Endpunktzahlen[i] = data::spieler[i].Endpunktzahl;
+        sort(Endpunktzahlen, order, data::spieleranzahl);
+
+
+        QMessageBox Ende;
+        Ende.setText("Herzlichen Glückwunsch");
+        //Ende.setDetailedText(data::spieler[order[data::spieleranzahl-1]].mName); //Das Ausgeben des Namen funktioniert noch nicht
+        Ende.setText("Du hast gewonnen! Mit einer Punktzahl von");
+        Ende.exec();
+
+    //data::spieler[order[data::spieleranzahl-1]].mName ist der Spieler mit der höchsten Punktzahl
+        delete[]Endpunktzahlen;
+        delete[]order;
+    }
+}
+
+//Endpunktzahlen werden ins Kniffelgewinnblatt eingetragen
+void spielmodusMultiDialog::refreshEndTabelle()
+{
+    for (int i=0; i<data::spieleranzahl; i++)
+    {
+        ui->tW_SpielstandMulti->setItem(13,i, new QTableWidgetItem(QString::number(data::spieler[i].Endpunktzahl)));
+    }
 }
 
 void spielmodusMultiDialog::chooseNewCell()
@@ -178,4 +216,21 @@ void spielmodusMultiDialog::on_pBW5_clicked()
     if(ui->pBW5->isChecked())keep[4]=1;
     else keep[4]=0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
