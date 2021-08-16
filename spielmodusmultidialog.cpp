@@ -91,7 +91,7 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
 
         QMessageBox Ende;
         Ende.setText("Herzlichen Glückwunsch");
-        Ende.setDetailedText(data::spieler[order[data::spieleranzahl-1]].mName);
+        //Ende.setDetailedText(data::spieler[order[data::spieleranzahl-1]].mName); //Das Ausgeben des Namen funktioniert noch nicht
         Ende.setText("Du hast gewonnen! Mit einer Punktzahl von");
         Ende.exec();
 
