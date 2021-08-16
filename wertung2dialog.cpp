@@ -3,7 +3,6 @@
 #include <data.h>
 #include <QObject>
 #include <QLabel>
-#include <windows.h>
 
 wertung2dialog::wertung2dialog(QWidget *parent) :
     QDialog(parent),
