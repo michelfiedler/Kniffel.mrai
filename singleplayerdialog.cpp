@@ -449,6 +449,13 @@ void singleplayerDialog::KIZug()
             //Ausgabe des Sieges oder der Niederlage
             if (data::singleSpieler.Endpunktzahl>data::KI.Endpunktzahl)
             {
+                //Den Namen von QString in char* umwandeln und in der Highscoreliste speichern
+                QString filename = data::singleSpieler.mName;
+                char* nameSinglePlayer;
+                string fname = filename.toStdString();
+                nameSinglePlayer = new char [fname.size()+1];
+                strcpy( nameSinglePlayer, fname.c_str() );
+                data::bestenliste.fuellenBestenliste(data::singleSpieler.Endpunktzahl, nameSinglePlayer);
 
                 emit SiegDu();  //Signal für den Sieg des Singlespielers aussenden
             }
@@ -464,6 +471,19 @@ void singleplayerDialog::KIZug()
         delete[] EintragTemp;
         EintragTemp = NULL;
 
+
+}
+
+
+
+
+
+void singleplayerDialog::on_nameSpeichern_clicked()
+{
+    data::singleSpieler.mName = ui ->singleName->text().trimmed();              //Der eingegebene Name des Spieler wird für die Bestenliste gespeichert.
+    QMessageBox msgBox;
+    msgBox.setText("Dein Name wurde gespeichert!");                             //Der Spieler erhält durch die MessageBox die Information , dass sein Name gespeichert wurde.
+    msgBox.exec();
 
 }
 
