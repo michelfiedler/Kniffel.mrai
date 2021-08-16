@@ -26,7 +26,7 @@ void SechsSpielerDialog::on_buttonBox_accepted()
     data::spieler[4].mName = ui ->spielerName65->text().trimmed();
     data::spieler[5].mName = ui ->spielerName66->text().trimmed();
 
-
+    emit tabelleFuellen6();
 
     this->close();
 }

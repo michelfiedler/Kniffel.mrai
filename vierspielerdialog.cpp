@@ -24,6 +24,7 @@ void VierSpielerDialog::on_buttonBox_accepted()
     data::spieler[2].mName = ui ->spielerName43->text().trimmed();
     data::spieler[3].mName = ui ->spielerName44->text().trimmed();//Die eingegebenen Namen werden gespeichert.
 
+    emit tabelleFuellen4();
 
     this->close();
 }

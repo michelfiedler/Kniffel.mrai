@@ -20,6 +20,9 @@ private slots:
 
 private:
     Ui::VierSpielerDialog *ui;
+
+public: signals:
+    void tabelleFuellen4();
 };
 
 #endif // VIERSPIELERDIALOG_H

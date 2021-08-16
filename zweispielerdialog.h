@@ -20,6 +20,10 @@ private slots:
 
 private:
     Ui::ZweiSpielerDialog *ui;
+
+public: signals:
+    void tabelleFuellen2();
+
 };
 
 #endif // ZWEISPIELERDIALOG_H

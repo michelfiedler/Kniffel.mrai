@@ -23,6 +23,8 @@ void DreiSpielerDialog::on_buttonBox_accepted()
     data::spieler[1].mName = ui ->spielerName32->text().trimmed();
     data::spieler[2].mName = ui ->spielerName33->text().trimmed();
 
+    emit tabelleFuellen3();
+
     this->close();
 
 }
