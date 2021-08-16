@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QLCDNumber>
 #include <QLabel>
-#include <windows.h>
+//#include <windows.h>
 
 singleplayerDialog::singleplayerDialog(QWidget *parent) :
     QDialog(parent),
@@ -232,7 +232,7 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
 void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
 {
     QMessageBox msgBox;
-    msgBox.setText("Dieses Feld kann nicht beschrieben werden. Bitte wählen Sie ein anderes aus.");
+    msgBox.setText("Dieses Feld kann nicht beschrieben werden. Bitte wähle ein anderes aus.");
     msgBox.exec();
 }
 
@@ -244,7 +244,6 @@ void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Wü
     ui->pBW3->setChecked(false);
     ui->pBW4->setChecked(false);
     ui->pBW5->setChecked(false);
-    if(data::wievielterWurf==0) for(int i=0; i<5; i++) keep[i] = 0;
     if(data::wievielterWurf<3){     //Man kann nicht mehr als 3 mal würfeln
     rolldice(dice,keep);
     for(int i=0; i<5; i++) keep[i]=0;   //nach jedem Wurf wird das keep Feld wieder mit 0 beschrieben
