@@ -126,6 +126,11 @@
        <string>Chance</string>
       </property>
      </row>
+     <row>
+      <property name="text">
+       <string>Endpunktzahl</string>
+      </property>
+     </row>
      <column>
       <property name="text">
        <string>Du</string>
