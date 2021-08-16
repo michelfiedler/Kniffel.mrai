@@ -449,6 +449,12 @@ void singleplayerDialog::KIZug()
             //Ausgabe des Sieges oder der Niederlage
             if (data::singleSpieler.Endpunktzahl>data::KI.Endpunktzahl)
             {
+                QString filename = "NameSingleplayer";
+                char* nameSinglePlayer;
+                string fname = filename.toStdString();
+                nameSinglePlayer = new char [fname.size()+1];
+                strcpy( nameSinglePlayer, fname.c_str() );
+                data::bestenliste.fuellenBestenliste(data::singleSpieler.Endpunktzahl, nameSinglePlayer);
 
                 emit SiegDu();  //Signal für den Sieg des Singlespielers aussenden
             }
