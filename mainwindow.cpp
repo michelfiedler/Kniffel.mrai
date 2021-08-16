@@ -98,6 +98,14 @@ void MainWindow::fillBestenliste()
         ui->tW_Bestenliste->insertRow(ui->tW_Bestenliste->rowCount());
         ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz5)));
         ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name5)));
+
+        for(int i=0; i<5; i++)
+        {
+            for(int j=0; j<2; j++)
+            {
+                ui->tW_Bestenliste->item(i,j)->setTextAlignment(Qt::AlignHCenter);
+            }
+        }
 }
 
 
