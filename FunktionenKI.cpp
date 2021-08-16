@@ -64,54 +64,50 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
                 //Notlösung und fragt nacheinander mögliche Ereignisse ab, die gestrichen werden können
                 //Jeweils wird abgefragt, ob ein Feld schon beschrieben ist. Wenn nicht, wird es beschrieben, die Schleife abgebrochen und true zurückgegeben
 
-                if (Spielstand[12] == 888 && sum(wuerfel, 5)> 15) //Chance eintragen, wenn diese groß genug ist (21 oder mehr)
+                if (Spielstand[12] == 888 && sum(wuerfel, 5)> 15) //Chance eintragen, wenn diese groß genug ist (16 oder mehr)
                 {
                     write(wuerfel, Spielstand, 13);
-                    i = 13;
                     return true;
                 }
                 else if (Spielstand[0] == 888) //Einsen eintragen
                 {
                     write(wuerfel, Spielstand, 1);
-                    i = 13;
                     return true;
                 }
                 else if (Spielstand[11] == 888) //Kniffel streichen
                 {
                     write(wuerfel, Spielstand, 12);
-                    i= 13;
                     return true;
                 }
                 else if (Spielstand[7] == 888) //Viererpasch streichen
                 {
                     write(wuerfel, Spielstand, 8);
-                    i = 13;
                     return true;
                 }
                 else if (Spielstand[1] == 888) //Zweien eintragen
                 {
                     write(wuerfel, Spielstand, 2);
-                    i = 13;
                     return true;
                 }
                 else if (Spielstand[10] == 888) //große Straße streichen
                 {
                     write(wuerfel, Spielstand, 11);
-                    i = 13;
                     return true;
                 }
                 else if (Spielstand[8] == 888) //FullHouse streichen
                 {
                     write(wuerfel, Spielstand, 9);
-                    i = 13;
                     return true;
                 }
+
+            }
+            else if(Reihenfolge[12-i] == 6 && sum(wuerfel, 5)<24)
+            {
 
             }
             else //Eintragen des Ereignisses
             {
                 write(wuerfel, Spielstand, Reihenfolge[12-i]+1);
-                i = 13;
                 return true;
             }
         }
@@ -272,9 +268,9 @@ void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
 
             if (miss34==1 && miss25==0 && miss16==0) //1+2, 2+5 oder 5+6 behalten, wenn das nicht geht: 2/5 behalten
             {
-                if (countN(wuerfel,5,1)>0 && countN(wuerfel,5,2)>0) {pick(wuerfel, behalten, 1, 1); pick(wuerfel, behalten, 2, 1);}
                 if (countN(wuerfel,5,5)>0 && countN(wuerfel,5,6)>0) {pick(wuerfel, behalten, 5, 1); pick(wuerfel, behalten, 6, 1);}
-                if (countN(wuerfel,5,2)>0 && countN(wuerfel,5,5)>0) {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+                else if (countN(wuerfel,5,1)>0 && countN(wuerfel,5,2)>0) {pick(wuerfel, behalten, 1, 1); pick(wuerfel, behalten, 2, 1);}//FEHLER BEHEBEN!
+                else if (countN(wuerfel,5,2)>0 && countN(wuerfel,5,5)>0) {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
                 else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
             }
             else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}

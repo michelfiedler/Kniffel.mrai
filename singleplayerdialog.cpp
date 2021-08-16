@@ -522,7 +522,7 @@ void singleplayerDialog::KIZug()
 
                 //Bildschirmausganbe, um Aktionen zu prüfen
                         cout<<"TEMP-EINTRÄGE und REIHENFOLGE"<<endl;
-                        for(int i=0; i<13; i++) cout<<i<<": "<<EintragTemp[i]<<"               "<<order[12-i]<<endl;
+                        for(int i=0; i<13; i++) cout<<i<<": "<<EintragTemp[i]<<"               "<<order[i]<<endl;
                         cout<<endl;
 
                 /*  Die Funktion EintragLetzterWurf trägt den möglicherweise besten Wert ein und gibt true zurück, falls ein wert eingrtragen wurde.
