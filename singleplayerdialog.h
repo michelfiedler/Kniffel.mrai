@@ -37,6 +37,8 @@ private slots:
 
     void on_pBW5_clicked();
 
+    void on_nameSpeichern_clicked();
+
 public slots:
     void neuWaehlen();
     void KIZug();
