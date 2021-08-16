@@ -34,6 +34,7 @@ private slots:
 
 public slots:
     void chooseNewCell();
+    void refreshEndTabelle();
 
 signals:
     void wrongCell();
