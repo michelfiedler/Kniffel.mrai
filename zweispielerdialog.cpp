@@ -22,6 +22,8 @@ void ZweiSpielerDialog::on_buttonBox_accepted()
     data::spieler[0].mName = ui ->nameEins->text().trimmed();               //Die eingegebenen Namen werden gespeichert.
     data::spieler[1].mName = ui ->spielerName22->text().trimmed();
 
+    emit tabelleFuellen2();                                                 //Signal zum füllen der Tabelle wird ausgesendet.
+
     this->close();
 }
 

@@ -28,6 +28,8 @@ void SiebenSpielerDialog::on_buttonBox_accepted()
     data::spieler[5].mName = ui ->spielerName76->text().trimmed();
     data::spieler[6].mName = ui ->spielerName77->text().trimmed();
 
+    emit tabelleFuellen7();                                             //Signal zum füllen der Tabelle wird ausgesendet.
+
     this->close();
 }
 

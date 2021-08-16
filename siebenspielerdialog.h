@@ -20,6 +20,9 @@ private slots:
 
 private:
     Ui::SiebenSpielerDialog *ui;
+
+public: signals:
+    void tabelleFuellen7();
 };
 
 #endif // SIEBENSPIELERDIALOG_H

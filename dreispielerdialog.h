@@ -20,6 +20,9 @@ private slots:
 
 private:
     Ui::DreiSpielerDialog *ui;
+
+public: signals:
+    void tabelleFuellen3();
 };
 
 #endif // DREISPIELERDIALOG_H

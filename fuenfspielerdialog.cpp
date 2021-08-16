@@ -24,7 +24,9 @@ void FuenfSpielerDialog::on_buttonBox_accepted()
     data::spieler[2].mName = ui ->spielerName53->text().trimmed();
     data::spieler[3].mName = ui ->spielerName54->text().trimmed();
     data::spieler[4].mName = ui ->spielerName55->text().trimmed();
-                 //Die eingegebenen Namen werden gespeichert.
+                                                                            //Die eingegebenen Namen werden gespeichert.
+
+    emit tabelleFuellen5();                                                 //Signal zum füllen der Tabelle wird ausgesendet.
 
 
     this->close();

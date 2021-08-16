@@ -20,6 +20,9 @@ private slots:
 
 private:
     Ui::FuenfSpielerDialog *ui;
+
+public: signals:
+    void tabelleFuellen5();
 };
 
 #endif // FUENFSPIELERDIALOG_H
