@@ -449,7 +449,8 @@ void singleplayerDialog::KIZug()
             //Ausgabe des Sieges oder der Niederlage
             if (data::singleSpieler.Endpunktzahl>data::KI.Endpunktzahl)
             {
-                QString filename = "NameSingleplayer";
+                //Den Namen von QString in char* umwandeln und in der Highscoreliste speichern
+                QString filename = data::singleSpieler.mName;
                 char* nameSinglePlayer;
                 string fname = filename.toStdString();
                 nameSinglePlayer = new char [fname.size()+1];
