@@ -16,21 +16,35 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert (evtl. zuerst Leerzeichen streichen (aus namensausgabe) und dann Kommata in Leerzeichen ändern, siehe Video)
+    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert
     /*ifstream datei;
-    datei.open("bestenliste");
+    datei.open("bestenlisteSpeichern.conf");
     string line;
     if(datei.is_open())
     {
         while(getline(datei,line))
         {
+            for(int i=0; i<line.size(); i++)
+            {
+                if(line[i] == ' ')
+                {
+                    line[i] = ',';
+                }
+            }
+            for(int i=0; i<line.size(); i++)
+            {
+                if(line[i] == ';')
+                {
+                    line[i] = ' ';
+                }
+            }
             stringstream linebuffer(line);
             linebuffer>>data::bestenliste.platz1>>data::bestenliste.name1>>data::bestenliste.platz2>>data::bestenliste.name2>>data::bestenliste.platz3>>data::bestenliste.name3
                     >>data::bestenliste.platz4>>data::bestenliste.name4>>data::bestenliste.platz5>>data::bestenliste.name5;
         }
         datei.close();
-    }*/
-    fillBestenliste();      //Die Highscoreliste wird mit den ausgelesenen Variablen gefüllt
+    }
+    fillBestenliste();  */    //Die Highscoreliste wird mit den ausgelesenen Variablen gefüllt
 
     QObject::connect(&data::bestenliste, &Bestenliste::UpdateBestenliste, this, &MainWindow::fillBestenliste);  //Der Slot fillBestenliste und das Signal, dass die
 }                                                                                                               //Bestenliste verändert wurde, werden verknüpft
@@ -43,15 +57,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionBeenden_triggered()    //Das Programm "Kniffel" wird geschlossen
 {
-    //Bei Programmende werden die aktuellen Highscores in einer Datei gespeichert (evtl. mit Kommata einlesen)
-    /*ofstream file;
-    file.open("bestenliste");
-    if(file.is_open())
-    {
-        file<<data::bestenliste.platz1<<' '<<data::bestenliste.name1<<' '<<data::bestenliste.platz2<<' '<<data::bestenliste.name2<<' '<<data::bestenliste.platz3<<' '<<data::bestenliste.name3
-           <<' '<<data::bestenliste.platz4<<' '<<data::bestenliste.name4<<' '<<data::bestenliste.platz5<<' '<<data::bestenliste.name5;
-        file.close();
-    }*/
 
     this->close();
 }
@@ -94,4 +99,19 @@ void MainWindow::fillBestenliste()
         ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz5)));
         ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name5)));
 }
+
+
+
+/*void MainWindow::on_pBsaveScores_clicked()
+{
+    //Bei Programmende werden die aktuellen Highscores in einer Datei gespeichert
+    ofstream file;
+    file.open("bestenlisteSpeichern.conf");
+    if(file.is_open())
+    {
+        file<<data::bestenliste.platz1<<';'<<data::bestenliste.name1<<';'<<data::bestenliste.platz2<<';'<<data::bestenliste.name2<<';'<<data::bestenliste.platz3<<';'<<data::bestenliste.name3
+           <<';'<<data::bestenliste.platz4<<';'<<data::bestenliste.name4<<';'<<data::bestenliste.platz5<<';'<<data::bestenliste.name5;
+        file.close();
+    }
+}*/
 
