@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert
-    /*ifstream datei;
+    ifstream datei;
     datei.open("bestenlisteSpeichern.conf");
     string line;
     if(datei.is_open())
@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
         }
         datei.close();
     }
-    fillBestenliste();  */    //Die Highscoreliste wird mit den ausgelesenen Variablen gefüllt
+    fillBestenliste();     //Die Highscoreliste wird mit den ausgelesenen Variablen gefüllt
 
     QObject::connect(&data::bestenliste, &Bestenliste::UpdateBestenliste, this, &MainWindow::fillBestenliste);  //Der Slot fillBestenliste und das Signal, dass die
 }                                                                                                               //Bestenliste verändert wurde, werden verknüpft
@@ -102,7 +102,7 @@ void MainWindow::fillBestenliste()
 
 
 
-/*void MainWindow::on_pBsaveScores_clicked()
+void MainWindow::on_pBsaveScores_clicked()
 {
     //Bei Programmende werden die aktuellen Highscores in einer Datei gespeichert
     ofstream file;
@@ -113,5 +113,5 @@ void MainWindow::fillBestenliste()
            <<';'<<data::bestenliste.platz4<<';'<<data::bestenliste.name4<<';'<<data::bestenliste.platz5<<';'<<data::bestenliste.name5;
         file.close();
     }
-}*/
+}
 
