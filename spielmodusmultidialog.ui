@@ -109,6 +109,11 @@ p, li { white-space: pre-wrap; }
        <string>Chance</string>
       </property>
      </row>
+     <row>
+      <property name="text">
+       <string>Endpunktzahl</string>
+      </property>
+     </row>
     </widget>
    </item>
    <item row="1" column="1">
