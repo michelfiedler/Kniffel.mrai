@@ -23,6 +23,8 @@ private slots:
 
     void on_pBNamenEintragen_clicked();
 
+    void on_buttonBox_accepted();
+
 private:
     Ui::MultiplayerDialog *ui;
 };

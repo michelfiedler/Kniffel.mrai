@@ -1,66 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>singleplayerDialog</class>
- <widget class="QDialog" name="singleplayerDialog">
+ <class>spielmodusMultiDialog</class>
+ <widget class="QDialog" name="spielmodusMultiDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>630</height>
+    <width>680</width>
+    <height>529</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>Singleplayer Kniffel</string>
+   <string>Dialog</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
-   <property name="fieldGrowthPolicy">
-    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-   </property>
-   <property name="horizontalSpacing">
-    <number>3</number>
-   </property>
-   <property name="verticalSpacing">
-    <number>1</number>
-   </property>
-   <property name="leftMargin">
-    <number>5</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>5</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
+   <item row="0" column="0" colspan="2">
+    <widget class="QTextBrowser" name="Spielerklaerung">
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Willkommen! Hier kannst Du gegen deine Freunde spielen.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Links findest Du das &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Kniffelgewinnblatt&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; und rechts kannst Du würfeln. Drücke den &amp;quot;behalten&amp;quot; Button, um die Würfel auszuwählen, die Du behalten möchtest. Um Dir die Punkte einzutragen, klicke das entsprechende Feld im Kniffelgewinnblatt.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Viel Spaß und Erfolg!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
-    <widget class="QTableWidget" name="tW_SpielstandSingle">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
+    <widget class="QTableWidget" name="tW_SpielstandMulti">
      <property name="sizeAdjustPolicy">
       <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::SelectedClicked</set>
      </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>125</number>
-     </attribute>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>33</number>
-     </attribute>
      <row>
       <property name="text">
        <string>Einsen</string>
@@ -126,49 +109,12 @@
        <string>Chance</string>
       </property>
      </row>
-     <column>
-      <property name="text">
-       <string>Du</string>
-      </property>
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="foreground">
-       <brush brushstyle="NoBrush">
-        <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
-        </color>
-       </brush>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>KI</string>
-      </property>
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-     </column>
     </widget>
    </item>
    <item row="1" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="7,7,7,7,7">
-     <property name="spacing">
-      <number>7</number>
-     </property>
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="topMargin">
-      <number>200</number>
+      <number>150</number>
      </property>
      <item>
       <widget class="QLabel" name="qlW1">
@@ -183,9 +129,6 @@
        </property>
        <property name="scaledContents">
         <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -223,12 +166,6 @@
      </item>
      <item>
       <widget class="QLabel" name="qlW4">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="maximumSize">
         <size>
          <width>110</width>
@@ -245,12 +182,6 @@
      </item>
      <item>
       <widget class="QLabel" name="qlW5">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="maximumSize">
         <size>
          <width>110</width>
@@ -269,25 +200,6 @@
    </item>
    <item row="2" column="1">
     <layout class="QGridLayout" name="gridLayout_3">
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <property name="horizontalSpacing">
-      <number>7</number>
-     </property>
-     <property name="verticalSpacing">
-      <number>0</number>
-     </property>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="pBW5">
-       <property name="text">
-        <string>behalten</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="pBW1">
        <property name="text">
@@ -300,12 +212,6 @@
      </item>
      <item row="0" column="3">
       <widget class="QPushButton" name="pBW4">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="text">
         <string>behalten</string>
        </property>
@@ -334,6 +240,16 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="pBW5">
+       <property name="text">
+        <string>behalten</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="3" column="1">
@@ -349,41 +265,9 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
-     </property>
-     <property name="centerButtons">
-      <bool>false</bool>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QTextBrowser" name="Spielerklaerung">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>80</height>
-      </size>
-     </property>
-     <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Willkommen! Hier kannst Du gegen den Computer spielen.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Links findest Du das &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Kniffelgewinnblatt&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; und rechts kannst Du würfeln. Drücke den &amp;quot;behalten&amp;quot; Button, um die Würfel auszuwählen, die Du behalten möchtest.Um Dir die Punkte einzutragen, klicke das entsprechende Feld im Kniffelgewinnblatt.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Viel Spaß und Erfolg!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="lName">
-     <property name="text">
-      <string>Bitte gebe hier Deinen Namen für die Highscoreliste ein:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLineEdit" name="lineEdit"/>
    </item>
   </layout>
  </widget>
@@ -392,12 +276,12 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>singleplayerDialog</receiver>
+   <receiver>spielmodusMultiDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>629</x>
-     <y>618</y>
+     <x>248</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -408,12 +292,12 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>singleplayerDialog</receiver>
+   <receiver>spielmodusMultiDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>697</x>
-     <y>618</y>
+     <x>316</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
