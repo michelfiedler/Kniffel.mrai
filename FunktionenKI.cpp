@@ -56,7 +56,7 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
         if (Spielstand[Reihenfolge[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
         {
             //Wenn kein gutes Ergebnis für 3en, 4en, 5en oder 6en vorliegt, dieses aber eingetragen werden würde
-            if(Reihenfolge[12-i]<6 && Reihenfolge[12-i]>1 && countN(wuerfel, 5, Reihenfolge[12-i]+1)<3 && Zug<8)
+            if(Reihenfolge[12-i]<6 && Reihenfolge[12-i]>1 && countN(wuerfel, 5, Reihenfolge[12-i]+1)<3)
             {
                 //-----------------------------------------------------------
                 //Streichpriorisierung
@@ -255,7 +255,7 @@ void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
                 pick(wuerfel, behalten, 5, 1);
                 pick(wuerfel, behalten, 6, 1);
             }
-        }
+         }
         else
         {
             pick(wuerfel, behalten, 3, 1);
@@ -273,8 +273,8 @@ void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
             if (miss34==1 && miss25==0 && miss16==0) //1+2, 2+5 oder 5+6 behalten, wenn das nicht geht: 2/5 behalten
             {
                 if (countN(wuerfel,5,1)>0 && countN(wuerfel,5,2)>0) {pick(wuerfel, behalten, 1, 1); pick(wuerfel, behalten, 2, 1);}
-                if (countN(wuerfel,5,5)>0 && countN(wuerfel,5,6)>0) {pick(wuerfel, behalten, 5, 1); pick(wuerfel, behalten, 6, 1);}
-                if (countN(wuerfel,5,2)>0 && countN(wuerfel,5,5)>0) {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
+                else if (countN(wuerfel,5,5)>0 && countN(wuerfel,5,6)>0) {pick(wuerfel, behalten, 5, 1); pick(wuerfel, behalten, 6, 1);}
+                else if (countN(wuerfel,5,2)>0 && countN(wuerfel,5,5)>0) {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
                 else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
             }
             else {pick(wuerfel, behalten, 2, 1); pick(wuerfel, behalten, 5, 1);}
