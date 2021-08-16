@@ -96,7 +96,7 @@ void MultiplayerDialog::on_pBNamenEintragen_clicked()
 
 void MultiplayerDialog::fillNameTable()                     //Funktion füllt die Tabelle im Multiplayerdialog mit den eingegebenen Namen
 {
-    data::spieleranzahl = (Spieler::eSpieleranzahl) ui->cBSpieleranzahl->currentIndex();    /* Die Anzahl der Spieler wird in der Combobox angegen
+    data::spieleranzahl = (Spieler::eSpieleranzahl) ui->cBSpieleranzahl->currentIndex();    /* Die Anzahl der Spieler wird in der Combobox angegeben
                                                                                           und in der Variable spieleranzahl gespeichert.*/
 
     ui->tBSpielernamen->setRowCount(0);          //Bisherige Einträge werden gelöscht
