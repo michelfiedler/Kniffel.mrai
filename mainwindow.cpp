@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert (evtl. Kommata in Leerzeichen ändern, siehe Video)
+    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert (evtl. zuerst Leerzeichen streichen (aus namensausgabe) und dann Kommata in Leerzeichen ändern, siehe Video)
     /*ifstream datei;
     datei.open("bestenliste");
     string line;

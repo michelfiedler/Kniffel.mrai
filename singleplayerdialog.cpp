@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QLCDNumber>
 #include <QLabel>
-#include <windows.h>
+//#include <windows.h>
 
 singleplayerDialog::singleplayerDialog(QWidget *parent) :
     QDialog(parent),
