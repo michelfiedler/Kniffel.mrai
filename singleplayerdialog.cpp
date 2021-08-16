@@ -467,3 +467,16 @@ void singleplayerDialog::KIZug()
 
 }
 
+
+
+
+
+void singleplayerDialog::on_nameSpeichern_clicked()
+{
+    data::singleSpieler.mName = ui ->singleName->text().trimmed();              //Der eingegebene Name des Spieler wird für die Bestenliste gespeichert.
+    QMessageBox msgBox;
+    msgBox.setText("Dein Name wurde gespeichert!");                             //Der Spieler erhält durch die MessageBox die Information , dass sein Name gespeichert wurde.
+    msgBox.exec();
+
+}
+
