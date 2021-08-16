@@ -54,20 +54,12 @@ void singleplayerDialog::refreshTable()
 {
     for(int i=0; i<13; i++)
     {
-        if(data::singleSpieler.Spielstand[i] == 888)
-        {
-            ui->tW_SpielstandSingle->setItem(i, 0, new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[i])));
-        }
-        else
+        if(data::singleSpieler.Spielstand[i] != 888)
         {
             ui->tW_SpielstandSingle->setItem(i, 0, new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[i])));
         }
 
-        if(data::KI.Spielstand[i] == 888)
-        {
-            ui->tW_SpielstandSingle->setItem(i, 1, new QTableWidgetItem(QString::number(data::KI.Spielstand[i])));
-        }
-        else
+        if(data::KI.Spielstand[i] != 888)
         {
             ui->tW_SpielstandSingle->setItem(i, 1, new QTableWidgetItem(QString::number(data::KI.Spielstand[i])));
         }
