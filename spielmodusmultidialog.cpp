@@ -66,6 +66,10 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
             //Um die Spieler am benutzen der Würfel des vorherigen Spielers zu hindern, wird schon einmal gewürfelt
             for(int i=0; i<5; i++) keep[i] = 0;
             spielmodusMultiDialog::on_pBwuerfeln_clicked();
+
+            QMessageBox msgBox;                 //Die Message Box wird erstellt.
+            msgBox.setText("Der nächset Spieler ist dran! Es wurde bereits das erste Mal für dich gewürfelt. Gib nach jedem Wurf an, welche Würfel du behalten willst, bevor du neu würfelst!");                             //Es wird dem nächsten Spieler angezeigt, dass er dran ist und bereits für ihn gewürfelt wurde.
+            msgBox.exec();                      //Die Message Box signaliesiert dm nächsten Spiler, dass er an der Reihe ist.
         }
         else {emit wrongCell();}
     }
