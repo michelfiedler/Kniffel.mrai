@@ -35,6 +35,8 @@ singleplayerDialog::~singleplayerDialog()
     //Dynamisch angeforderten Speicher wieder freigeben
     delete [] data::singleSpieler.Spielstand;
     data::singleSpieler.Spielstand = NULL;
+    delete [] data::KI.Spielstand;
+    data::KI.Spielstand = NULL;
 
 }
 
@@ -447,13 +449,16 @@ void singleplayerDialog::KIZug()
             //Ausgabe des Sieges oder der Niederlage
             if (data::singleSpieler.Endpunktzahl>data::KI.Endpunktzahl)
             {
-                //Den Namen von QString in char* umwandeln und in der Highscoreliste speichern
-                QString filename = data::singleSpieler.mName;
+                /*Nun überprüfen, ob die Punkte des Spielers ausreichen, um in die Highscoreliste eingetragen zu werden. Dafür muss der Name, der als QString gespeichert
+                 *  wurde in char* umwgewandelt werden*/
+                QString spielerName = data::singleSpieler.mName;
                 char* nameSinglePlayer;
-                string fname = filename.toStdString();
-                nameSinglePlayer = new char [fname.size()+1];
-                strcpy( nameSinglePlayer, fname.c_str() );
+                string sname = spielerName.toStdString();
+                nameSinglePlayer = new char [sname.size()+1];
+                strcpy( nameSinglePlayer, sname.c_str() );
                 data::bestenliste.fuellenBestenliste(data::singleSpieler.Endpunktzahl, nameSinglePlayer);
+                delete[] nameSinglePlayer;
+                nameSinglePlayer=NULL;
 
                 emit SiegDu();  //Signal für den Sieg des Singlespielers aussenden
             }

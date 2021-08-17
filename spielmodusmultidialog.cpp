@@ -95,6 +95,19 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
         Ende.setText("Du hast gewonnen! Mit einer Punktzahl von");
         Ende.exec();
 
+        /*Nun überprüfen, ob die Punkte der Spieler ausreichen, um in die Highscoreliste eingetragen zu werden. Dafür muss der Name, der als QString gespeichert
+         *  wurde in char* umwgewandelt werden*/
+        for (int i=0; i<=data::spieleranzahl+1; i++)
+        {
+            QString playerName = data::spieler[i].mName;
+            char* namePlayer;
+            string pname = playerName.toStdString();
+            namePlayer = new char [pname.size()+1];
+            strcpy( namePlayer, pname.c_str() );
+            data::bestenliste.fuellenBestenliste(data::spieler[i].Endpunktzahl, namePlayer);
+            if(i==data::spieleranzahl+1){delete[] namePlayer; namePlayer=NULL;}
+        }
+
     //data::spieler[order[data::spieleranzahl-1]].mName ist der Spieler mit der höchsten Punktzahl
         delete[]Endpunktzahlen;
         delete[]order;

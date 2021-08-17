@@ -5,6 +5,12 @@ data::data()
 
 }
 
+data::~data()
+{
+    delete [] spieler;
+    spieler = NULL;
+}
+
 Bestenliste data::bestenliste;      //Objekt bestenliste erstellen vom Typ Bestenliste
 Spieler data::singleSpieler;        //Objekt singleSpieler erstellen vom Typ Spieler
 Spieler data::KI;
