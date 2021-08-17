@@ -80,7 +80,7 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
 
 
     //Spielende--------------------------------------------------------------------------------------------------------------------------
-    //Endpunktzahlen werden berechnet
+    //Endpunktzahlen werden berechnet, wenn der letzte Zug erreicht wurde
     if (data::Zug ==13)
     {
         int* Endpunktzahlen = new int [data::spieleranzahl+2];
@@ -93,12 +93,12 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
         refreshEndTabelle();
         for(int i=0; i<data::spieleranzahl+2; i++) order[i] = i;
         for(int i=0; i<data::spieleranzahl+2; i++) Endpunktzahlen[i] = data::spieler[i].Endpunktzahl;
-        sort(Endpunktzahlen, order, data::spieleranzahl+2);
+        sort(Endpunktzahlen, order, data::spieleranzahl+2); //data::spieler[order[data::spieleranzahl+1] ist der beste Spieler
 
-
-        //QMessageBox Ende;
-        int value = data::spieler[order[data::spieleranzahl+1]].Endpunktzahl; //data::spieler[order[data::spieleranzahl+1] ist der beste Spieler
+        //Ausgabe der Punkteauswertung
+        int value = data::spieler[order[data::spieleranzahl+1]].Endpunktzahl;
         QString Name = QString (data::spieler[order[data::spieleranzahl+1]].mName);
+        //Auszugebener Text
         QString text = QString("Herzlichen Glückwunsch\n %1 , Du hast gewonnen! Mit einer Punktzahl von: %2").arg(Name).arg(value);
         QMessageBox::information(0, "Punkteauswertung", text);
 
@@ -115,7 +115,6 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
             if(i==data::spieleranzahl+1){delete[] namePlayer; namePlayer=NULL;}
         }
 
-    //data::spieler[order[data::spieleranzahl-1]].mName ist der Spieler mit der höchsten Punktzahl
         delete[]Endpunktzahlen;
         Endpunktzahlen=NULL;
         delete[]order;
