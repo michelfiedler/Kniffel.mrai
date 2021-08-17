@@ -6,7 +6,6 @@
 
 #include <QObject>
 #include <QMessageBox>
-#include <QLCDNumber>
 #include <QLabel>
 //#include <windows.h>
 

@@ -2,12 +2,9 @@
 #include "ui_mainwindow.h"
 #include "data.h"
 
-#include <vector>
-#include <algorithm>
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <cstdlib>
 #include <QObject>
 
 MainWindow::MainWindow(QWidget *parent) :

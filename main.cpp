@@ -1,17 +1,9 @@
 #include <iostream>
 #include <ctime>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include <cstdlib>
 #include <QApplication>
 
 #include "mainwindow.h"
 #include "Funktionen.h"
-#include "FunktionenKI.h"
-#include "data.h"
 
 using namespace std;
 
