@@ -31,6 +31,7 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
 singleplayerDialog::~singleplayerDialog()
 {
     delete ui;
+    data::Zug=0;
     //Dynamisch angeforderten Speicher wieder freigeben
     delete [] data::singleSpieler.Spielstand;
     data::singleSpieler.Spielstand = NULL;
