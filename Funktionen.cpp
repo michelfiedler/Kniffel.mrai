@@ -6,8 +6,6 @@
 
 using namespace std;
 
-int punktzahlBesterSpieler;
-char nameBesterSpieler[15];
 int* dice = new int[5];
 int* keep = new int[5];
 
@@ -115,15 +113,19 @@ bool fullhouse (int* zeiger, int laenge)
     else return false;
 }
 
+/*Funktion prüft, ob es sich wirklich um eine kleine Straße handelt. Sie bekommt das Feld mit den Würfeln sowie die Länge
+des Feldes übergeben. Handelt es sich um eine kleine Straße wird der bool-Wert true zurück gegeben und sonst false.*/
 bool klstrasse (int* zeiger, int laenge)
 {
-    if (countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0
-        &&((countN(zeiger, laenge, 1)>0&&countN(zeiger, laenge, 2)>0)
+    if (countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0    //Prüfen, ob Würfelwert 3 und 4 vorliegen
+        &&((countN(zeiger, laenge, 1)>0&&countN(zeiger, laenge, 2)>0)   //Prüfen, ob Würfelwert 1 und 2 vorliegen oder 2 und 5 oder 5 und 6
         ||(countN(zeiger, laenge, 2)>0&&countN(zeiger, laenge, 5)>0)
         ||(countN(zeiger, laenge, 5)>0&&countN(zeiger, laenge, 6)>0))) return true;
     else return false;
 }
 
+/*Funktion prüft, ob es sich wirklich um eine große Straße handelt. Sie bekommt das Feld mit den Würfeln sowie die Länge
+des Feldes übergeben. Handelt es sich um eine große Straße wird der bool-Wert true zurück gegeben und sonst false.*/
 bool grstrasse (int* zeiger, int laenge)
 {
     if (countN(zeiger, laenge, 2)>0&&countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0&&countN(zeiger, laenge, 5)>0
@@ -242,47 +244,4 @@ void write (int* wuerfel, int* blatt, int was)  //Funktion schreibt die Punkte i
 }
 
 
-/*void Punkteauswertung (int Spieleranzahl, Spieler* spielerptr)
-{
-    int* Reihenfolge = new int[Spieleranzahl];
 
-    for(int i=0; i<Spieleranzahl; i++)
-    {
-      Reihenfolge[i] = i;
-      spielerptr[i].Endpunktzahl = sum(spielerptr[i].Spielstand, 13);
-      if(sum(spielerptr[i].Spielstand, 6) > 62) spielerptr[i].Endpunktzahl +=35;
-    }
-
-    int temp = 0;
-    for(int j = 0; j<Spieleranzahl-1; j++)
-    {
-        for(int i=0; i<Spieleranzahl-1; i++)
-        {
-            if(spielerptr[i].Endpunktzahl>spielerptr[i+1].Endpunktzahl)
-            {
-                temp = Reihenfolge[i];
-                Reihenfolge[i] = Reihenfolge[i+1];
-                Reihenfolge[i+1] = temp;
-            }
-        }
-    }
-
-    cout << "ERGEBNIS" <<endl;
-    for(int i=0; i<Spieleranzahl; i++)
-    {
-        cout    << i+1 <<". Platz: " <<spielerptr[Reihenfolge[Spieleranzahl-i-1]].get_Name() <<"   mit "
-                <<spielerptr[Reihenfolge[Spieleranzahl-i-1]].Endpunktzahl << " Punkten!" <<endl;
-
-        //Hier den Namen und die Punktzahl des Spielers des ersten Platzes speichern, um ihn möglicherweise in die Bestenliste aufzunehmen
-        if (i==0)
-        {
-            spielerptr[Reihenfolge[Spieleranzahl-i-1]].Endpunktzahl = punktzahlBesterSpieler;
-            for(int j=1; j<15; j++)
-            {
-                spielerptr[Reihenfolge[Spieleranzahl-i-1]].Name[j] = nameBesterSpieler[j];
-            }
-        }
-    }
-
-    cout << "Herzlichen Glueckwunsch  " << spielerptr[Reihenfolge[Spieleranzahl-1]].get_Name() << "!  Du hast gewonnen." << endl;
-}*/

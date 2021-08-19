@@ -14,7 +14,7 @@ spielmodusMultiDialog::spielmodusMultiDialog(QWidget *parent) :
     ui->setupUi(this);
 
     ui->tW_SpielstandMulti->setColumnCount(data::spieleranzahl+2);  //Anzahl der Spalten im Kniffelblatt an Spieleranzahl anpassen
-    for(int i=0; i<=data::spieleranzahl+1; i++)     //i läuft von 0 bis Anzahl der Spieler -1 für den Index der Spalten
+    for(int i=0; i<=data::spieleranzahl+1; i++)     //i läuft von 0 bis Anzahl der Spieler-1 (Variable spieleranzahl ist 0 bei 2 Spielern) für den Index der Spalten
     {
         data::spieler[i].Spielstand = new int [13]; //Ein Spielstand Feld für die Spieler
         data::spieler[i].reset_Spielstand();
@@ -41,19 +41,20 @@ spielmodusMultiDialog::~spielmodusMultiDialog()
     }
 }
 
-void spielmodusMultiDialog::on_buttonBox_rejected()
+void spielmodusMultiDialog::on_buttonBox_rejected() //Dialog schließen
 {
     this->close();
 }
 
-
+/*Wenn ein besetimmtes Feld im Gewinnblatt geklickt wird, soll der entsprechende Spielstand eingetragen werden.
+Es werden die Zeilen- und Spaltennummer übergeben.*/
 void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int column)
 {
     ui->tW_SpielstandMulti->setSortingEnabled(false);
 
     if(column==data::welcherSpieler)        //welcherSpieler muss nach jedem mal würfeln neu definiert werden, damit definiert wird welcher Spieler am Zug ist
     {
-        if(data::spieler[data::welcherSpieler].Spielstand[row] == 888)
+        if(data::spieler[data::welcherSpieler].Spielstand[row] == 888) //Nur Eintragen, wenn Feld unbeschrieben ist
         {
             write (dice, data::spieler[data::welcherSpieler].Spielstand, row+1); //Testen, ob schon ein Item existiert und wenn nicht, den Spielstand beschreiben
             QTableWidgetItem *item= new QTableWidgetItem(QString::number(data::spieler[data::welcherSpieler].Spielstand[row])); //ein Item für die Tabelle erstellen und den Eintrag in einen integer umwandeln, um die Punkte des Spielstandes einzutragen
@@ -73,8 +74,8 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
             if (data::Zug==0)
             {
                 QMessageBox msgBox;                 //Die Message Box wird erstellt.
-                msgBox.setText("Der nächset Spieler ist dran! Es wurde bereits das erste Mal für dich gewürfelt. Gib nach jedem Wurf an, welche Würfel du behalten willst, bevor du neu würfelst!");                             //Es wird dem nächsten Spieler angezeigt, dass er dran ist und bereits für ihn gewürfelt wurde.
-                msgBox.exec();                      //Die Message Box signaliesiert dm nächsten Spiler, dass er an der Reihe ist.
+                msgBox.setText("Der nächste Spieler ist dran! Es wurde bereits das erste Mal für dich gewürfelt. Gib nach jedem Wurf an, welche Würfel du behalten willst, bevor du neu würfelst!");                             //Es wird dem nächsten Spieler angezeigt, dass er dran ist und bereits für ihn gewürfelt wurde.
+                msgBox.exec();                      //Die Message Box signalisiert dem nächsten Spieler, dass er an der Reihe ist.
             }
         }
         else {emit wrongCell();}
@@ -114,7 +115,10 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
             string pname = playerName.toStdString();
             namePlayer = new char [pname.size()+1];
             strcpy( namePlayer, pname.c_str() );
+
+            //Nun überprüfen
             data::bestenliste.fuellenBestenliste(data::spieler[i].Endpunktzahl, namePlayer);
+            //Nach Überprüfung des letzten Spielers, Speicher wieder freigeben
             if(i==data::spieleranzahl+1){delete[] namePlayer; namePlayer=NULL;}
         }
 
@@ -134,6 +138,7 @@ void spielmodusMultiDialog::refreshEndTabelle()
     }
 }
 
+//Spieler signalisieren ein anderes Feld im Gewinnblatt auszuwählen
 void spielmodusMultiDialog::chooseNewCell()
 {
     QMessageBox myMsgBox;
@@ -141,7 +146,7 @@ void spielmodusMultiDialog::chooseNewCell()
     myMsgBox.exec();
 }
 
-
+//Button "Würfeln" würfelt und zeigt die Würfelergebnisse in der GUI an
 void spielmodusMultiDialog::on_pBwuerfeln_clicked()
 {
     ui->pBW1->setChecked(false);    //Die Buttons für das Behalten werden zurückgesetzt->sie "leuchten" nicht mehr
@@ -202,14 +207,14 @@ void spielmodusMultiDialog::on_pBwuerfeln_clicked()
         if(dice[4]==5) {ui->qlW5->setPixmap(multiAugen5);}
         if(dice[4]==6) {ui->qlW5->setPixmap(multiAugen6);}
 
-        data::wievielterWurf++;
+        data::wievielterWurf++; //Variable für die Anzahl der Würfe hochsetzen
     }
 }
 
 //Wenn die Buttons "behalten" gedrückt werden, soll der Würfel behalten werden->der behalten Button "leuchtet" in dem Fall
 void spielmodusMultiDialog::on_pBW1_clicked()
 {
-    if(ui->pBW1->isChecked())keep[0]=1;
+    if(ui->pBW1->isChecked())keep[0]=1; //Wenn die Buttons gedrückt werden, soll der Würfel behalten werden->der behalten Button "leuchtet" in dem Fall
     else keep[0]=0;
 }
 

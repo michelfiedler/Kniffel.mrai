@@ -16,13 +16,14 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
     ui->setupUi(this);
 
 
-    data::singleSpieler.Spielstand = new int [13]; //Ein Spielstand Feld für den SinglePlayer erstellen
+    //Speicher für die Spielstände anfordern und mit 888 intitialisieren
+    data::singleSpieler.Spielstand = new int [13];
     data::singleSpieler.reset_Spielstand();
     data::KI.Spielstand = new int[13];
     data::KI.reset_Spielstand();
-    //for (int i=0; i<13; i++) {data::singleSpieler.Spielstand[i]=0;} //Alle Einträge des Spielstandes auf 0 setzen
 
-    QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);    //Der Slot neuWaehlen und das Signal besetzt werden verknüpft
+    //Signale und Slots verknüpfen
+    QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);
     QObject::connect(this, &singleplayerDialog::KIistdran, this, &singleplayerDialog::KIZug);
     QObject::connect(this, &singleplayerDialog::SiegDu, this, &singleplayerDialog::wertung);
     QObject::connect(this, &singleplayerDialog::SiegKI, this, &singleplayerDialog::wertung2);
@@ -41,6 +42,8 @@ singleplayerDialog::~singleplayerDialog()
     data::KI.Spielstand = NULL;
 
 }
+
+//Slots
 
 void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen, abhängig vom Sieger
 {
@@ -79,15 +82,15 @@ void singleplayerDialog::refreshEndTabelle()
 
 }
 
-//Slots
 
 void singleplayerDialog::on_buttonBox_rejected()        //Der SingleplayerModus wird geschlossen
 {
     this->close();
 }
 
-
-void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)    //Wenn ein besetimmtes Feld im Gewinnblatt geklickt wird, soll der entsprechende Spielstand eingetragen werden
+/*Wenn ein besetimmtes Feld im Gewinnblatt geklickt wird, soll der entsprechende Spielstand eingetragen werden.
+Es werden die Zeilen- und Spaltennummer übergeben.*/
+void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
 {
     ui->tW_SpielstandSingle->setSortingEnabled(false);  //Sortieren der Tabelle abschalten
 
@@ -95,30 +98,32 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
     {
         if (data::singleSpieler.Spielstand[row] == 888) { write (dice, data::singleSpieler.Spielstand, row+1); //Testen, ob schon ein Item existiert und wenn nicht, den Spielstand beschreiben
             QTableWidgetItem *item= new QTableWidgetItem(QString::number(data::singleSpieler.Spielstand[row])); //ein Item für die Tabelle erstellen und den Eintrag in einen integer umwandeln, um die Punkte des Spielstandes einzutragen
-            ui->tW_SpielstandSingle->setItem(row,0, item);
+            ui->tW_SpielstandSingle->setItem(row,0, item);  //Das Item in die Tabelle einfügen
             emit KIistdran();
-        } //Das Item in die Tabelle einfügen
+        }
         else {emit besetzt();}            //Signal für erneute Feldauswahl, falls in diesem Feld schon Punkte eingetragen wurden
     }
     else {emit besetzt();}        //Signal für erneute Feldauswahl
 
 }
 
-void singleplayerDialog::neuWaehlen()   //Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
+//Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
+void singleplayerDialog::neuWaehlen()
 {
     QMessageBox msgBox;
     msgBox.setText("Dieses Feld kann nicht beschrieben werden. Bitte wähle ein anderes aus.");
     msgBox.exec();
 }
 
-
-void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Würfelergebnisse an
+//Button "Würfeln" würfelt und zeigt die Würfelergebnisse in der GUI an
+void singleplayerDialog::on_pBwuerfeln_clicked()
 {
     ui->pBW1->setChecked(false);    //Die Buttons für das Behalten werden zurückgesetzt->sie "leuchten" nicht mehr
     ui->pBW2->setChecked(false);
     ui->pBW3->setChecked(false);
     ui->pBW4->setChecked(false);
     ui->pBW5->setChecked(false);
+
     if(data::wievielterWurf<3){     //Man kann nicht mehr als 3 mal würfeln
     rolldice(dice,keep);
     for(int i=0; i<5; i++) keep[i]=0;   //nach jedem Wurf wird das keep Feld wieder mit 0 beschrieben
@@ -171,7 +176,7 @@ void singleplayerDialog::on_pBwuerfeln_clicked()    //Würfelt und zeigt die Wü
     if(dice[4]==5) {ui->qlW5->setPixmap(augen5);}
     if(dice[4]==6) {ui->qlW5->setPixmap(augen6);}
 
-    data::wievielterWurf++;
+    data::wievielterWurf++; //Variable für die Anzahl der Würfe hochsetzen
     }
 }
 
@@ -458,7 +463,11 @@ void singleplayerDialog::KIZug()
                 string sname = spielerName.toStdString();
                 nameSinglePlayer = new char [sname.size()+1];
                 strcpy( nameSinglePlayer, sname.c_str() );
+
+                //Nun überprüfen mit Funktion fuellenBestenliste
                 data::bestenliste.fuellenBestenliste(data::singleSpieler.Endpunktzahl, nameSinglePlayer);
+
+                //Speicher freigeben
                 delete[] nameSinglePlayer;
                 nameSinglePlayer=NULL;
 
