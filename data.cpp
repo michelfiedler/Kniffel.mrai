@@ -13,7 +13,8 @@ data::~data()
 
 Bestenliste data::bestenliste;      //Objekt bestenliste erstellen vom Typ Bestenliste
 Spieler data::singleSpieler;        //Objekt singleSpieler erstellen vom Typ Spieler
-Spieler data::KI;
+Spieler data::KI;                   //Objekt für KI vom Typ Spieler erstellen
+//Nun die Variablen setzen, wie sie für den Anfang des Spieles sein müssen
 int data::Spielmodus=0;
 int data::wievielterWurf=0;
 int data::spieleranzahl=0;

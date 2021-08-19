@@ -6,8 +6,6 @@
 
 using namespace std;
 
-int punktzahlBesterSpieler;
-char nameBesterSpieler[15];
 int* dice = new int[5];
 int* keep = new int[5];
 
@@ -115,15 +113,19 @@ bool fullhouse (int* zeiger, int laenge)
     else return false;
 }
 
+/*Funktion prüft, ob es sich wirklich um eine kleine Straße handelt. Sie bekommt das Feld mit den Würfeln sowie die Länge
+des Feldes übergeben. Handelt es sich um eine kleine Straße wird der bool-Wert true zurück gegeben und sonst false.*/
 bool klstrasse (int* zeiger, int laenge)
 {
-    if (countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0
-        &&((countN(zeiger, laenge, 1)>0&&countN(zeiger, laenge, 2)>0)
+    if (countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0    //Prüfen, ob Würfelwert 3 und 4 vorliegen
+        &&((countN(zeiger, laenge, 1)>0&&countN(zeiger, laenge, 2)>0)   //Prüfen, ob Würfelwert 1 und 2 vorliegen oder 2 und 5 oder 5 und 6
         ||(countN(zeiger, laenge, 2)>0&&countN(zeiger, laenge, 5)>0)
         ||(countN(zeiger, laenge, 5)>0&&countN(zeiger, laenge, 6)>0))) return true;
     else return false;
 }
 
+/*Funktion prüft, ob es sich wirklich um eine große Straße handelt. Sie bekommt das Feld mit den Würfeln sowie die Länge
+des Feldes übergeben. Handelt es sich um eine große Straße wird der bool-Wert true zurück gegeben und sonst false.*/
 bool grstrasse (int* zeiger, int laenge)
 {
     if (countN(zeiger, laenge, 2)>0&&countN(zeiger, laenge, 3)>0&&countN(zeiger, laenge, 4)>0&&countN(zeiger, laenge, 5)>0

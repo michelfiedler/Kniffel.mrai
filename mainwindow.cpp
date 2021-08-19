@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //Grafische Einstellungen in der GUI
     ui->tBwelcomeText->setStyleSheet("background:transparent;color: rgb(255, 255, 255);");
     ui->lBestenliste->setStyleSheet("background-color: rgb(32, 45, 53);");
     ui->lBestenliste->setStyleSheet("color: rgb(255, 255, 255);");
@@ -26,28 +27,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert
+    //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen für die Bestenliste gespeichert
     ifstream datei;
     datei.open("bestenlisteSpeichern.conf");
     string line;
     if(datei.is_open())
     {
-        while(getline(datei,line))
+        while(getline(datei,line))  //solange ausgelesen wird
         {
-            for(int i=0; i<line.size(); i++)
+            for(int i=0; i<line.size(); i++)    //mögliche Leerzeichen in der Datei durch Kommatas ersetzen
             {
                 if(line[i] == ' ')
                 {
                     line[i] = ',';
                 }
             }
-            for(int i=0; i<line.size(); i++)
+            for(int i=0; i<line.size(); i++)    //Semikolons, welche die Variablen trennen, durch Leerzeichen ersetzen für das Auslesen in die Variablen
             {
                 if(line[i] == ';')
                 {
                     line[i] = ' ';
                 }
             }
+            //Daten in die Variablen auslesen
             stringstream linebuffer(line);
             linebuffer>>data::bestenliste.platz1>>data::bestenliste.name1>>data::bestenliste.platz2>>data::bestenliste.name2>>data::bestenliste.platz3>>data::bestenliste.name3
                     >>data::bestenliste.platz4>>data::bestenliste.name4>>data::bestenliste.platz5>>data::bestenliste.name5;
@@ -87,7 +89,7 @@ void MainWindow::on_pBmulti_clicked()           //Button Multiplayer wurde ausge
         data::Spielmodus=1;     //Spielmodus Multiplayer festlegen
 }
 
-
+//Tabelle Bestenliste beschreiben
 void MainWindow::fillBestenliste()
 {
     ui->tW_Bestenliste->setRowCount(0); //Bisherige Einträge der Bestenliste werden gelöscht
@@ -109,6 +111,7 @@ void MainWindow::fillBestenliste()
         ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 0, new QTableWidgetItem(QString::number(data::bestenliste.platz5)));
         ui->tW_Bestenliste->setItem(ui->tW_Bestenliste->rowCount()-1, 1, new QTableWidgetItem(QString(data::bestenliste.name5)));
 
+        //In jedem Feld der Bestenliste den Text mittig einordnen und den Hintergrund auf Weiß setzen
         for(int i=0; i<5; i++)
         {
             for(int j=0; j<2; j++)
@@ -120,14 +123,14 @@ void MainWindow::fillBestenliste()
 }
 
 
-
+//Beim Klicken des "Highscores speicher" Buttons werden die aktuellen Highscores in einer Datei gespeichert
 void MainWindow::on_pBsaveScores_clicked()
 {
-    //Bei Programmende werden die aktuellen Highscores in einer Datei gespeichert
     ofstream file;
     file.open("bestenlisteSpeichern.conf");
     if(file.is_open())
     {
+        //Hier in das Dokument die Variablen reinschreiben
         file<<data::bestenliste.platz1<<';'<<data::bestenliste.name1<<';'<<data::bestenliste.platz2<<';'<<data::bestenliste.name2<<';'<<data::bestenliste.platz3<<';'<<data::bestenliste.name3
            <<';'<<data::bestenliste.platz4<<';'<<data::bestenliste.name4<<';'<<data::bestenliste.platz5<<';'<<data::bestenliste.name5;
         file.close();
