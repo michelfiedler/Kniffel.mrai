@@ -49,12 +49,21 @@ void pick (int* wuerfel, int* behalten, int was, int anz)
     }
 }
 
-bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zug)
+/*  Die Funktion EintragLetzterWurf hat das Ziel, nach dem letzten Wurf der KI den sinnvollsten Eintrag zu finden. Dafür bekommt
+ *  sie die zuletzt gewürfelten Würfel (wuerfel) übergeben, sowie das aktuelle Kniffelgewinnblatt der KI (Spielstand).
+ *  Vor dem Funktionsablauf wurde ein temporäres Feld mit allen möglichen Einträgen beschrieben, die der höhe nach geordnet wurden,
+ *  ihre Reihenfolge wird mithilfe des Reihenfolge-Feldes an die Funktion übergeben.
+ *  Zurückgegeben wird, ob ein Eintrag vorgenommen wurde. Dies ist entscheidend, da durch die vorgenommenen Priorisierungen
+ *  in bestimmten Spielsituationen kein Eintrag vorgenommen wird. Der bool-Wert wird vom Programm abgefangen und im Falle eines
+ *  nicht erfolgten Eintrags dies noch nachgeholt.
+ */
+bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel)
 {
-    for(int i=0; i<13; i++)
+    for(int i=0; i<13; i++)         //Es werden die 13 Einträge des Kniffelgewinnblattes durchlaufen
     {
-        if (Spielstand[Reihenfolge[12-i]] == 888) //Prüfen, ob Feld noch unbeschrieben
-        {
+        if (Spielstand[Reihenfolge[12-i]] == 888)   //Das Spielstand-Feld wurde als default mit 888 beschrieben
+        {                                           //Es wird geprüft, ob der Eintrag schon beschrieben wurde
+
             //Wenn kein gutes Ergebnis für 3en, 4en, 5en oder 6en vorliegt, dieses aber eingetragen werden würde
             if(Reihenfolge[12-i]<6 && Reihenfolge[12-i]>1 && countN(wuerfel, 5, Reihenfolge[12-i]+1)<3)
             {
@@ -64,7 +73,7 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
                 //Notlösung und fragt nacheinander mögliche Ereignisse ab, die gestrichen werden können
                 //Jeweils wird abgefragt, ob ein Feld schon beschrieben ist. Wenn nicht, wird es beschrieben, die Schleife abgebrochen und true zurückgegeben
 
-                if (Spielstand[12] == 888 && sum(wuerfel, 5)> 15) //Chance eintragen, wenn diese groß genug ist (16 oder mehr)
+                if (Spielstand[12] == 888 && sum(wuerfel, 5)>15) //Chance eintragen, wenn diese groß genug ist (16 oder mehr)
                 {
                     write(wuerfel, Spielstand, 13);
                     return true;
@@ -101,11 +110,12 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
                 }
 
             }
+            //Ein Eintrag von weniger als 24 als Dreierpasch ist nicht sinnvoll, daher soll nichts ausgeführt werden
             else if(Reihenfolge[12-i] == 6 && sum(wuerfel, 5)<24)
             {
 
             }
-            else //Eintragen des Ereignisses
+            else //Wird dieser else-Block erreicht, ist das Eintragen des höchstmöglichen Ereignisses vorteilhaft und es wird eingetragen
             {
                 write(wuerfel, Spielstand, Reihenfolge[12-i]+1);
                 return true;
@@ -113,6 +123,12 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
         }
     }
     return false;
+
+    /*  Sollte das Ende der Funktion erreicht werden, bedeutet dies, dass bislang noch kein Eintrag
+     *  ins Kniffelgewinnblatt vorgenommen wurde, da die Funktion sonst bereits abgebrochen worden wäre
+     *  und true zurückgegeben hätte. Somit soll die Funktion das Hauptprogramm über den nicht korrekten Ablauf informiren
+     */
+
 }
 
 void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
