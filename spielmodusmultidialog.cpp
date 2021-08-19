@@ -29,6 +29,8 @@ spielmodusMultiDialog::spielmodusMultiDialog(QWidget *parent) :
 spielmodusMultiDialog::~spielmodusMultiDialog()
 {
     delete ui;
+
+    data::wievielterWurf=0;
     data::Zug=0;
 
     //Dynamisch angeforderten Speicher wieder freigeben
