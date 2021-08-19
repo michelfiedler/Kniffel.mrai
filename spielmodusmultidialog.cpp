@@ -29,6 +29,7 @@ spielmodusMultiDialog::spielmodusMultiDialog(QWidget *parent) :
 spielmodusMultiDialog::~spielmodusMultiDialog()
 {
     delete ui;
+    data::Zug=0;
 
     //Dynamisch angeforderten Speicher wieder freigeben
     for(int i=0; i<=data::spieleranzahl+1; i++)
@@ -67,9 +68,12 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
             for(int i=0; i<5; i++) keep[i] = 0;
             spielmodusMultiDialog::on_pBwuerfeln_clicked();
 
-            QMessageBox msgBox;                 //Die Message Box wird erstellt.
-            msgBox.setText("Der nächset Spieler ist dran! Es wurde bereits das erste Mal für dich gewürfelt. Gib nach jedem Wurf an, welche Würfel du behalten willst, bevor du neu würfelst!");                             //Es wird dem nächsten Spieler angezeigt, dass er dran ist und bereits für ihn gewürfelt wurde.
-            msgBox.exec();                      //Die Message Box signaliesiert dm nächsten Spiler, dass er an der Reihe ist.
+            if (data::Zug==0)
+            {
+                QMessageBox msgBox;                 //Die Message Box wird erstellt.
+                msgBox.setText("Der nächset Spieler ist dran! Es wurde bereits das erste Mal für dich gewürfelt. Gib nach jedem Wurf an, welche Würfel du behalten willst, bevor du neu würfelst!");                             //Es wird dem nächsten Spieler angezeigt, dass er dran ist und bereits für ihn gewürfelt wurde.
+                msgBox.exec();                      //Die Message Box signaliesiert dm nächsten Spiler, dass er an der Reihe ist.
+            }
         }
         else {emit wrongCell();}
     }
@@ -77,27 +81,27 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
 
 
     //Spielende--------------------------------------------------------------------------------------------------------------------------
-    //Endpunktzahlen werden berechnet
+    //Endpunktzahlen werden berechnet, wenn der letzte Zug erreicht wurde
     if (data::Zug ==13)
     {
-        int* Endpunktzahlen = new int [data::spieleranzahl];
-        int* order = new int [data::spieleranzahl];
-        for (int i=0; i<data::spieleranzahl; i++)
+        int* Endpunktzahlen = new int [data::spieleranzahl+2];
+        int* order = new int [data::spieleranzahl+2];
+        for (int i=0; i<data::spieleranzahl+2; i++)
         {
             data::spieler[i].Endpunktzahl = sum(data::spieler[i].Spielstand, 13);
             if(sum(data::spieler[i].Spielstand, 6) > 62) data::spieler[i].Endpunktzahl +=35;
         }
         refreshEndTabelle();
-        for(int i=0; i<data::spieleranzahl; i++) order[i] = i;
-        for(int i=0; i<data::spieleranzahl; i++) Endpunktzahlen[i] = data::spieler[i].Endpunktzahl;
-        sort(Endpunktzahlen, order, data::spieleranzahl);
+        for(int i=0; i<data::spieleranzahl+2; i++) order[i] = i;
+        for(int i=0; i<data::spieleranzahl+2; i++) Endpunktzahlen[i] = data::spieler[i].Endpunktzahl;
+        sort(Endpunktzahlen, order, data::spieleranzahl+2); //data::spieler[order[data::spieleranzahl+1] ist der beste Spieler
 
-
-        QMessageBox Ende;
-        Ende.setText("Herzlichen Glückwunsch");
-        //Ende.setDetailedText(data::spieler[order[data::spieleranzahl-1]].mName); //Das Ausgeben des Namen funktioniert noch nicht
-        Ende.setText("Du hast gewonnen! Mit einer Punktzahl von");
-        Ende.exec();
+        //Ausgabe der Punkteauswertung
+        int value = data::spieler[order[data::spieleranzahl+1]].Endpunktzahl;
+        QString Name = QString (data::spieler[order[data::spieleranzahl+1]].mName);
+        //Auszugebener Text
+        QString text = QString("Herzlichen Glückwunsch\n %1 , Du hast gewonnen! Mit einer Punktzahl von: %2").arg(Name).arg(value);
+        QMessageBox::information(0, "Punkteauswertung", text);
 
         /*Nun überprüfen, ob die Punkte der Spieler ausreichen, um in die Highscoreliste eingetragen zu werden. Dafür muss der Name, der als QString gespeichert
          *  wurde in char* umwgewandelt werden*/
@@ -112,16 +116,17 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
             if(i==data::spieleranzahl+1){delete[] namePlayer; namePlayer=NULL;}
         }
 
-    //data::spieler[order[data::spieleranzahl-1]].mName ist der Spieler mit der höchsten Punktzahl
         delete[]Endpunktzahlen;
+        Endpunktzahlen=NULL;
         delete[]order;
+        order=NULL;
     }
 }
 
 //Endpunktzahlen werden ins Kniffelgewinnblatt eingetragen
 void spielmodusMultiDialog::refreshEndTabelle()
 {
-    for (int i=0; i<data::spieleranzahl; i++)
+    for (int i=0; i<data::spieleranzahl+2; i++)
     {
         ui->tW_SpielstandMulti->setItem(13,i, new QTableWidgetItem(QString::number(data::spieler[i].Endpunktzahl)));
     }

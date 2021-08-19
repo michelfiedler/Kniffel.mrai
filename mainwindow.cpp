@@ -2,12 +2,9 @@
 #include "ui_mainwindow.h"
 #include "data.h"
 
-#include <vector>
-#include <algorithm>
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <cstdlib>
 #include <QObject>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,6 +12,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->tBwelcomeText->setStyleSheet("background:transparent;color: rgb(255, 255, 255);");
+    ui->lBestenliste->setStyleSheet("background-color: rgb(32, 45, 53);");
+    ui->lBestenliste->setStyleSheet("color: rgb(255, 255, 255);");
+    ui->tW_Bestenliste->setStyleSheet("background:transparent;");
+    ui->pBsingle->setStyleSheet("background-color: rgb (27, 42, 49);");
+    ui->pBsingle->setStyleSheet("color: rgb(255, 255, 255);");
+    ui->pBsaveScores->setStyleSheet("background-color: rgb (27, 42, 49);");
+    ui->pBsaveScores->setStyleSheet("color: rgb(255, 255, 255);");
+    ui->pBmulti->setStyleSheet("background-color: rgb (27, 42, 49);");
+    ui->pBmulti->setStyleSheet("color: rgb(255, 255, 255);");
+
+
 
     //Bei Programmstart werden aus einer Datei die bisherigen Highscores ausgelesen und in den Variablen gespeichert
     ifstream datei;
@@ -104,6 +114,7 @@ void MainWindow::fillBestenliste()
             for(int j=0; j<2; j++)
             {
                 ui->tW_Bestenliste->item(i,j)->setTextAlignment(Qt::AlignHCenter);
+                ui->tW_Bestenliste->item(i,j)->setBackground(QColor(255,255,255));
             }
         }
 }

@@ -6,5 +6,6 @@
         <file>imageWuerfel4.png</file>
         <file>imageWuerfel5.png</file>
         <file>imageWuerfel6.png</file>
+        <file>backgroundImage.jpg</file>
     </qresource>
 </RCC>

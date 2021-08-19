@@ -2,6 +2,7 @@
 #include "ui_multiplayerdialog.h"
 
 #include "spieler.h"
+#include "data.h"
 #include "zweispielerdialog.h"
 #include "dreispielerdialog.h"
 #include "vierspielerdialog.h"
@@ -10,9 +11,9 @@
 #include "siebenspielerdialog.h"
 #include "spielmodusmultidialog.h"
 
-#include "QTableWidget"
-#include "data.h"
+#include <QTableWidget>
 #include <QString>
+
 MultiplayerDialog::MultiplayerDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MultiplayerDialog)
