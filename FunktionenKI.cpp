@@ -60,7 +60,7 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
             {
                 //-----------------------------------------------------------
                 //Streichpriorisierung
-                //liegt kein gutes Ergebnis vor, wird vom der KI häufig ein Ereignis eingetragen, welches nicht schlau ist. Die Streichpriorisierung dient als
+                //liegt kein gutes Ergebnis vor, wird von der KI häufig ein Ereignis eingetragen, welches nicht schlau ist. Die Streichpriorisierung dient als
                 //Notlösung und fragt nacheinander mögliche Ereignisse ab, die gestrichen werden können
                 //Jeweils wird abgefragt, ob ein Feld schon beschrieben ist. Wenn nicht, wird es beschrieben, die Schleife abgebrochen und true zurückgegeben
 
@@ -115,11 +115,16 @@ bool EintragLetzterWurf (int* Spielstand, int* Reihenfolge, int* wuerfel, int Zu
     return false;
 }
 
+//Auswahl der Würfel abhängig davon, welches Ziel verfolgt werden soll.
+/*Übergabeparameter sind das aktuell vorliegende Würfelfeld, das Behalten-Feld, welches in der Funktion neu beschrieben wird,
+ *  damit die jeweiligen Würfel im nächsten Zug nicht neu gewürfelt werden. Des Weiteren wird das Ziel übergeben, also welches
+ *  Ereignis die KI in diesem Wurf anstrebt und die Zug-Variable, welche angibt, im wie vielten Spielzug die KI sich gerade befindet. */
 void setGoal (int* wuerfel, int* behalten, int Ereignis, int Wurf)
 {
     int* anzahl = new int[6];
     for(int i=0; i<6; i++) anzahl[i] = countN(wuerfel, 5, i+1);
 
+    //Fallunterscheidung abhängig vom verfolgten Ziel dieses Wurfes:
     switch(Ereignis)
     {
     case 0:
@@ -382,6 +387,7 @@ double ErwartungswertOben2 (int* feld, int zahl)
     return erwartungswert*zahl;
 }
 
+//Berechnung des Erwartungswertes für den Dreierpasch nach dem ersten Wurf
 double ErwartungswertDreierPasch1 (int* feld)
 {
     int* anzahl = new int[6];
@@ -433,6 +439,7 @@ double ErwartungswertDreierPasch1 (int* feld)
     }
 }
 
+//Berechnung des Erwartungswertes für den Dreierpasch nach dem zweiten Wurf (selbes Vorgehen, wie oben)
 double ErwartungswertDreierPasch2 (int* feld)
 {
     int* anzahl = new int[6];
@@ -483,6 +490,7 @@ double ErwartungswertDreierPasch2 (int* feld)
     }
 }
 
+//Berechnung des Erwartungswertes für den Viererpasch nach dem ersten Wurf
 double ErwartungswertViererPasch1 (int* feld)
 {
     int* anzahl = new int[6];
@@ -516,6 +524,7 @@ double ErwartungswertViererPasch1 (int* feld)
     }
     case 5:
     {
+        //Erneute Fallunterscheidung, um die Punktzahl zu maximieren
         if (anzahl[4]%4 == 0 && anzahl[5]%4 == 0) return 4.25 +4*mostFrqN;
         if (anzahl[4]%4 == 1 && anzahl[5]%4 == 0) return 5 + 4*mostFrqN;
         if (anzahl[4]%4 == 0 && anzahl[5]%4 == 1) return 6 + 4*mostFrqN;
@@ -524,6 +533,7 @@ double ErwartungswertViererPasch1 (int* feld)
     }
 }
 
+//Berechnung des Erwartungswertes für den Viererpasch nach dem zweiten Wurf (selbes Vorgehen, wie oben)
 double ErwartungswertViererPasch2 (int* feld)
 {
     int* anzahl = new int[6];
@@ -659,9 +669,9 @@ double ErwartungswertklStrasse1 (int* feld)
     //Die zu den Erwartungswerten zugehörigen Wahrscheinlichkeiten wurden teilweise mittels Simulation bestimmt, teils berechnet
     if (miss34==0 && miss25==0 && miss16==0) return 30*65.0/81.0;
     if (miss34==0 && miss25==0 && miss16==1) return 30*65.0/81.0;
-    if (miss34==0 && miss25==1 && miss16==0) return 30*0.658; //nur 3+4 behalten
+    if (miss34==0 && miss25==1 && miss16==0) return 30*0.658;
     if (miss34==0 && miss25==1 && miss16==1) return 30*0.658;
-    if (miss34==1 && miss25==0 && miss16==0) //1+2, 2+5 oder 5+6 behalten (0.518), wenn das nicht geht: 2/5 behalten (0.490)
+    if (miss34==1 && miss25==0 && miss16==0)
     {
         if ((countN(feld,5,1)>0 && countN(feld,5,2)>0)
          || (countN(feld,5,5)>0 && countN(feld,5,6)>0)
@@ -675,14 +685,15 @@ double ErwartungswertklStrasse1 (int* feld)
     }
     if (miss34==1 && miss25==1 && miss16==0) return 30*0.426;
     if (miss34==1 && miss25==1 && miss16==1) return 30*0.588;
-    if (miss34==2 && miss25==0 && miss16==0) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
-    if (miss34==2 && miss25==0 && miss16==1) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
-    if (miss34==2 && miss25==1 && miss16==0) return 30*0.389; //alles neu (im 2.Wurf 3+4 behalten, 2/5 behalten)
+    if (miss34==2 && miss25==0 && miss16==0) return 30*0.389;
+    if (miss34==2 && miss25==0 && miss16==1) return 30*0.389;
+    if (miss34==2 && miss25==1 && miss16==0) return 30*0.389;
     //Vollständigkeit: Fall "211"  kann es nicht geben
     else return 0;          //Theoretisch sind alle 11 bzw. 12 Fälle abgedeckt, da die Steuervariablen keine anderen Fälle annehmen können
                             //Zur Problemvorbeugung soll 0 zurückgegeben werden
 }
 
+//Berechnung des Erwartungswertes für die kleine Straße nach dem zweiten Wurf (selbes Vorgehen wie oben)
 double ErwartungswertklStrasse2 (int* feld)
 {
    //Die folgenden Variablen dienen der späteren Fallunterscheidung. Sie beschreiben, ob die entsprechenden Zahlen im Würfelfeld NICHT vorhanden sind
@@ -691,57 +702,57 @@ double ErwartungswertklStrasse2 (int* feld)
     int miss16 = 0;             //Zählt fehlende 1en und 6en
 
     //Abfrage nach den fehlenden Würfeln
-    if (countN(feld,5,3) == 0) miss34++;        //weder 3 noch 4 vorhanden: 2, entweder 3 oder 4 vorhanden: 1, beide vorhanden: 0
+    if (countN(feld,5,3) == 0) miss34++;
     if (countN(feld,5,4) == 0) miss34++;
-    if (countN(feld,5,2) == 0 && countN(feld,5,5) == 0) miss25 = 1;     //weder 2 noch 5 vorhanden: 1, entweder 2 oder 5 vorhanden oder beide: 0
-    if (countN(feld,5,1) == 0 && countN(feld,5,6) == 0) miss16 = 1;     //weder 1 noch 6 vorhanden: 1, entweder 1 oder 6 vorhanden oder beide: 0
+    if (countN(feld,5,2) == 0 && countN(feld,5,5) == 0) miss25 = 1;
+    if (countN(feld,5,1) == 0 && countN(feld,5,6) == 0) miss16 = 1;
 
+    //Prüfen, ob bereits eine kleine Straße vorliegt
     if (klstrasse(feld,5)) return 30;
 
-    if (miss34==0 && miss25==0 && miss16==0) return 30*0.556; //34 und 2/5 behalten
-    if (miss34==0 && miss25==0 && miss16==1) return 30*0.556; //34 und 2/5 behalten
-    if (miss34==0 && miss25==1 && miss16==0) return 30*0.361; //nur 3+4 behalten
-    if (miss34==0 && miss25==1 && miss16==1) return 30*0.361; //nur 3+4 behalten
+    if (miss34==0 && miss25==0 && miss16==0) return 30*0.556;
+    if (miss34==0 && miss25==0 && miss16==1) return 30*0.556;
+    if (miss34==0 && miss25==1 && miss16==0) return 30*0.361;
+    if (miss34==0 && miss25==1 && miss16==1) return 30*0.361;
     if (miss34==1 && miss25==0 && miss16==0)
     {
         if ((countN(feld,5,1)>0 && countN(feld,5,2)>0)
          || (countN(feld,5,5)>0 && countN(feld,5,6)>0)
-         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) return 30*0.361; //1+2, 2+5 oder 5+6 behalten
+         || (countN(feld,5,2)>0 && countN(feld,5,5)>0)) return 30*0.361;
         else return 30*0.25; //2/5 behalten
     }
     if (miss34==1 && miss25==0 && miss16==1)
     {
-        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) return 30*0.361; //2+5 wenn möglich
+        if (countN(feld,5,2)>0 && countN(feld,5,5)>0) return 30*0.361;
         else return 30*0.25; //2 oder 5 und 3 behalten
     }
-    if (miss34==1 && miss25==1 && miss16==0) return 30*0.231; //nur 3 behalten
-    if (miss34==1 && miss25==1 && miss16==1) return 30*0.231; //nur 3 behalten
-    if (miss34==2 && miss25==0 && miss16==0) return 30*0.154; //alles neu
-    if (miss34==2 && miss25==0 && miss16==1) return 30*0.154; //alles neu
-    if (miss34==2 && miss25==1 && miss16==0) return 30*0.154; //alles neu
-    //Vollständigkeit: Fall "211"  kann es nicht geben
-    else return 0;          //Theoretisch sind alle 11 bzw. 12 Fälle abgedeckt, da die Steuervariablen keine anderen Fälle annehmen können
-                            //Zur Problemvorbeugung soll 0 zurückgegeben werden
+    if (miss34==1 && miss25==1 && miss16==0) return 30*0.231;
+    if (miss34==1 && miss25==1 && miss16==1) return 30*0.231;
+    if (miss34==2 && miss25==0 && miss16==0) return 30*0.154;
+    if (miss34==2 && miss25==0 && miss16==1) return 30*0.154;
+    if (miss34==2 && miss25==1 && miss16==0) return 30*0.154;
 }
 
 
-//Berechnung des Erwartungswertes für eine große Straße nach dem ersten Wurf
+//Berechnung des Erwartungswertes für eine große Straße nach dem ersten Wurf.
+//Die Funktion erhält als Übergabeparameter das aktuell vorliegende Würfelfeld.
 double ErwartungswertgrStrasse1 (int* feld)
 {
+    //Prüfen, ob bereits eine große Straße vorliegt
     if (grstrasse(feld,5)) return 40;
 
     double erwartungswert;
-    int missingones = 0;        //entspricht den fehlenden Würfeln, hier 1 und 6
-    int keymissingones = 0;     //entspricht den wichtigen fehlende Würfeln, hier 2,3,4 und 5, da diese immer für eine große Straße benötigt werden
+    int missingones = 0;        //entspricht den fehlenden Würfeln, hier 1 und 6.
+    int keymissingones = 0;     //entspricht den Würfeln, hier 2,3,4 und 5, welche immer für eine große Straße benötigt werden.
     int anzahl[6]={0};
 
-    //Zählen aller vorliegenden Würfel
+    //Zählen aller vorliegenden Würfel:
     for (int i=0; i<6; i++)
     {
         anzahl[i]=countN(feld,5,i+1);
     }
 
-    //Zählen der keymissingones und missingones
+    //Zählen der keymissingones und missingones:
     for (int i=1; i<5; i++)
     {
        if (anzahl[i]==0) keymissingones++;
@@ -757,11 +768,11 @@ double ErwartungswertgrStrasse1 (int* feld)
     if (keymissingones==2 && missingones==0) erwartungswert = 121.0/1296.0;
     if (keymissingones==2 && missingones==1) erwartungswert = 307.0/5832.0;
     if (keymissingones==3 && missingones==0) erwartungswert = 2141.0/46656.0;
-    if (keymissingones==3 && missingones==1) erwartungswert = 0.01;             //nicht berechnet, da sehr kleine Werte und in diesen Fällen
-    if (keymissingones==4 && missingones==0) erwartungswert = 0.005;            // andere Ereignisse vorliegen.
+    if (keymissingones==3 && missingones==1) erwartungswert = 0.01;             //nicht berechnet, da sehr kleine Werte und in diesen Fällen andere Ereignisse vorliegen.
+    if (keymissingones==4 && missingones==0) erwartungswert = 0.005;
 
 
-    return erwartungswert*40; //Multiplikation mit der maximal zu erreichenden Punktzahl und Rückgabe des Erwartungswertes
+    return erwartungswert*40; //Multiplikation mit der maximal zu erreichenden Punktzahl und Rückgabe des Erwartungswertes.
 }
 
 //Berechnung des Erwartungswertes nach dem zweiten Wurf (selbes Vorgehen wie nach dem ersten Wurf)
