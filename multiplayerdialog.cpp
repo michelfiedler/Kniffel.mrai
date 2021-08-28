@@ -112,7 +112,7 @@ void MultiplayerDialog::fillNameTable()                     //Funktion füllt di
 
 }
 
-
+//Wird der OK Button geklickt, öffnet sich ein Fenster, um im Multiplayer spielen zu können
 void MultiplayerDialog::on_buttonBox_accepted()
 {
     spielmodusMultiDialog* SpielmodusMultiDialog = new spielmodusMultiDialog(this);

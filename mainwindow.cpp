@@ -123,7 +123,7 @@ void MainWindow::fillBestenliste()
 }
 
 
-//Beim Klicken des "Highscores speicher" Buttons werden die aktuellen Highscores in einer Datei gespeichert
+//Beim Klicken des "Highscores speichern" Buttons werden die aktuellen Highscores in einer Datei gespeichert
 void MainWindow::on_pBsaveScores_clicked()
 {
     ofstream file;
