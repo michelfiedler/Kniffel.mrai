@@ -131,14 +131,14 @@ bool grstrasse (int* zeiger, int laenge)
     else return false;
 }
 
-//Die boolean Funktion prüft, ob bei vorhanden Würfeln ein Dreierpasch vorliegt
-//Es werden die Würfel als Feld im Parameter zeiger übergen und die Länge des Würfelfeldes die hier 5 beträgt.
+//Die boolean Funktion "bool dreierpasch" prüft, ob bei vorhanden Würfeln ein Dreierpasch vorliegt
+//Es werden die Würfel als Feld im Parameter zeiger übergeben und die Länge des Würfelfeldes die hier 5 beträgt im Parameter laenge.
 bool dreierpasch (int* zeiger, int laenge)
 {
-    int sum = 0;                                //Einführung der Variable sum
-    for (int i=1; i<7; i++)                     //für jede Zahl von 1-6 wird mithilfe der Funktion CountN() gezählt wie oft die einzelnen Zahlen vorkommen
+    int sum = 0;
+    for (int i=1; i<7; i++)                     //für jede mögliche Würfelzahl, wird die For-Schleife einmal durchlaufen
     {
-        if (countN(zeiger, laenge, i)>2)        //Aufruf der Funktion countN() für die einzelnen Zahlen
+        if (countN(zeiger, laenge, i)>2)        //Es wird überpüft, ob eine Würfelzahl öfter als zwei Mal vorkommt
         {
             for (int j=0; j<laenge; j++)
             {
