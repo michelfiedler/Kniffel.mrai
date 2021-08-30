@@ -16,13 +16,13 @@ spielmodusMultiDialog::spielmodusMultiDialog(QWidget *parent) :
     ui->tW_SpielstandMulti->setColumnCount(data::spieleranzahl+2);  //Anzahl der Spalten im Kniffelblatt an Spieleranzahl anpassen
     for(int i=0; i<=data::spieleranzahl+1; i++)     //i läuft von 0 bis Anzahl der Spieler-1 (Variable spieleranzahl ist 0 bei 2 Spielern) für den Index der Spalten
     {
-        data::spieler[i].Spielstand = new int [13]; //Ein Spielstand Feld für die Spieler
+        data::spieler[i].Spielstand = new int [13]; //Ein Spielstand Feld für die Spieler anfordern
         data::spieler[i].reset_Spielstand();
 
         ui->tW_SpielstandMulti->setHorizontalHeaderItem(i,new QTableWidgetItem(QString(data::spieler[i].mName)));   //Namen der Spieler im Kniffelblatt eintragen
-
-        QObject::connect(this, &spielmodusMultiDialog::wrongCell, this, &spielmodusMultiDialog::chooseNewCell);
     }
+
+    QObject::connect(this, &spielmodusMultiDialog::wrongCell, this, &spielmodusMultiDialog::chooseNewCell);
 
 }
 
@@ -52,7 +52,7 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
 {
     ui->tW_SpielstandMulti->setSortingEnabled(false);
 
-    if(column==data::welcherSpieler)        //welcherSpieler muss nach jedem mal würfeln neu definiert werden, damit definiert wird welcher Spieler am Zug ist
+    if(column==data::welcherSpieler)        //Dafür sorgen, dass der aktuelle Spieler nur in seine Spalte die Punkte eintragen kann
     {
         if(data::spieler[data::welcherSpieler].Spielstand[row] == 888) //Nur Eintragen, wenn Feld unbeschrieben ist
         {
@@ -107,7 +107,7 @@ void spielmodusMultiDialog::on_tW_SpielstandMulti_cellClicked(int row, int colum
         QMessageBox::information(0, "Punkteauswertung", text);
 
         /*Nun überprüfen, ob die Punkte der Spieler ausreichen, um in die Highscoreliste eingetragen zu werden. Dafür muss der Name, der als QString gespeichert
-         *  wurde in char* umwgewandelt werden*/
+         *  wurde in char* umgewandelt werden*/
         for (int i=0; i<=data::spieleranzahl+1; i++)
         {
             QString playerName = data::spieler[i].mName;

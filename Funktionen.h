@@ -7,10 +7,7 @@
 using namespace std;
 
 //Variablen (hier als externe definiert, um sie als Prototypen zu kennzeichnen und sie woanders definieren zu können
-extern int punktzahlBesterSpieler;
-extern char nameBesterSpieler[15];
-
-extern int* dice;						//dice gibt die Würfelergebnisse an
+extern int* dice;		//dice gibt die Würfelergebnisse an
 extern int* keep;
 
 //generelle Funktionen

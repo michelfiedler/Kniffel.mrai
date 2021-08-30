@@ -7,7 +7,6 @@
 #include <QObject>
 #include <QMessageBox>
 #include <QLabel>
-//#include <windows.h>
 
 singleplayerDialog::singleplayerDialog(QWidget *parent) :
     QDialog(parent),
@@ -43,6 +42,7 @@ singleplayerDialog::~singleplayerDialog()
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Slots
 
 void singleplayerDialog::wertung()  //Dialog Punkteauswertung öffnen, abhängig vom Sieger
@@ -57,6 +57,7 @@ void singleplayerDialog::wertung2()
     wertung2->exec();
 }
 
+//Das Kniffelgewinnblatt wird geupdated und mit den Einträgen der Spielstandfelder beschrieben, solange in dem Spielstandfeld keine 888 steht
 void singleplayerDialog::refreshTable()
 {
     for(int i=0; i<13; i++)
@@ -107,7 +108,7 @@ void singleplayerDialog::on_tW_SpielstandSingle_cellClicked(int row, int column)
 
 }
 
-//Slot, der MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
+//Slot, der eine MessageBox anzeigt, welche den Benutzer auffordert ein neues Feld zu wählen
 void singleplayerDialog::neuWaehlen()
 {
     QMessageBox msgBox;
@@ -457,7 +458,7 @@ void singleplayerDialog::KIZug()
             if (data::singleSpieler.Endpunktzahl>data::KI.Endpunktzahl)
             {
                 /*Nun überprüfen, ob die Punkte des Spielers ausreichen, um in die Highscoreliste eingetragen zu werden. Dafür muss der Name, der als QString gespeichert
-                 *  wurde in char* umwgewandelt werden*/
+                 *  wurde in char* umgewandelt werden*/
                 QString spielerName = data::singleSpieler.mName;
                 char* nameSinglePlayer;
                 string sname = spielerName.toStdString();

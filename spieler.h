@@ -10,8 +10,8 @@ using namespace std;
 
 class Spieler
 {
-    public:             //muss public sein, um ihn für die Bestenliste neu zuordnen zu können
-        char Name[15];
+    public:
+        char Name[15];  //muss public sein, um ihn für die Bestenliste neu zuordnen zu können
         enum eSpieleranzahl{
             Zwei,
             Drei,
