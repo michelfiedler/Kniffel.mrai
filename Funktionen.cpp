@@ -174,24 +174,6 @@ bool viererpasch (int* zeiger, int laenge)
     return false;
 }
 
-/*void showscore (int* zeiger)
-{
-    cout <<endl<<"SPIELSTAND"<<endl;
-    cout <<"1		Einsen			"<<zeiger[0]<<endl;
-    cout <<"2		Zweien			"<<zeiger[1]<<endl;
-    cout <<"3		Dreien			"<<zeiger[2]<<endl;
-    cout <<"4		Vieren			"<<zeiger[3]<<endl;
-    cout <<"5		Fuenfen			"<<zeiger[4]<<endl;
-    cout <<"6		Sechsen			"<<zeiger[5]<<endl;
-    cout <<"7		Dreierpasch		"<<zeiger[6]<<endl;
-    cout <<"8		Viererpasch		"<<zeiger[7]<<endl;
-    cout <<"9		FullHouse		"<<zeiger[8]<<endl;
-    cout <<"10		kl Strasse		"<<zeiger[9]<<endl;
-    cout <<"11		gr Strasse		"<<zeiger[10]<<endl;
-    cout <<"12		Kniffel			"<<zeiger[11]<<endl;
-    cout <<"13		Chance			"<<zeiger[12]<<endl<<endl;
-}*/
-
 
 void write (int* wuerfel, int* blatt, int was)  //Funktion schreibt die Punkte in den Spielstand rein. Sie bekommt das Feld mit den Würfelwerten und dem Spielstand übergeben
 {                                               //Die Variable "was" wird durch das Anklicken des Feldes des Gewinnblatts in der GUI bestimmt

@@ -445,11 +445,11 @@ double ErwartungswertDreierPasch1 (int* feld)
              unterschieden wird, da die 4 noch mal gewürfelt werden würde. */
         {
             if (anzahl[4]%3 == 0 && anzahl[5]%3 == 0) return 8.5 + 3*mostFrqN;
-            if (anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 9.25 + 3*mostFrqN;
-            if (anzahl[4]%3 == 2 && anzahl[5]%3 == 0) return 10 + 3*mostFrqN;
-            if (anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 10.25 + 3*mostFrqN;
-            if (anzahl[4]%3 == 1 && anzahl[5]%3 == 1) return 11 + 3*mostFrqN;
-            if (anzahl[4]%3 == 0 && anzahl[5]%3 == 2) return 12 + 3*mostFrqN;
+            else if (anzahl[4]%3 == 1 && anzahl[5]%3 == 0) return 9.25 + 3*mostFrqN;
+            else if (anzahl[4]%3 == 2 && anzahl[5]%3 == 0) return 10 + 3*mostFrqN;
+            else if (anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 10.25 + 3*mostFrqN;
+            else if (anzahl[4]%3 == 1 && anzahl[5]%3 == 1) return 11 + 3*mostFrqN;
+            else if (anzahl[4]%3 == 0 && anzahl[5]%3 == 2) return 12 + 3*mostFrqN;
             else return 0;
             break;
         }

@@ -239,7 +239,7 @@ void singleplayerDialog::KIZug()
 
             rolldice(dice, keep);
 
-            //Bildschirmausganbe, um Aktionen zu prüfen
+            //Bildschirmausgabe, um Aktionen zu prüfen
                     cout<<"WUERFEL"<<endl;
                     for(int i=0; i<5; i++) cout<<dice[i]<<"   ";
                     cout<<endl;
