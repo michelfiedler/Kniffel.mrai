@@ -22,7 +22,8 @@ int countN (int* zeiger, int laenge, int N) //Zählfunktionen bekommt einen Zeig
 }
 
 
-void rolldice (int* zeiger, int* behalten) //Zufällige Würfelfunktion
+void rolldice (int* zeiger, int* behalten)  //Zufällige Würfelfunktion, bekommt ein int-Feld mit Würfeleinträgen und ein int-Feld,
+                                            //das Informationen über das Behalten der Würfel enthält, übergeben
 {
     for (int k=0; k<5; k++)
     {
@@ -51,7 +52,8 @@ int maxindex (int* feld, int laenge) //einfache max-Funktion | gibt den Index de
     return maxindex;
 }
 
-void sort(double* feld, int* Reihenfolge, int laenge)
+void sort(double* feld, int* Reihenfolge, int laenge)   //Bubblesort-Algorithmus, bekommt ein zu sortierendes double-Feld übergeben, welches nicht überschrieben wird
+                                                        //Die Reihenfolge der Einträge wird in einem Int-Feld gespeichert, zusätzlich die Länge beider Felder als int
 {
     for(int i=0; i<laenge; i++) Reihenfolge[i] = i;
 
@@ -70,7 +72,8 @@ void sort(double* feld, int* Reihenfolge, int laenge)
     }
 }
 
-void sort(int* feld, int* Reihenfolge, int laenge)
+void sort(int* feld, int* Reihenfolge, int laenge)  //Bubblesort-Algorithmus, bekommt ein zu sortierendes int-Feld übergeben, welches nicht überschrieben wird
+                                                    //Die Reihenfolge der Einträge wird in einem Int-Feld gespeichert, zusätzlich die Länge beider Felder als int
 {
     for(int i=0; i<laenge; i++) Reihenfolge[i] = i;
 
@@ -90,6 +93,8 @@ void sort(int* feld, int* Reihenfolge, int laenge)
 }
 
 // Kontrollfunktionen
+// Alle Kontrollfunktionen bekommen die zu überprüfenden Würfel als int-Feld übergeben und dessen Länge. Sie überprüfen, ob
+// ein bestimmtes Ereignis vorliegt und gibt dies als bool zurück
 
 bool kniffel (int* zeiger, int laenge)
 {
@@ -169,7 +174,7 @@ bool viererpasch (int* zeiger, int laenge)
     return false;
 }
 
-void showscore (int* zeiger)
+/*void showscore (int* zeiger)
 {
     cout <<endl<<"SPIELSTAND"<<endl;
     cout <<"1		Einsen			"<<zeiger[0]<<endl;
@@ -185,7 +190,7 @@ void showscore (int* zeiger)
     cout <<"11		gr Strasse		"<<zeiger[10]<<endl;
     cout <<"12		Kniffel			"<<zeiger[11]<<endl;
     cout <<"13		Chance			"<<zeiger[12]<<endl<<endl;
-}
+}*/
 
 
 void write (int* wuerfel, int* blatt, int was)  //Funktion schreibt die Punkte in den Spielstand rein. Sie bekommt das Feld mit den Würfelwerten und dem Spielstand übergeben

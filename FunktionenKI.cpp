@@ -450,6 +450,7 @@ double ErwartungswertDreierPasch1 (int* feld)
             if (anzahl[4]%3 == 0 && anzahl[5]%3 == 1) return 10.25 + 3*mostFrqN;
             if (anzahl[4]%3 == 1 && anzahl[5]%3 == 1) return 11 + 3*mostFrqN;
             if (anzahl[4]%3 == 0 && anzahl[5]%3 == 2) return 12 + 3*mostFrqN;
+            else return 0;
             break;
         }
     }

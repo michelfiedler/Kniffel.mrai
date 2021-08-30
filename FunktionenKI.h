@@ -7,7 +7,7 @@ double pot (double, int);
 int fact (int);
 void pick (int*, int*, int, int);
 double Bernoulli (int, int, double);
-bool EintragLetzterWurf (int*, int*, int*, int);
+bool EintragLetzterWurf (int*, int*, int*);
 void setGoal (int*, int*, int, int);
 double ErwartungswertOben1 (int*, int);
 double ErwartungswertOben2 (int*, int);

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <QObject>
 
-class data      //Eine Klasse die Objekte besitzt, gemeinsam genutzt werden
+class data      //Eine Klasse die Objekte besitzt, die gemeinsam genutzt werden
 {
 public:
     data();

@@ -415,7 +415,7 @@ void singleplayerDialog::KIZug()
                  *      ÜBRIGENS: Das Ereignis mit dem höchstmöclichen Wert ist NICHT immer automatisch die beste Wahl, da es dadurch möglicherweise
                  *      nicht mehr möglich ist, den Bonus zu erhalten!
                  */
-                if(!EintragLetzterWurf(data::KI.Spielstand, order, dice, data::Zug))
+                if(!EintragLetzterWurf(data::KI.Spielstand, order, dice))
                 {
                     for (int i=0; i<13; i++)
                     {
