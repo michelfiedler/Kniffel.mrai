@@ -24,6 +24,11 @@ spielmodusMultiDialog::spielmodusMultiDialog(QWidget *parent) :
 
     QObject::connect(this, &spielmodusMultiDialog::wrongCell, this, &spielmodusMultiDialog::chooseNewCell);
 
+    data::wievielterWurf = 0;
+
+    for(int i=0; i<5; i++) keep[i]=0;
+    spielmodusMultiDialog::on_pBwuerfeln_clicked();
+
 }
 
 spielmodusMultiDialog::~spielmodusMultiDialog()

@@ -19,8 +19,6 @@ MultiplayerDialog::MultiplayerDialog(QWidget *parent) :
     ui(new Ui::MultiplayerDialog)
 {
     ui->setupUi(this);
-
-
 }
 
 MultiplayerDialog::~MultiplayerDialog()

@@ -20,12 +20,16 @@ singleplayerDialog::singleplayerDialog(QWidget *parent) :
     data::singleSpieler.reset_Spielstand();
     data::KI.Spielstand = new int[13];
     data::KI.reset_Spielstand();
+    data::wievielterWurf = 0;
 
     //Signale und Slots verknüpfen
     QObject::connect(this, &singleplayerDialog::besetzt, this, &singleplayerDialog::neuWaehlen);
     QObject::connect(this, &singleplayerDialog::KIistdran, this, &singleplayerDialog::KIZug);
     QObject::connect(this, &singleplayerDialog::SiegDu, this, &singleplayerDialog::wertung);
     QObject::connect(this, &singleplayerDialog::SiegKI, this, &singleplayerDialog::wertung2);
+
+    for(int i=0; i<5; i++) keep[i] = 0;
+    singleplayerDialog::on_pBwuerfeln_clicked();
 }
 
 singleplayerDialog::~singleplayerDialog()
